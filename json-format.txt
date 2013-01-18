@@ -1,0 +1,34 @@
+JSONToReturn = {
+	weeklyMenu: [
+		{
+			catering: {
+				avgRating: 4.5,
+				numRatings: 46,
+				caterer: "AsianSensation",
+				foodType: "Asian",
+				imageUrl: "",
+				comments: [
+					{
+						username: "Gary",
+						message: "Best chicken ever",
+						rating: 5
+					}
+				]
+				foodItems: [
+					{
+						name: "Kung Pao Chicken",
+					},
+					{
+						name: "General Tao's Chicken"
+					}
+				]
+			},
+			indian: {
+
+			},
+			vegetarian: {
+
+			}
+		}
+	]
+}
