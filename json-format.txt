@@ -1,26 +1,32 @@
-JSONToReturn = {
+Rest API calls
+
+getweeklyinfo = {
 	weeklyMenu: [
 		{
 			catering: {
-				avgRating: 4.5,
-				numRatings: 46,
-				caterer: "AsianSensation",
-				foodType: "Asian",
-				imageUrl: "",
-				comments: [
-					{
-						username: "Gary",
-						userid: 100,
-						message: "Best chicken ever"
-					}
-				],
+				caterer: {
+					avgRating: 4.5,
+					totalRatings: 46,
+					catererId: 5,
+					caterer: "AsianSensation",
+					foodType: "Asian",
+					imageUrl: "",
+					comments: [
+						{
+							commentId: 1,
+							message: "Best chicken ever"
+						}
+					],
+				},
 				foodItems: [
 					{
+						foodId: 1,
 						name: "Kung Pao Chicken",
 						rating: 300,
 						numRating: 450
 					},
 					{
+						foodId: 2,
 						name: "General Tao's Chicken",
 						rating: -150,
 						numRating: 375
@@ -35,4 +41,14 @@ JSONToReturn = {
 			}
 		}
 	]
+}
+
+addcomment = {
+	message: "I luuurv this shit",
+	catererId: 5
+}
+
+addrating = {
+	rating = -1,
+	foodId: 1
 }
