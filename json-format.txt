@@ -10,16 +10,20 @@ JSONToReturn = {
 				comments: [
 					{
 						username: "Gary",
-						message: "Best chicken ever",
-						rating: 5
+						userid: 100,
+						message: "Best chicken ever"
 					}
-				]
+				],
 				foodItems: [
 					{
 						name: "Kung Pao Chicken",
+						rating: 300,
+						numRating: 450
 					},
 					{
-						name: "General Tao's Chicken"
+						name: "General Tao's Chicken",
+						rating: -150,
+						numRating: 375
 					}
 				]
 			},
