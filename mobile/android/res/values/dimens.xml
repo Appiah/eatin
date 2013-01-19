@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fs36">10pt</dimen>
+    <dimen name="fs18">6pt</dimen>
+    <dimen name="fs96">26pt</dimen>
+</resources>

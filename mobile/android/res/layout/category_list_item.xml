@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp" >
+
+    <ImageView
+        android:id="@+id/catIcon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_width="120px"
+        android:layout_height="120px"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/catName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/catIcon"
+        android:layout_toRightOf="@id/catIcon"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:text="Category Name"
+        android:textSize="@dimen/fs36" />
+
+    <TextView
+        android:id="@+id/catererName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/catName"
+        android:layout_toRightOf="@id/catIcon"
+        android:layout_marginLeft="12dp"
+        android:text="Caterer Name"
+        android:textSize="@dimen/fs18" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="25px"
+        android:layout_height="35px"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="14dp"
+        android:src="@drawable/right_arrow" />
+
+</RelativeLayout>
