@@ -5,6 +5,17 @@
 <title>EatIn</title>
 </head>
 
+<script>
+function httpGet()
+{
+	var httpClient = util.newHttpClient();
+	var result = httpClient.get("www.google.com");
+
+	document.getElementById("demo").innerHTML=result;
+	return results;
+}
+</script>
+
 <link rel="stylesheet" type="text/css" href="style.css"/>
 
 <body>
@@ -32,11 +43,18 @@
 	<tr>
 	<td>
 		<div><text class="tname">Asian Garden</text></div>
-		<div class="tbar"></div>
-		<div class="trating"><text>2000 votes</text></div>
+		<div class="tbar">
+		<div 
+			style="width: 40%;"
+			class="redbar"></div>
+		<div 
+			style="width: 60%;"
+			class="greenbar"></div>
+		</div>
+		<div><text>2000 votes</text></div>
 	</td>
-	<td>
-		<div class="ticon"><img>20 comments</img></div>
+	<td align="right">
+		<div class="ticon"><text class="commentCount">20</text></div>
 	</td>
 	</tr>
 	</table>
@@ -47,7 +65,9 @@
 
 	<tr>
 	<td>
-		<div class="itemBar">&nbsp;</div>
+		<div 
+			style="background-color: #176411"
+			class="itemBar">&nbsp;</div>
 	</td>
 	<td>
 		<div><text>Kung Pao Chicken</text></div>
@@ -57,18 +77,22 @@
 		<img 
 			src="webclient/resources/up.png"
 			onmouseover="this.src='webclient/resources/up2.png'";
-			onmouseout="this.src='webclient/resources/up.png'">
+			onmouseout="this.src='webclient/resources/up.png'"
+			onclick="httpGet()">
 	</td>
 	<td>
 		<img 
 			src="webclient/resources/down.png"
 			onmouseover="this.src='webclient/resources/down2.png'";
-			onmouseout="this.src='webclient/resources/down.png'">
+			onmouseout="this.src='webclient/resources/down.png'"
+			onclick="httpGet()">
 	</td>
 	</tr>
 	<tr>
 	<td>
-		<div class="itemBar">&nbsp;</div>
+		<div
+			style="background-color: #176411"
+			class="itemBar">&nbsp;</div>
 	</td>
 	<td>
 		<div><text>General Tao's Chicken</text></div>
@@ -78,13 +102,15 @@
 		<img 
 			src="webclient/resources/up.png"
 			onmouseover="this.src='webclient/resources/up2.png'";
-			onmouseout="this.src='webclient/resources/up.png'">
+			onmouseout="this.src='webclient/resources/up.png'"
+			onclick="httpGet()">
 	</td>
 	<td>
 		<img 
 			src="webclient/resources/down.png"
 			onmouseover="this.src='webclient/resources/down2.png'";
-			onmouseout="this.src='webclient/resources/down.png'">
+			onmouseout="this.src='webclient/resources/down.png'"
+			onclick="httpGet()">
 	</td>
 	</tr>
 

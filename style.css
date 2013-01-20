@@ -30,6 +30,11 @@ div.title
 	border-bottom-style: double;
 }
 
+table.titleTable
+{
+	width: 100%;
+}
+
 text.tname
 {
 	font-size: 45px;
@@ -39,21 +44,32 @@ text.tname
 div.tbar
 {
 	height: 10px;
-	width: 300px;
-	background: black;
+	width: 350px;
+	background: transparent;
 }
 
-div.trating
+div.redbar
 {
-	padding: 5px;
-	display: inline;
+	float: left;
+	height: 10px;
+	background: red;
+}
+
+div.greenbar
+{
+	float: right;
+	height: 10px;
+	background:green;
 }
 
 div.ticon
 {
-	display: inline;
-	position: absolute;
-	right: 50px;
+	background-image: url('webclient/resources/comments.png');
+	height: 100px;
+	width: 100px;
+	margin: 0;
+	text-align: center;
+	line-height: 90px;
 }
 
 table.itemTable
