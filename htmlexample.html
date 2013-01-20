@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
 
+<script type="text/javascript" language="javascript">
+	function changeImage(img){
+		document.getElementById('bigImage').src=img;
+	}
+</script>
+
 <head>
 <title>EatIn</title>
 </head>
@@ -9,11 +15,23 @@
 
 <body>
 
-	<div class="header">
-		<div class="hbutton"><img></img></div>
-		<div class="himg"><img>CHEESE PLATTER</img></div>
-		<div class="htext"><text>Daily Catering</text></div>
-	</div>
+	<table class="header">
+	<tr>
+	<td class="hback">
+		<div><img 
+			src="webclient/resources/back.png"
+			onmouseover="this.src='webclient/resources/back2.png'";
+			onmouseout="this.src='webclient/resources/back.png'">
+		</div>
+	</td>
+	<td>	
+		<di><img class="himg"; src="webclient/resources/daily.jpg"></img></div>
+	</td>
+	<td>
+		<div class="hitem"><text class="htext">Daily Catering</text></div>
+	</td>
+	</tr>
+	</table>
 
 	<div class="title">
 	<table class="titleTable">
@@ -21,7 +39,7 @@
 	<td>
 		<div><text class="tname">Caterer: Asian Garden</text></div>
 		<div class="tbar">THIS IS A BAR</div>
-		<div class="trating">SOME NUMBER</div>
+		<div class="trating"><text>2000 votes</text></div>
 	</td>
 	<td>
 		<div class="ticon"><img>20 comments</img></div>
@@ -35,7 +53,7 @@
 
 	<tr>
 	<td>
-		<div><img>VERTICAL BAR</img></div>
+		<div class="itemBar">&nbsp;</div>
 	</td>
 	<td>
 		<div><text>a</text></div>
@@ -50,7 +68,7 @@
 	</tr>
 	<tr>
 	<td>
-		<div><img>VERTICAL BAR</img></div>
+		<div class="itemBar">&nbsp;</div>
 	</td>
 	<td>
 		<div><text>AJSfOASHFAHSFLJASF</text></div>
