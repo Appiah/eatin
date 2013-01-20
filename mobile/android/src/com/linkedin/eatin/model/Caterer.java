@@ -1,5 +1,6 @@
 package com.linkedin.eatin.model;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class Caterer {
 	private String foodType;
 	
 	private List<FoodItem> foodList;
+	private List<Comment> commentList;
 	
 	public Integer getId() { return id; }
 	public String getName() { return name; }
@@ -19,6 +21,7 @@ public class Caterer {
 	public Integer getNumRatings() { return numRatings; }
 	public String getImageUrl() { return imageUrl; }
 	public String getFoodType() { return foodType; }
+	public List<Comment> getCommentList() { return commentList; }
 	
 	public void setId(Integer id) { this.id = id; }
 	public void setName(String name) { this.name = name; }
@@ -29,11 +32,14 @@ public class Caterer {
 	
 	public Caterer(Integer id, String name, String imageUrl, String foodType) {
 		super();
+		
 		this.id = id;
 		this.name = name;
 		this.imageUrl = imageUrl;
 		this.foodType = foodType;
+		
 		this.foodList = new LinkedList<FoodItem>();
+		this.commentList = new LinkedList<Comment>();
 	}
 	
 	public void addFoodItem(FoodItem item) {
@@ -60,5 +66,9 @@ public class Caterer {
 		}
 		
 		avgRating = (double) total / (double) numRatings;
+	}
+	
+	public void addComment(String text) {
+		commentList.add(new Comment(null, text, "Anonymous", new Date()));
 	}
 }

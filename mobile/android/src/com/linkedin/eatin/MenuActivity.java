@@ -1,5 +1,6 @@
 package com.linkedin.eatin;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -11,12 +12,17 @@ import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.linkedin.eatin.model.Caterer;
+import com.linkedin.eatin.model.Comment;
 import com.linkedin.eatin.model.Constants;
 import com.linkedin.eatin.model.FoodItem;
 import com.linkedin.eatin.model.Menu;
@@ -49,8 +55,38 @@ public class MenuActivity extends Activity {
 		}
 	}
 
+	public class CommentListAdapter extends ArrayAdapter<Comment> {
+		private List<Comment> objects;
+		private Context context;
+		
+		private SimpleDateFormat dateFormat;
+
+		public CommentListAdapter(Context context, List<Comment> objects) {
+			super(context, R.layout.food_list_item, objects);
+
+			this.objects = objects;
+			this.context = context;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View view = inflater.inflate(R.layout.food_list_item, null);
+
+			Comment item = objects.get(position);
+
+			((TextView) view.findViewById(R.id.foodName)).setText(item.getPoster());
+			((TextView) view.findViewById(R.id.numRatings)).setText(item.getMessage());
+			((TextView) view.findViewById(R.id.numRatings)).setText(item.getPostDate());
+
+			return view;
+		}
+	}
+
 	private ListView foodList;
 	private Menu menu;
+	private Caterer caterer;
+	private ViewFlipper flipper;
+	private EditText commentField;
 
 	private int day;
 	private int catId;
@@ -65,7 +101,7 @@ public class MenuActivity extends Activity {
 		day = bundle.getInt(Constants.ARG_DAY);
 
 		menu = Model.getModel().getMenuList().get(day);
-		Caterer caterer = menu.getCaterer(catId);
+		caterer = menu.getCaterer(catId);
 
 		ActionBar ab = getActionBar();
 		ab.setDisplayHomeAsUpEnabled(true);
@@ -85,11 +121,27 @@ public class MenuActivity extends Activity {
 
 		((TextView) findViewById(R.id.catererName)).setText(caterer.getName());
 		((TextView) findViewById(R.id.numAvgVotes)).setText(caterer.getNumRatings().toString());
+		((Button) findViewById(R.id.commentsBtn)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View source) {
+				flipper.showNext();
+			}
+		});
+		((Button) findViewById(R.id.submitBtn)).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View source) {
+				String text = commentField.get;
+				caterer.addComment(text);
+			}
+		});
 		View plusRating = (View) findViewById(R.id.posRatingsBar);
 
 		plusRating.getLayoutParams().width = (int)(getResources().getDimension(R.dimen.s160dp) * caterer.getAvgRating());
 
-
+		commentField = (EditText) findViewById(R.id.commentField);
+		flipper = (ViewFlipper) findViewById(R.id.menuFlipper);
 		foodList = (ListView) findViewById(R.id.foodList);
 		foodList.setAdapter(new MenuListAdapter(this, menu.getFoodItems()[catId]));
 	}
