@@ -11,22 +11,23 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="4dp"
         android:text="Day"
-        android:textColor="#1b1b1b"
+        android:textColor="#2e2e2e"
         android:textSize="@dimen/fs96" />
 
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="134dp"
+        android:layout_marginLeft="110dp"
         android:text="Date"
-        android:textColor="#696969"
+        android:textColor="#8d8d8d"
         android:textSize="@dimen/fs36" />
 
 	<LinearLayout
 	    android:id="@+id/categoryList"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
+	    android:layout_marginTop="16dp"
 	    android:orientation="vertical" >
 	    
 	</LinearLayout>

@@ -3,4 +3,8 @@
     <dimen name="fs36">10pt</dimen>
     <dimen name="fs18">6pt</dimen>
     <dimen name="fs96">26pt</dimen>
+    <dimen name="fs30">9pt</dimen>
+    <dimen name="fs12">4pt</dimen>
+    <dimen name="fs24">7pt</dimen>
+    <dimen name="s160dp">160dp</dimen>
 </resources>

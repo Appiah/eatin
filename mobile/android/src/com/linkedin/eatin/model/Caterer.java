@@ -3,8 +3,8 @@ package com.linkedin.eatin.model;
 public class Caterer {
 	private Integer id;
 	private String name;
-	private Double avgRating;
-	private Integer numRatings;
+	private Double avgRating = 0.5;
+	private Integer numRatings = 1;
 	private String imageUrl;
 	private String foodType;
 	
@@ -14,6 +14,7 @@ public class Caterer {
 	public Integer getNumRatings() { return numRatings; }
 	public String getImageUrl() { return imageUrl; }
 	public String getFoodType() { return foodType; }
+	
 	public void setId(Integer id) { this.id = id; }
 	public void setName(String name) { this.name = name; }
 	public void setAvgRating(Double avgRating) { this.avgRating = avgRating; }
@@ -21,13 +22,10 @@ public class Caterer {
 	public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 	public void setFoodType(String foodType) { this.foodType = foodType; }
 	
-	public Caterer(Integer id, String name, Double avgRating,
-			Integer numRatings, String imageUrl, String foodType) {
+	public Caterer(Integer id, String name, String imageUrl, String foodType) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.avgRating = avgRating;
-		this.numRatings = numRatings;
 		this.imageUrl = imageUrl;
 		this.foodType = foodType;
 	}
