@@ -1,3 +1,4 @@
+package com.linkedin.eatin;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -244,95 +245,15 @@ public class Helper {
 	public enum Category {
 		Indian, Daily, Vegetarian
 	}
-	public class Dish {
-		public String name;
-		public int id;
-		public int num_ratings;
-		public int rating;
-		
-		public Dish(String n, int i, int num, int r) {
-			name=n;
-			id=i;
-			num_ratings=num;
-			rating=r;
-		}
-	}
-	
-	public class Meal {
-		public int caterer_id;
-		public Date date;
-		public ArrayList<Dish> dishes;
-		public Category category;
-		
-		public Meal(int cid, Date d, Category c){
-			caterer_id = cid;
-			date = d;
-			dishes = new ArrayList<Dish>();
-			category = c;
-		}
-		
-		public void addDish(Dish dish) {
-			dishes.add(dish);
-		}
-	}
-	
-	public class Caterer {
-		public String name;
-		public String type;
-		public int id;
-		public String image_url;
-		ArrayList<Comment> comments;
-		
-		public Caterer (String n, String t, int i, String iu) {
-			name = n;
-			type = t;
-			id = i;
-			image_url = iu;
-			comments = new ArrayList<Comment>();
-		}
-		
-		public Caterer(int i) {
-			try {
-				Statement statement = connection.createStatement();
-				String sql = "select Name, Type, ImgURL from caterer where ID = " + i + ";";
-				ResultSet result = statement.executeQuery(sql);
-				result.next();
-				name = result.getString(1);
-				type = result.getString(2);
-				id = i;
-				image_url = result.getString(3);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public class Comment {
-		
-		public String text;
-		public Date date_time;
-		public int caterer_id;
-		
-		public Comment(String t,  Date dt, int ci ) {
-			text = t;
-			date_time = dt;
-			caterer_id = ci;
-		}
-	}
-	
-	public class DailyMenu {
-		public Caterer indian_caterer;
-		public Caterer dv_caterer;
-		public Meal[] meals;
-		
-		public DailyMenu(int caterer_id, int caterer_id2, Meal[] m) {
-			indian_caterer = new Caterer(caterer_id);
-			dv_caterer = new Caterer(caterer_id2);
-			meals = m;
-		}
 
-	}
+	
+
+	
+
+	
+
+	
+
 	
 	public int GetDayFromDate(Date date) {  
 	        Calendar calendar = Calendar.getInstance();  
