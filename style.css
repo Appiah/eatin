@@ -1,0 +1,67 @@
+text
+{
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+table.header
+{
+	width: 100%;
+	background-color: black;
+	padding: 10px;
+}
+
+img.himg
+{
+	border-style: outset;
+}
+
+text.htext
+{
+	font-size: 45px;
+	color: white;
+	font-weignt: bold;
+}
+
+div.title
+{
+	height: 100px;
+	width: 100%;
+	padding-top: 20px;
+	border-bottom-style: double;
+}
+
+text.tname
+{
+	font-size: 45px;
+	font-weight: bold;
+}
+
+div.tbar
+{
+	display: inline;
+}
+
+div.trating
+{
+	display: inline;
+}
+
+div.ticon
+{
+	display: inline;
+	position: absolute;
+	right: 50px;
+}
+
+table.itemTable
+{
+	padding-top: 10px;
+	width: 100%;
+}
+
+div.itemBar
+{
+	width: 20px;
+	height: 50px;
+	background: #176411;
+}
