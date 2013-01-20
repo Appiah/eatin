@@ -1,11 +1,13 @@
 package com.linkedin.eatin;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.linkedin.eatin.model.Constants;
+import com.linkedin.eatin.model.Model;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -34,21 +37,24 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	 * intensive, it may be best to switch to a
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
-	SectionsPagerAdapter mSectionsPagerAdapter;
+	private SectionsPagerAdapter mSectionsPagerAdapter;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
-	ViewPager mViewPager;
+	private ViewPager mViewPager;
+	private Model model;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		model = Model.getModel();
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
@@ -61,12 +67,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
-		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-			@Override
-			public void onPageSelected(int position) {
-				actionBar.setSelectedNavigationItem(position);
-			}
-		});
+//		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+//			@Override
+//			public void onPageSelected(int position) {
+//				actionBar.setSelectedNavigationItem(position);
+//			}
+//		});
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -120,9 +126,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new MenuSectionFragment(position, context);
+			Fragment fragment = new MenuSectionFragment();
 			Bundle args = new Bundle();
-			args.putInt(Constants.ARG_DAY, position + 1);
+			args.putInt(Constants.ARG_DAY, position);
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -130,7 +136,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return model.getMenuList().size();
 		}
 
 		@Override
@@ -189,10 +195,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 			@Override
 			public void onClick(View v) {
-				Bundle args = new Bundle();
-				args.putInt(Constants.ARG_DAY, day);
-				args.putInt(Constants.ARG_CAT_ID, catId);
-				//Intent intent = new Intent(context, .class)
+				Intent intent = new Intent(context, MenuActivity.class);
+				intent.putExtra(Constants.ARG_DAY, day);
+				intent.putExtra(Constants.ARG_CAT_ID, catId);
+				startActivity(intent);
 			}			
 		}
 		
@@ -200,26 +206,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		private List<Category> catInfoList;
 		private Context context;
 		private int day;
+		private com.linkedin.eatin.model.Menu menu;
+		private SimpleDateFormat dateFormat;
 
 		public MenuSectionFragment() {}
-		
-		public MenuSectionFragment(int day, Context ctx) {
-			catInfoList = new ArrayList<Category>();
-			catInfoList.add(new Category(Constants.CAT_CATER, "Daily Catering", "<Caterer Name>", R.drawable.cater_logo, "#cb2525", "#f1a2a2"));
-			catInfoList.add(new Category(Constants.CAT_INDIAN, "Indian Cuisine", "<Caterer Name>", R.drawable.indian_logo, "#ada932", "#d6cb81"));
-			catInfoList.add(new Category(Constants.CAT_VEGGIE, "Vegetarian", "<Caterer Name>", R.drawable.vege_logo, "#5dad32", "#a1d681"));
-			
-			//day = getArguments().getInt(Constants.ARG_DAY);
-			this.day = day;
-			this.context = ctx;
-		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			// Create a new TextView and set its text to the fragment's section
 			// number argument value.
+			super.onCreateView(inflater, container, savedInstanceState);
 			View view = inflater.inflate(R.layout.main_menu_layout, null);
+			
+			init();
+			
 			catListView = (LinearLayout) view.findViewById(R.id.categoryList);
 			
 			catListView.addView(buildCategoryView(inflater, 0));
@@ -227,8 +228,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			catListView.addView(buildCategoryView(inflater, 2));
 			
 			((TextView) view.findViewById(R.id.day)).setText(Constants.DAY_NAMES[day % 5]);
+			((TextView) view.findViewById(R.id.date)).setText(dateFormat.format(menu.getDate()));
 			
 			return view;
+		}
+		
+		private void init() {
+			day = getArguments().getInt(Constants.ARG_DAY);
+			context = getActivity();
+			
+			menu = Model.getModel().getMenuList().get(day);
+			
+			dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+			
+			catInfoList = new ArrayList<Category>();
+			catInfoList.add(new Category(Constants.CAT_CATER, "Daily Catering", menu.getCaterer(0).getName(), R.drawable.cater_logo, "#cb2525", "#f1a2a2"));
+			catInfoList.add(new Category(Constants.CAT_INDIAN, "Indian Cuisine", menu.getCaterer(1).getName(), R.drawable.indian_logo, "#ada932", "#d6cb81"));
+			catInfoList.add(new Category(Constants.CAT_VEGGIE, "Vegetarian", menu.getCaterer(2).getName(), R.drawable.vege_logo, "#5dad32", "#a1d681"));
 		}
 		
 		private View buildCategoryView(LayoutInflater inflater, int cat) {

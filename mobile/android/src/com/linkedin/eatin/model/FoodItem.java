@@ -27,4 +27,16 @@ public class FoodItem {
 		this.rating = rating;
 		this.caterer = caterer;
 	}
+	
+	public String getRatingColor() {
+		Double ratio = getRating();
+		Integer g = (int)((Math.min(ratio, 0.5) * 2) * 255);
+		Integer r = (int)((Math.min(1-ratio, 0.5) * 2) * 255);
+		
+		return "#" + padString(Integer.toHexString(r)) + padString(Integer.toHexString(g)) + "00"; 
+	}
+	
+	private String padString(String str) {
+		return str.length() == 1? "0" + str : str;
+	}
 }
