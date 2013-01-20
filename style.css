@@ -38,11 +38,14 @@ text.tname
 
 div.tbar
 {
-	display: inline;
+	height: 10px;
+	width: 300px;
+	background: black;
 }
 
 div.trating
 {
+	padding: 5px;
 	display: inline;
 }
 
