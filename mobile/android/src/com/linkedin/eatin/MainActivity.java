@@ -20,8 +20,9 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.linkedin.eatin.model.Constants;
@@ -58,7 +59,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -114,11 +115,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	 * one of the sections/tabs/pages.
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-		private Context context;
 
-		public SectionsPagerAdapter(FragmentManager fm, Context ctx) {
+		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
-			this.context = ctx;
 		}
 
 		@Override
@@ -141,15 +140,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			switch (position) {
-			case 0:
-				return getString(R.string.title_section1).toUpperCase();
-			case 1:
-				return getString(R.string.title_section2).toUpperCase();
-			case 2:
-				return getString(R.string.title_section3).toUpperCase();
-			}
-			return null;
+			return "";
 		}
 	}
 
@@ -202,7 +193,40 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			}			
 		}
 		
-		private LinearLayout catListView;
+		public class CategoryListAdapter extends ArrayAdapter<Category> {
+			private List<Category> objects;
+			private Context context;
+
+			public CategoryListAdapter(Context context, List<Category> objects) {
+				super(context, R.layout.category_list_item, objects);
+
+				this.objects = objects;
+				this.context = context;
+			}
+
+			public View getView(int position, View convertView, ViewGroup parent) {
+				LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				View view = inflater.inflate(R.layout.category_list_item, null);
+
+				Category item = objects.get(position);
+
+				TextView category = ((TextView) view.findViewById(R.id.catName));
+				TextView caterer = ((TextView) view.findViewById(R.id.catererName));
+				((ImageView) view.findViewById(R.id.catIcon)).setImageResource(item.imageId);
+				
+				category.setText(item.name);
+				category.setTextColor(item.mainColor);
+				caterer.setText(item.description);
+				caterer.setTextColor(item.secColor);
+				
+				view.setClickable(true);
+				view.setOnClickListener(new CategoryClickHandler(day, item.catId));
+
+				return view;
+			}
+		}
+		
+		private ListView catListView;
 		private List<Category> catInfoList;
 		private Context context;
 		private int day;
@@ -221,13 +245,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			
 			init();
 			
-			catListView = (LinearLayout) view.findViewById(R.id.categoryList);
+			catListView = (ListView) view.findViewById(R.id.categoryList);
+			catListView.setAdapter(new CategoryListAdapter(context, catInfoList));
 			
-			catListView.addView(buildCategoryView(inflater, 0));
-			catListView.addView(buildCategoryView(inflater, 1));
-			catListView.addView(buildCategoryView(inflater, 2));
-			
-			((TextView) view.findViewById(R.id.day)).setText(Constants.DAY_NAMES[day % 5]);
+			TextView dayTitle = ((TextView) view.findViewById(R.id.day));
+			dayTitle.setText(Constants.DAY_NAMES[day % 5]);
+			dayTitle.setTextColor(Color.parseColor("#1a70c0"));
 			((TextView) view.findViewById(R.id.date)).setText(dateFormat.format(menu.getDate()));
 			
 			return view;
@@ -245,24 +268,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			catInfoList.add(new Category(Constants.CAT_CATER, "Daily Catering", menu.getCaterer(0).getName(), R.drawable.cater_logo, "#cb2525", "#f1a2a2"));
 			catInfoList.add(new Category(Constants.CAT_INDIAN, "Indian Cuisine", menu.getCaterer(1).getName(), R.drawable.indian_logo, "#ada932", "#d6cb81"));
 			catInfoList.add(new Category(Constants.CAT_VEGGIE, "Vegetarian", menu.getCaterer(2).getName(), R.drawable.vege_logo, "#5dad32", "#a1d681"));
-		}
-		
-		private View buildCategoryView(LayoutInflater inflater, int cat) {
-			Category cate = catInfoList.get(cat);
-			View view = inflater.inflate(R.layout.category_list_item, null);
-			TextView category = ((TextView) view.findViewById(R.id.catName));
-			TextView caterer = ((TextView) view.findViewById(R.id.catererName));
-			((ImageView) view.findViewById(R.id.catIcon)).setImageResource(cate.imageId);
-			
-			category.setText(cate.name);
-			category.setTextColor(cate.mainColor);
-			caterer.setText(cate.description);
-			caterer.setTextColor(cate.secColor);
-			
-			view.setClickable(true);
-			view.setOnClickListener(new CategoryClickHandler(day, cat));
-			
-			return view;
 		}
 	}
 
