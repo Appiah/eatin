@@ -58,6 +58,8 @@ public class MenuActivity extends Activity {
 				@Override
 				public void onClick(View view) {
 					item.upvote();
+					MenuListAdapter.this.notifyDataSetChanged();
+					MenuActivity.this.updateLikes();
 				}
 			});
 			
@@ -66,6 +68,8 @@ public class MenuActivity extends Activity {
 				@Override
 				public void onClick(View view) {
 					item.downvote();
+					MenuListAdapter.this.notifyDataSetChanged();
+					MenuActivity.this.updateLikes();
 				}
 			});
 
@@ -107,6 +111,8 @@ public class MenuActivity extends Activity {
 	private Caterer caterer;
 	private ViewFlipper flipper;
 	private EditText commentField;
+	private TextView numAvgVotes;
+	private View likesBar;
 
 	private int day;
 	private int catId;
@@ -123,11 +129,14 @@ public class MenuActivity extends Activity {
 		menu = BaseData.getModel().getMenuList().get(day);
 		caterer = menu.getCaterer(catId);
 
+		likesBar = (View) findViewById(R.id.posRatingsBar);
 		commentField = (EditText) findViewById(R.id.commentField);
+		numAvgVotes = (TextView) findViewById(R.id.numAvgVotes);
 		flipper = (ViewFlipper) findViewById(R.id.menuFlipper);
 		foodList = (ListView) findViewById(R.id.foodList);
-		foodList.setAdapter(new MenuListAdapter(this, menu.getFoodItems()[catId]));
 		commentList = (ListView) findViewById(R.id.commentList);
+		
+		foodList.setAdapter(new MenuListAdapter(this, menu.getFoodItems()[catId]));
 		commentList.setAdapter(new CommentListAdapter(this, caterer.getCommentList()));
 
 		ActionBar ab = getActionBar();
@@ -147,7 +156,6 @@ public class MenuActivity extends Activity {
 		}
 
 		((TextView) findViewById(R.id.catererName)).setText(caterer.getName());
-		((TextView) findViewById(R.id.numAvgVotes)).setText(caterer.getNumRatings().toString());
 		((ImageButton) findViewById(R.id.commentsBtn)).setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -164,9 +172,13 @@ public class MenuActivity extends Activity {
 				caterer.addComment(text);
 			}
 		});
-		View plusRating = (View) findViewById(R.id.posRatingsBar);
 
-		plusRating.getLayoutParams().width = (int)(getResources().getDimension(R.dimen.s160dp) * caterer.getAvgRating());
+		updateLikes();
+	}
+	
+	protected void updateLikes() {
+		numAvgVotes.setText(caterer.getNumRatings().toString());
+		likesBar.getLayoutParams().width = (int)(getResources().getDimension(R.dimen.s160dp) * caterer.getAvgRating());
 	}
 
 	@Override

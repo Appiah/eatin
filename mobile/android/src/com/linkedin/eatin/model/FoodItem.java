@@ -1,5 +1,7 @@
 package com.linkedin.eatin.model;
 
+import android.util.Log;
+
 public class FoodItem {
 	public interface FIUpdateable {
 		public void updateUpVote();
@@ -40,18 +42,20 @@ public class FoodItem {
 		Integer g = (int)((Math.min(ratio, 0.5) * 2) * 255);
 		Integer r = (int)((Math.min(1-ratio, 0.5) * 2) * 255);
 		
-		return "#" + padString(Integer.toHexString(r)) + padString(Integer.toHexString(g)) + "00"; 
+		String ret = "#" + padString(Integer.toHexString(r)) + padString(Integer.toHexString(g)) + "00";
+		Log.d("Color", ret);
+		return ret;
 	}
 	
 	public void upvote() {
+		rating = (double)(getNumLikes() + 1) / (double)(numRatings + 1);
 		numRatings ++;
-		rating = (double)(getNumLikes() + 1) / (double) numRatings;
 		caterer.updateRatings();
 	}
 	
 	public void downvote() {
-		numRatings ++;
 		rating = (double) getNumLikes() / (double)(numRatings + 1);
+		numRatings ++;
 		caterer.updateRatings();
 	}
 	
