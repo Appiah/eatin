@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp" >
+
+    <TextView
+        android:id="@+id/textPosted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Posted by:"
+        android:textColor="#444444"
+        android:textSize="@dimen/fs18" />
+
+    <TextView
+        android:id="@+id/posterName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textPosted"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@+id/textPosted"
+        android:text="&lt;Poster>"
+        android:textColor="#444444"
+        android:textSize="@dimen/fs18" />
+
+    <TextView
+        android:id="@+id/postDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textPosted"
+        android:layout_marginTop="2dp"
+        android:text="&lt;Date>"
+        android:textColor="#565656"
+        android:textSize="@dimen/fs15" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textPosted"
+        android:layout_below="@+id/textPosted"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="6dp"
+        android:text="&lt;CommentMessage>"
+        android:textSize="@dimen/fs24" />
+
+</RelativeLayout>

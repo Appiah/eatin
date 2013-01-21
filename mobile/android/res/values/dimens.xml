@@ -7,4 +7,5 @@
     <dimen name="fs12">4pt</dimen>
     <dimen name="fs24">7pt</dimen>
     <dimen name="s160dp">160dp</dimen>
+    <dimen name="fs15">5pt</dimen>
 </resources>

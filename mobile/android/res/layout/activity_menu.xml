@@ -89,20 +89,30 @@
     <ViewFlipper
         android:id="@+id/menuFlipper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:inAnimation="@android:anim/slide_in_left"
+        android:outAnimation="@android:anim/slide_out_right" >
+
+        <ListView
+            android:id="@+id/foodList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="12dp"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="12dp" >
 
             <EditText
                 android:id="@+id/commentField"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:ems="10"
-                android:inputType="textMultiLine" >
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:padding="8dp" >
 
                 <requestFocus />
             </EditText>
@@ -110,7 +120,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right" >
+                android:gravity="right"
+                android:layout_marginTop="3dp" >
 
                 <Button
                     android:id="@+id/submitBtn"
@@ -119,22 +130,14 @@
                     android:minHeight="30dp"
                     android:text="Submit"
                     android:textSize="@dimen/fs24" />
-
             </LinearLayout>
 
             <ListView
-                android:id="@+id/listView1"
+                android:id="@+id/commentList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
             </ListView>
-
         </LinearLayout>
-
-        <ListView
-            android:id="@+id/foodList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
     </ViewFlipper>
 
 </LinearLayout>
