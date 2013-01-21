@@ -1,0 +1,56 @@
+@(foodType: String, caterer: String, numVotesCaterer: Int, numCommentsCaterer: Int, foodItemNames: Array[String], foodItemNumVotes: Array[Int], foodItemNumPositiveVotes: Array[Int], foodItemIDs: Array[Int], red: Array[Int], green: Array[Int], redBar: Array[Int], greenBar: Array[Int])
+
+	<div class="title">
+		<table class="titleTable">
+			<tr>
+				<td>
+					<div><text class="tname">@caterer</text></div>
+					<div class="tbar">
+					<div 
+						style="width: @redBar%;"
+						class="redbar"></div>
+					<div 
+						style="width: @greenBar%;"
+						class="greenbar"></div>
+					</div>
+					<div><text>@numVotesCaterer votes</text></div>
+				</td>
+				<td align="right">
+					<div class="ticon"><text class="commentCount">@numCommentsCaterer</text></div>
+				</td>
+			</tr>
+		</table>
+	</div>	
+
+
+	<table class="itemTable">
+
+		@for(i <- 0 until foodItemNames.length){
+
+			<tr>
+				<td>
+					<div class="itemBar" style="background:rgb(@red(i), @green(i), 0 )">&nbsp;</div>
+				</td>
+			<td>
+				<div><text>@foodItemNames(i)</text></div>
+				<div><text>@foodItemNumVotes(i) votes</text></div>	
+			</td>
+			<td>
+				<img 
+					src="@routes.Assets.at("images/up.png")"
+					onmouseover="this.src='@routes.Assets.at("images/up2.png")'";
+					onmouseout="this.src='@routes.Assets.at("images/up.png")'"
+					onclick="location.href='up?id=@foodItemIDs(i)'">
+			</td>
+			<td>
+				<img 
+					src="@routes.Assets.at("images/down.png")"
+					onmouseover="this.src='@routes.Assets.at("images/down2.png")'";
+					onmouseout="this.src='@routes.Assets.at("images/down.png")'"
+					onclick="location.href='down?id=@foodItemIDs(i)'">
+			</td>
+			</tr>
+
+		}
+
+	</table>

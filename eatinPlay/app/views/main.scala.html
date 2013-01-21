@@ -1,0 +1,59 @@
+@(daily: Html, veg: Html, indian: Html)
+
+<!DOCTYPE html>
+<html>
+
+<script type="text/javascript" language="javascript">
+	function changeImage(img){
+		document.getElementById('bigImage').src=img;
+	}
+</script>
+
+
+<script>
+function httpGet(arg)
+{
+	var httpClient = util.newHttpClient();
+	var result = httpClient.get(document.URL + arg);
+
+	window.location.reload();
+	/*document.getElementById("demo").innerHTML=result;
+	return results;*/
+}
+</script>
+
+<head>
+	<title>EatIn</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+</head>
+
+<body onload="httpGet("test")">
+
+	<div class="container">
+	&nbsp;
+
+	<div class="header">
+		<img 
+			class="logo"
+			src="@routes.Assets.at("images/logo2.png")">
+	</div>
+
+
+	<div class="tableDiv">
+		<div class="first">
+			@daily
+		</div>
+		<div class="second">
+		@veg
+		</div>
+		<div class="third">
+		@indian
+		</div>
+	</div>
+
+</body>
+
+</html>
+
