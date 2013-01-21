@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Model {
-	private static Model model;
+public class BaseData {
+	private static BaseData model;
 	
-	public static Model getModel() {
+	public static BaseData getModel() {
 		if (model == null)
-			model = new Model();
+			model = new BaseData();
 		return model;
 	}
 	
@@ -18,7 +18,7 @@ public class Model {
 	private List<Menu> menuList;
 	private List<Caterer> catererList;
 	
-	public Model() {
+	public BaseData() {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
 		

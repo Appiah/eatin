@@ -61,8 +61,8 @@ public class Caterer {
 		int total = 0;
 		numRatings = 0;
 		for (FoodItem item : foodList) {
-			numRatings += item.getNumRating();
-			total += item.getNumRating() * item.getRating();
+			numRatings += item.getNumRatings();
+			total += item.getNumRatings() * item.getRating();
 		}
 		
 		avgRating = (double) total / (double) numRatings;

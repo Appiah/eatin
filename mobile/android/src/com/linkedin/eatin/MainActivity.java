@@ -26,7 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.linkedin.eatin.model.Constants;
-import com.linkedin.eatin.model.Model;
+import com.linkedin.eatin.model.BaseData;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -44,14 +44,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	private ViewPager mViewPager;
-	private Model model;
+	private BaseData model;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		model = Model.getModel();
+		model = BaseData.getModel();
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -260,7 +260,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			day = getArguments().getInt(Constants.ARG_DAY);
 			context = getActivity();
 			
-			menu = Model.getModel().getMenuList().get(day);
+			menu = BaseData.getModel().getMenuList().get(day);
 			
 			dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
 			

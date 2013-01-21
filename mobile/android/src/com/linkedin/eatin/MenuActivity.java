@@ -28,7 +28,7 @@ import com.linkedin.eatin.model.Comment;
 import com.linkedin.eatin.model.Constants;
 import com.linkedin.eatin.model.FoodItem;
 import com.linkedin.eatin.model.Menu;
-import com.linkedin.eatin.model.Model;
+import com.linkedin.eatin.model.BaseData;
 
 public class MenuActivity extends Activity {
 
@@ -47,11 +47,27 @@ public class MenuActivity extends Activity {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View view = inflater.inflate(R.layout.food_list_item, null);
 
-			FoodItem item = objects.get(position);
+			final FoodItem item = objects.get(position);
 
 			((TextView) view.findViewById(R.id.foodName)).setText(item.getName());
-			((TextView) view.findViewById(R.id.numRatings)).setText(item.getNumRating().toString());
+			((TextView) view.findViewById(R.id.numRatings)).setText(item.getNumRatings().toString());
 			((View) view.findViewById(R.id.ratingIndicator)).setBackgroundColor(Color.parseColor(item.getRatingColor()));
+			
+			((ImageButton) view.findViewById(R.id.upvoteIcon)).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View view) {
+					item.upvote();
+				}
+			});
+			
+			((ImageButton) view.findViewById(R.id.downvoteIcon)).setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View view) {
+					item.downvote();
+				}
+			});
 
 			return view;
 		}
@@ -104,7 +120,7 @@ public class MenuActivity extends Activity {
 		catId = bundle.getInt(Constants.ARG_CAT_ID);
 		day = bundle.getInt(Constants.ARG_DAY);
 
-		menu = Model.getModel().getMenuList().get(day);
+		menu = BaseData.getModel().getMenuList().get(day);
 		caterer = menu.getCaterer(catId);
 
 		commentField = (EditText) findViewById(R.id.commentField);

@@ -1,20 +1,27 @@
 package com.linkedin.eatin.model;
 
 public class FoodItem {
+	public interface FIUpdateable {
+		public void updateUpVote();
+		public void updateDownVote();
+	}
+	
 	private Integer id;
 	private String name;
-	private Integer numRating;
+	private Integer numRatings;
 	private Double rating;
 	private Caterer caterer;
 	
 	public Integer getId() { return id; }
 	public String getName() { return name; }
-	public Integer getNumRating() { return numRating; }
+	public Integer getNumRatings() { return numRatings; }
+	public Integer getNumLikes() { return (int) (rating * numRatings); }
 	public Double getRating() { return rating; }
 	public Caterer getCaterer() { return caterer; }
+	
 	public void setId(Integer id) { this.id = id; }
 	public void setName(String name) { this.name = name; }
-	public void setNumRating(Integer numRating) { this.numRating = numRating; }
+	public void setNumRating(Integer numRating) { this.numRatings = numRating; }
 	public void setRating(Double rating) { this.rating = rating; }
 	public void setCaterer(Caterer caterer) { this.caterer = caterer; }
 	
@@ -23,7 +30,7 @@ public class FoodItem {
 		super();
 		this.id = id;
 		this.name = name;
-		this.numRating = numRating;
+		this.numRatings = numRating;
 		this.rating = rating;
 		this.caterer = caterer;
 	}
@@ -34,6 +41,18 @@ public class FoodItem {
 		Integer r = (int)((Math.min(1-ratio, 0.5) * 2) * 255);
 		
 		return "#" + padString(Integer.toHexString(r)) + padString(Integer.toHexString(g)) + "00"; 
+	}
+	
+	public void upvote() {
+		numRatings ++;
+		rating = (double)(getNumLikes() + 1) / (double) numRatings;
+		caterer.updateRatings();
+	}
+	
+	public void downvote() {
+		numRatings ++;
+		rating = (double) getNumLikes() / (double)(numRatings + 1);
+		caterer.updateRatings();
 	}
 	
 	private String padString(String str) {
