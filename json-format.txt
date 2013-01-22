@@ -3,32 +3,35 @@ Rest API calls
 getweeklyinfo = {
 	weeklyMenu: [
 		{
-			catering: {
-				caterer: {
-					avgRating: 4.5,
-					totalRatings: 46,
-					catererId: 5,
-					caterer: "AsianSensation",
-					foodType: "Asian",
-					imageUrl: "",
-					comments: [
-						{
-							commentId: 1,
-							message: "Best chicken ever"
-						}
-					],
-				},
+			date: MM DD YYYY,
+			id: 315,
+			daily: {
+				totalLikes: 25,
+				totalRatings: 46,
+				catererId: 5,
+				caterer: "AsianSensation",
+				foodType: "Asian",
+				imageUrl: "",
+				comments: [
+					{
+						commentId: 1,
+						message: "Best chicken ever"
+						poster: "Edward"
+						postDate: "DDMMYYY"
+					}
+				],
+
 				foodItems: [
 					{
 						foodId: 1,
 						name: "Kung Pao Chicken",
-						rating: 300,
+						numLikes: 300,
 						numRating: 450
 					},
 					{
 						foodId: 2,
 						name: "General Tao's Chicken",
-						rating: -150,
+						numLikes: -150,
 						numRating: 375
 					}
 				]
