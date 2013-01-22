@@ -3,6 +3,7 @@ package com.linkedin.eatin;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -25,10 +26,10 @@ import android.widget.ViewFlipper;
 
 import com.linkedin.eatin.model.Caterer;
 import com.linkedin.eatin.model.Comment;
-import com.linkedin.eatin.model.Constants;
 import com.linkedin.eatin.model.FoodItem;
 import com.linkedin.eatin.model.Menu;
 import com.linkedin.eatin.model.BaseData;
+import com.linkedin.eatin.utility.Constants;
 
 public class MenuActivity extends Activity {
 
@@ -88,7 +89,7 @@ public class MenuActivity extends Activity {
 
 			this.objects = objects;
 			this.context = context;
-			this.dateFormat = new SimpleDateFormat("HH:mm, MMMM dd, yyyy");
+			this.dateFormat = new SimpleDateFormat("HH:mm, MMMM dd, yyyy", Locale.US);
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -178,7 +179,7 @@ public class MenuActivity extends Activity {
 	
 	protected void updateLikes() {
 		numAvgVotes.setText(caterer.getNumRatings().toString());
-		likesBar.getLayoutParams().width = (int)(getResources().getDimension(R.dimen.s160dp) * caterer.getAvgRating());
+		likesBar.getLayoutParams().width = (int)(getResources().getDimension(R.dimen.s160dp) * caterer.getLikeRatio());
 	}
 
 	@Override

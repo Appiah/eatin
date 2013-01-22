@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.linkedin.eatin.utility.Constants;
+
 public class Menu {
 	private Integer id;
 	private Date date;
@@ -21,11 +27,20 @@ public class Menu {
 	public Caterer getCaterer(int menuId) { return caterers[menuId]; }
 	public void setCaterer(int day, Caterer caterer) { this.caterers[day] = caterer; }
 	
-	@SuppressWarnings("unchecked")
 	public Menu(Integer id, Date date) {
 		super();
 		this.id = id;
 		this.date = date;
+		
+		init();
+	}
+	
+	private Menu() {
+		init();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void init() {
 		this.foodItems = (List<FoodItem>[]) new List<?>[Constants.NUM_CAT];
 		this.caterers = new Caterer[Constants.NUM_CAT];
 		
@@ -43,5 +58,27 @@ public class Menu {
 	
 	public List<FoodItem> getFoodItems(int menuId) {
 		return this.foodItems[menuId];
+	}
+	
+	public static Menu fromJSON(JSONObject json) throws JSONException {
+		Menu m = new Menu();
+		
+		m.setDate(new Date(json.getLong("date")));
+		m.setId(json.getInt("id"));
+		
+		JSONObject [] menulist = new JSONObject[Constants.NUM_CAT];
+		menulist[Constants.CAT_CATER] = json.getJSONObject("daily");
+		menulist[Constants.CAT_INDIAN] = json.getJSONObject("indian");
+		menulist[Constants.CAT_VEGGIE] = json.getJSONObject("vegetarian");
+		
+		for (int i = 0; i < menulist.length; i++) {
+			JSONObject menu = menulist[i];
+			JSONArray foodItems = menu.getJSONArray("foodItems");
+			FoodItem fi = FoodItem.fromJSON(foodItems.getJSONObject(i));
+			fi.setCaterer(Caterer.fromJSON(menu));
+			m.addFoodItem(i, fi);
+		}
+		
+		return m;
 	}
 }

@@ -3,8 +3,10 @@ package com.linkedin.eatin;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.ActionBar;
+import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -25,10 +27,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.linkedin.eatin.model.Constants;
 import com.linkedin.eatin.model.BaseData;
+import com.linkedin.eatin.utility.Constants;
+import com.linkedin.eatin.utility.Updateable;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+public class MainActivity extends FragmentActivity implements TabListener, Updateable {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -109,6 +112,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 	@Override
 	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	}
+
+	@Override
+	public void update(int updateCode) {
 	}
 
 	/**
@@ -263,7 +270,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			
 			menu = BaseData.getModel().getMenuList().get(day);
 			
-			dateFormat = new SimpleDateFormat("MMMM dd, yyyy");
+			dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
 			
 			catInfoList = new ArrayList<Category>();
 			catInfoList.add(new Category(Constants.CAT_CATER, "Daily Catering", menu.getCaterer(0).getName(), R.drawable.cater_logo, "#cb2525", "#f1a2a2"));
@@ -271,5 +278,4 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			catInfoList.add(new Category(Constants.CAT_VEGGIE, "Vegetarian", menu.getCaterer(2).getName(), R.drawable.vege_logo, "#5dad32", "#a1d681"));
 		}
 	}
-
 }

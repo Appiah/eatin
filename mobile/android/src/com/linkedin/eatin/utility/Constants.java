@@ -1,4 +1,4 @@
-package com.linkedin.eatin.model;
+package com.linkedin.eatin.utility;
 
 public class Constants {
 	public static final int CAT_CATER = 0;

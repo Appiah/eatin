@@ -4,10 +4,14 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Caterer {
 	private Integer id;
 	private String name;
-	private Double avgRating = 0.5;
+	private Integer numLikes = 0;
 	private Integer numRatings = 1;
 	private String imageUrl;
 	private String foodType;
@@ -17,15 +21,16 @@ public class Caterer {
 	
 	public Integer getId() { return id; }
 	public String getName() { return name; }
-	public Double getAvgRating() { return avgRating; }
+	public Integer getNumLikes() { return numLikes; }
 	public Integer getNumRatings() { return numRatings; }
+	public Double getLikeRatio() { return (double) numLikes / (double) numRatings; }
 	public String getImageUrl() { return imageUrl; }
 	public String getFoodType() { return foodType; }
 	public List<Comment> getCommentList() { return commentList; }
 	
 	public void setId(Integer id) { this.id = id; }
 	public void setName(String name) { this.name = name; }
-	public void setAvgRating(Double avgRating) { this.avgRating = avgRating; }
+	public void setNumLikes(Integer numLikes) { this.numLikes = numLikes; }
 	public void setNumRatings(Integer numRatings) { this.numRatings = numRatings; }
 	public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 	public void setFoodType(String foodType) { this.foodType = foodType; }
@@ -38,6 +43,11 @@ public class Caterer {
 		this.imageUrl = imageUrl;
 		this.foodType = foodType;
 		
+		this.foodList = new LinkedList<FoodItem>();
+		this.commentList = new LinkedList<Comment>();
+	}
+	
+	private Caterer() {	
 		this.foodList = new LinkedList<FoodItem>();
 		this.commentList = new LinkedList<Comment>();
 	}
@@ -58,17 +68,37 @@ public class Caterer {
 	}
 	
 	public void updateRatings() {
-		int total = 0;
+		numLikes = 0;
 		numRatings = 0;
 		for (FoodItem item : foodList) {
 			numRatings += item.getNumRatings();
-			total += item.getNumRatings() * item.getRating();
+			numLikes += item.getNumLikes();
 		}
-		
-		avgRating = (double) total / (double) numRatings;
 	}
 	
 	public void addComment(String text) {
 		commentList.add(new Comment(null, text, "Anonymous", new Date()));
+	}
+	
+	public void addComment(Comment comment) {
+		commentList.add(comment);
+	}
+	
+	public static Caterer fromJSON(JSONObject json) throws JSONException {
+		Caterer c = new Caterer();
+		
+		c.setNumLikes(json.getInt("numLikes"));
+		c.setNumRatings(json.getInt("totalRatings"));
+		c.setId(json.getInt("catererId"));
+		c.setName(json.getString("caterer"));
+		c.setFoodType(json.getString("foodType"));
+		c.setImageUrl(json.getString("imageUrl"));
+		
+		JSONArray comments = json.getJSONArray("comments");
+		
+		for (int i = 0; i < comments.length(); i++)
+			c.addComment(Comment.fromJSON(comments.getJSONObject(i)));
+					
+		return c;
 	}
 }

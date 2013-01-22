@@ -5,7 +5,7 @@ getweeklyinfo = {
 		{
 			catering: {
 				caterer: {
-					avgRating: 4.5,
+					numLikes: 40,
 					totalRatings: 46,
 					catererId: 5,
 					caterer: "AsianSensation",

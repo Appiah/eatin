@@ -2,6 +2,9 @@ package com.linkedin.eatin.model;
 
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Comment {
 	private Long id;
 	private String message;
@@ -23,5 +26,18 @@ public class Comment {
 		this.message = message;
 		this.poster = poster;
 		this.postDate = postDate;
+	}
+	
+	private Comment() {}
+	
+	public static Comment fromJSON(JSONObject json) throws JSONException {
+		Comment c = new Comment();
+		
+		c.setId(json.getLong("commentId"));
+		c.setMessage(json.getString("message"));
+		c.setPostDate(new Date(json.getInt("datePosted")));
+		c.setPoster(json.getString("poster"));
+		
+		return null;
 	}
 }
