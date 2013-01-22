@@ -1,4 +1,4 @@
-@(foodType: String, caterer: String, numVotesCaterer: Int, numCommentsCaterer: Int, foodItemNames: Array[String], foodItemNumVotes: Array[Int], foodItemNumPositiveVotes: Array[Int], foodItemIDs: Array[Int], red: Array[Int], green: Array[Int], redBar: Array[Int], greenBar: Array[Int])
+@(foodType: String, caterer: String, numVotesCaterer: Int, numPositiveVotesCaterer: Int, numCommentsCaterer: Int, foodItemNames: Array[String], foodItemNumVotes: Array[Int], foodItemNumPositiveVotes: Array[Int], foodItemIDs: Array[Int])
 
 	<div class="title">
 		<table class="titleTable">
@@ -7,10 +7,10 @@
 					<div><text class="tname">@caterer</text></div>
 					<div class="tbar">
 					<div 
-						style="width: @redBar%;"
+						style="width: @((numVotesCaterer) * 100 / numVotesCaterer)%;"
 						class="redbar"></div>
 					<div 
-						style="width: @greenBar%;"
+						style="width: @((numVotesCaterer) * 100 / numVotesCaterer)%;"
 						class="greenbar"></div>
 					</div>
 					<div><text>@numVotesCaterer votes</text></div>
@@ -29,7 +29,7 @@
 
 			<tr>
 				<td>
-					<div class="itemBar" style="background:rgb(@red(i), @green(i), 0 )">&nbsp;</div>
+					<div class="itemBar" style="background:rgb(@((foodItemNumVotes(i) - foodItemNumPositiveVotes(i) ) * 255 / foodItemNumVotes(i)), @(foodItemNumVotes(i)  * 255 / foodItemNumVotes(i)), 0 )">&nbsp;</div>
 				</td>
 			<td>
 				<div><text>@foodItemNames(i)</text></div>

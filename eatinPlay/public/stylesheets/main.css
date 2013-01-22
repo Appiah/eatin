@@ -9,7 +9,8 @@ div.container
 	width: 100%;
 	position: fixed;
 	margin: 0;
-	padding; 0;
+	padding: 0;
+	overflow: scroll;
 }
 
 div.header
@@ -36,7 +37,7 @@ div.tableDiv
 	display: block;
 	width: 99%;
 	height: 85%;
-	overflow: hidden;
+	overflow: scroll;
 }
 
 div.first
@@ -122,7 +123,7 @@ text.tname
 div.tbar
 {
 	height: 10px;
-	width: 350px;
+	width: 100%;
 	background: transparent;
 }
 
@@ -161,4 +162,92 @@ div.itemBar
 	width: 20px;
 	height: 50px;
 	background: #176411;
+}
+
+
+
+
+/*  SECTIONS  ============================================================================= */
+
+.section {
+	clear: both;
+	padding: 0px;
+	margin: 0px;
+}
+
+/*  GROUPING  ============================================================================= */
+
+
+.group:before,
+.group:after {
+    content:"";
+    display:table;
+}
+.group:after {
+    clear:both;
+}
+.group {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
+
+/*  GRID COLUMN SETUP   ==================================================================== */
+
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 1.6%;
+}
+
+.col:first-child { margin-left: 0; } /* all browsers except IE6 and lower */
+
+/*  GRID OF THREE   ============================================================================= */
+
+	
+.span_3_of_3 {
+	width: 100%; 
+}
+
+.span_2_of_3 {
+	width: 66.1%; 
+}
+
+.span_1_of_3 {
+	width: 32.2%; 
+}
+
+
+/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
+
+@media only screen and (max-width: 640px) {
+	.span_3_of_3 {
+		width: 80%; 
+		margin-left: auto;
+		margin-right: auto;
+		margin: 0  auto 0 auto;
+	}
+	.span_2_of_3 {
+		width: 80%; 
+		margin-left: auto;
+		margin-right: auto;
+		margin: 0  auto 0 auto;
+	}
+	.span_1_of_3 {
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+		margin: 0  auto 0 auto;
+	}
+}
+
+
+@media only screen and (max-width: 480px) {
+	.span_3_of_3 {
+		width: 100%; 
+	}
+	.span_2_of_3 {
+		width: 100%; 
+	}
+	.span_1_of_3 {
+		width: 100%;
+	}
 }

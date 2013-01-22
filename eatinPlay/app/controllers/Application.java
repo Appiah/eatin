@@ -17,44 +17,43 @@ import views.html.*;
 
 public class Application extends Controller {
 
-  static Connection connection = null;
-  
-  public static Result index() {
+  private static Connection connection = null;
 
+  private enum FoodType { DAILY, VEGETARIAN, INDIAN }
+  
+  private static boolean setupConnection() throws ClassNotFoundException, SQLException{
     try {
       Class.forName("com.mysql.jdbc.Driver");
     } catch (ClassNotFoundException e) {
-      System.out.println("Where is your MySQL JDBC Driver?");
-      e.printStackTrace();
-
-      return ok("Where is your MySQL JDBC Driver?");
-      //return;
+      throw e;
+      //return internalServerError("Where is your MySQL JDBC Driver?" + '\n' + e.toString());
     }
 
     try {
       connection = DriverManager.getConnection(
           "jdbc:mysql://lhuang-ld.linkedin.biz:3306/EatIn", "root", "eatin");
-
     } catch (SQLException e) {
-      System.out.println("Connection Failed! Check output console");
-      e.printStackTrace();
-      return ok("Connection Failed! Check output console" + '\n' +  e.toString());
-
-      //return;
+      throw e;
+      //return internalServerError("Connection Failed! Check output console" + '\n' +  e.toString());
     }
-
-    return ok(main.render(displayDailyCatering(), displayVegetarian(), displayIndian()));
+    return true;
   }
 
-  public static play.api.templates.Html displayDailyCatering() {
+  public static Result index() {
 
-    Helper helper = new Helper(connection);    
-    DailyMenu[] meals =  helper.getWeeksMenu();
+    try {
+      setupConnection();
+    } catch (ClassNotFoundException e) {
+      return internalServerError("Where is your MySQL JDBC Driver?" + '\n' + e.toString());
+    } catch (SQLException e) {
+      return internalServerError("Connection Failed! Check output console" + '\n' +  e.toString());
+    }
     
+    Helper helper = new Helper(connection);  
     int dayOfWeek = 0;
 
+    // Get date offset
     Date date = new Date(System.currentTimeMillis());
-    //System.out.println(GetDayFromDate(date));
     Calendar calendar1 = Calendar.getInstance();
     calendar1.setTime(date);
     if (helper.GetDayFromDate(date) == 7 || helper.GetDayFromDate(date) == 1) {
@@ -63,174 +62,115 @@ public class Application extends Controller {
       dayOfWeek = helper.GetDayFromDate(date) - 1;
     }
 
-    String[] names = new String[meals[dayOfWeek].meals[1].dishes.size()];// {"ace", "boom", "crew", "dog", "eon"};  
-    int[] votes = new int[meals[dayOfWeek].meals[1].dishes.size()];  //{1, 2, 3, 4, 5};  
-    int[] pos =  new int[meals[dayOfWeek].meals[1].dishes.size()];//  {0, 1, 3, 3, 7};  
-    int[] ids = new int[meals[dayOfWeek].meals[1].dishes.size()]; //{10, 20, 30, 40, 50};  
-    int[] red =  new int[meals[dayOfWeek].meals[1].dishes.size()];//  {0, 1, 3, 3, 7};  
-    int[] green = new int[meals[dayOfWeek].meals[1].dishes.size()]; //{10, 20, 30, 40, 50};  
-    int[] redBar =  new int[meals[dayOfWeek].meals[1].dishes.size()];//  {0, 1, 3, 3, 7};  
-    int[] greenBar = new int[meals[dayOfWeek].meals[1].dishes.size()]; //{10, 20, 30, 40, 50};  
+    helper = null;
 
+    //render(main.render(displayDailyCatering(dayOfWeek, FoodType.DAILY), displayVegetarian(dayOfWeek, FoodType.VEGETARIAN), displayIndian(dayOfWeek, FoodType.INDIAN)));
+    return ok(main.render(displayCatering(dayOfWeek, FoodType.DAILY), displayCatering(dayOfWeek, FoodType.VEGETARIAN), displayCatering(dayOfWeek, FoodType.INDIAN)));  
+        
+  }
 
-    for (int i = 0; i < meals[dayOfWeek].meals[1].dishes.size(); i++) {
-      names[i] = meals[dayOfWeek].meals[1].dishes.get(i).name;
-      ids[i] = meals[dayOfWeek].meals[1].dishes.get(i).id;
-      votes[i] = helper.getNumRatingsForDish(meals[dayOfWeek].meals[1].dishes.get(i).id);
-      pos[i] = helper.getNumPositiveRatingsForDish(meals[dayOfWeek].meals[1].dishes.get(i).id);
-      red[i] = (votes[i] - pos[i])*255 / votes[i];
-      green[i] = pos[i] * 255 / votes[i];
-      redBar[i] = (votes[i] - pos[i]) * 100 / votes[i] + 1;
-      greenBar[i] = pos[i] * 100 / votes[i];
+  public static play.api.templates.Html displayCatering(int dayOfWeek, FoodType foodType) {
+
+    int foodIndexValue = 0;
+    if (foodType == FoodType.DAILY) {
+      foodIndexValue = 1;
+    } else if (foodType == FoodType.INDIAN) {
+      foodIndexValue = 0;
+    } else if (foodType == FoodType.VEGETARIAN) {
+      foodIndexValue = 2;
     }
 
-  	return foodcategory.render("Daily Catering", meals[dayOfWeek].dv_caterer.name, helper.getNumRatings(meals[dayOfWeek].dv_caterer.id), helper.getNumComments(meals[dayOfWeek].dv_caterer.id), names, votes, pos, ids, red, green, redBar, greenBar );
-  }
-  
-
-  public static play.api.templates.Html displayIndian() {
-    
+    /*https://github.com/playframework/Play20/wiki/Javajson*/
+    /*-----------------------------------------------------*/
 
     Helper helper = new Helper(connection);    
     DailyMenu[] meals =  helper.getWeeksMenu();
-    
-    int dayOfWeek = 0;
+      
+    String[] names = new String[meals[dayOfWeek].meals[foodIndexValue].dishes.size()]; 
+    int[] votes = new int[meals[dayOfWeek].meals[foodIndexValue].dishes.size()]; 
+    int[] pos =  new int[meals[dayOfWeek].meals[foodIndexValue].dishes.size()];
+    int[] ids = new int[meals[dayOfWeek].meals[foodIndexValue].dishes.size()]; 
 
-    Date date = new Date(System.currentTimeMillis());
-    //System.out.println(GetDayFromDate(date));
-    Calendar calendar1 = Calendar.getInstance();
-    calendar1.setTime(date);
-    if (helper.GetDayFromDate(date) == 7 || helper.GetDayFromDate(date) == 1) {
-      dayOfWeek = 0;
-    } else {
-      dayOfWeek = helper.GetDayFromDate(date) - 1;
+    for (int i = 0; i < meals[dayOfWeek].meals[foodIndexValue].dishes.size(); i++) {
+      names[i] = meals[dayOfWeek].meals[foodIndexValue].dishes.get(i).name;
+      ids[i] = meals[dayOfWeek].meals[foodIndexValue].dishes.get(i).id;
+      votes[i] = helper.getNumRatingsForDish(meals[dayOfWeek].meals[foodIndexValue].dishes.get(i).id);
+      pos[i] = helper.getNumPositiveRatingsForDish(meals[dayOfWeek].meals[foodIndexValue].dishes.get(i).id);
     }
 
-    String[] names = new String[meals[dayOfWeek].meals[0].dishes.size()];// {"ace", "boom", "crew", "dog", "eon"};  
-    int[] votes = new int[meals[dayOfWeek].meals[0].dishes.size()];  //{1, 2, 3, 4, 5};  
-    int[] pos =  new int[meals[dayOfWeek].meals[0].dishes.size()];//  {0, 1, 3, 3, 7};  
-    int[] ids = new int[meals[dayOfWeek].meals[0].dishes.size()]; //{10, 20, 30, 40, 50};  
-    int[] red =  new int[meals[dayOfWeek].meals[0].dishes.size()];//  {0, 1, 3, 3, 7};  
-    int[] green = new int[meals[dayOfWeek].meals[0].dishes.size()]; //{10, 20, 30, 40, 50};  
-    int[] redBar =  new int[meals[dayOfWeek].meals[0].dishes.size()];//  {0, 1, 3, 3, 7};  
-    int[] greenBar = new int[meals[dayOfWeek].meals[0].dishes.size()]; //{10, 20, 30, 40, 50};  
+    String foodTypeName = "";
+    int catererID = meals[dayOfWeek].dv_caterer.id;
 
-
-    for (int i = 0; i < meals[dayOfWeek].meals[0].dishes.size(); i++) {
-      names[i] = meals[dayOfWeek].meals[0].dishes.get(i).name;
-      ids[i] = meals[dayOfWeek].meals[0].dishes.get(i).id;
-      votes[i] = helper.getNumRatingsForDish(meals[dayOfWeek].meals[0].dishes.get(i).id);
-      pos[i] = helper.getNumPositiveRatingsForDish(meals[dayOfWeek].meals[0].dishes.get(i).id);
-      red[i] = (votes[i] - pos[i]) *255 / votes[i];
-      green[i] = pos[i]*255/votes[i];
-      redBar[i] = (votes[i] - pos[i]) * 100 / votes[i] + 1;
-      greenBar[i] = pos[i] * 100 / votes[i];
+    if (foodType == FoodType.DAILY) {
+      foodTypeName = "Daily Catering";
+    } else if (foodType == FoodType.INDIAN) {
+      foodTypeName = "Indian";
+      catererID = meals[dayOfWeek].indian_caterer.id;
+    } else if (foodType == FoodType.VEGETARIAN) {
+      foodTypeName = "Vegetarian";
     }
 
-    return foodcategory.render("Indian", meals[dayOfWeek].dv_caterer.name, helper.getNumRatings(meals[dayOfWeek].indian_caterer.id),  helper.getNumComments(meals[dayOfWeek].indian_caterer.id), names, votes, pos, ids, red, green, redBar, greenBar );
-  }
-
-  public static play.api.templates.Html displayVegetarian() {
-
-    Helper helper = new Helper(connection);    
-    DailyMenu[] meals =  helper.getWeeksMenu();
-    
-    int dayOfWeek = 0;
-
-    Date date = new Date(System.currentTimeMillis());
-    //System.out.println(GetDayFromDate(date));
-    Calendar calendar1 = Calendar.getInstance();
-    calendar1.setTime(date);
-    if (helper.GetDayFromDate(date) == 7 || helper.GetDayFromDate(date) == 1) {
-      dayOfWeek = 0;
-    } else {
-      dayOfWeek = helper.GetDayFromDate(date) - 1;
-    }
-
-    String[] names = new String[meals[dayOfWeek].meals[2].dishes.size()];// {"ace", "boom", "crew", "dog", "eon"};  
-    int[] votes = new int[meals[dayOfWeek].meals[2].dishes.size()];  //{1, 2, 3, 4, 5};  
-    int[] pos =  new int[meals[dayOfWeek].meals[2].dishes.size()];//  {0, 1, 3, 3, 7};  
-    int[] ids = new int[meals[dayOfWeek].meals[2].dishes.size()]; //{10, 20, 30, 40, 50};  
-    int[] red =  new int[meals[dayOfWeek].meals[2].dishes.size()];//  {0, 1, 3, 3, 7};  
-    int[] green = new int[meals[dayOfWeek].meals[2].dishes.size()]; //{10, 20, 30, 40, 50};  
-    int[] redBar =  new int[meals[dayOfWeek].meals[2].dishes.size()];//  {0, 1, 3, 3, 7};  
-    int[] greenBar = new int[meals[dayOfWeek].meals[2].dishes.size()]; //{10, 20, 30, 40, 50};  
-
-
-    for (int i = 0; i < meals[dayOfWeek].meals[2].dishes.size(); i++) {
-      names[i] = meals[dayOfWeek].meals[2].dishes.get(i).name;
-      ids[i] = meals[dayOfWeek].meals[2].dishes.get(i).id;
-      votes[i] = helper.getNumRatingsForDish(meals[dayOfWeek].meals[2].dishes.get(i).id);
-      pos[i] = helper.getNumPositiveRatingsForDish(meals[dayOfWeek].meals[2].dishes.get(i).id);
-      red[i] = (votes[i] - pos[i]) *255 / votes[i];
-      green[i] = pos[i]*255/votes[i];
-      redBar[i] = (votes[i] - pos[i]) * 100 / votes[i] + 1;
-      greenBar[i] = pos[i] * 100 / votes[i];
-    }
-
-    return foodcategory.render("Vegetarian", meals[dayOfWeek].dv_caterer.name, helper.getNumRatings(meals[dayOfWeek].dv_caterer.id),  helper.getNumComments(meals[dayOfWeek].dv_caterer.id), names, votes, pos, ids, red, green, redBar, greenBar );
+  	return foodcategory.render(foodTypeName, meals[dayOfWeek].dv_caterer.name, helper.getNumRatings(catererID), helper.getNumPositiveRatings(catererID), helper.getNumComments(catererID), names, votes, pos, ids);
   }
 
   public static Result upVote(String id) {
     
     try {
-      Class.forName("com.mysql.jdbc.Driver");
+      setupConnection();
     } catch (ClassNotFoundException e) {
-      System.out.println("Where is your MySQL JDBC Driver?");
-      e.printStackTrace();
-
-      return ok("Where is your MySQL JDBC Driver?");
-      //return;
-    }
-
-    try {
-      connection = DriverManager.getConnection(
-          "jdbc:mysql://lhuang-ld.linkedin.biz:3306/EatIn", "root", "eatin");
-
+      return internalServerError("Where is your MySQL JDBC Driver?" + '\n' + e.toString());
     } catch (SQLException e) {
-      System.out.println("Connection Failed! Check output console");
-      e.printStackTrace();
-      return ok("Connection Failed! Check output console" + '\n' +  e.toString());
-
-      //return;
+      return internalServerError("Connection Failed! Check output console" + '\n' +  e.toString());
     }
-    
+
+
     Helper helper = new Helper(connection);
-
     helper.changeRating(Integer.parseInt(id), true);
+    int dayOfWeek = 0;
 
-    return ok(main.render(displayDailyCatering(), displayVegetarian(), displayIndian()));
+    // Get date offset
+    Date date = new Date(System.currentTimeMillis());
+    Calendar calendar1 = Calendar.getInstance();
+    calendar1.setTime(date);
+    if (helper.GetDayFromDate(date) == 7 || helper.GetDayFromDate(date) == 1) {
+      dayOfWeek = 0;
+    } else {
+      dayOfWeek = helper.GetDayFromDate(date) - 1;
+    }
+
+    helper = null;
+
+    return ok(main.render(displayCatering(dayOfWeek, FoodType.DAILY), displayCatering(dayOfWeek, FoodType.VEGETARIAN), displayCatering(dayOfWeek, FoodType.INDIAN)));  
   }
 
-public static Result downVote(String id) {
+  public static Result downVote(String id) {
     
     try {
-      Class.forName("com.mysql.jdbc.Driver");
+      setupConnection();
     } catch (ClassNotFoundException e) {
-      System.out.println("Where is your MySQL JDBC Driver?");
-      e.printStackTrace();
-
-      return ok("Where is your MySQL JDBC Driver?");
-      //return;
-    }
-
-    try {
-      connection = DriverManager.getConnection(
-          "jdbc:mysql://lhuang-ld.linkedin.biz:3306/EatIn", "root", "eatin");
-
+      return internalServerError("Where is your MySQL JDBC Driver?" + '\n' + e.toString());
     } catch (SQLException e) {
-      System.out.println("Connection Failed! Check output console");
-      e.printStackTrace();
-      return ok("Connection Failed! Check output console" + '\n' +  e.toString());
-
-      //return;
+      return internalServerError("Connection Failed! Check output console" + '\n' +  e.toString());
     }
     
     Helper helper = new Helper(connection);
-
     helper.changeRating(Integer.parseInt(id), false);
+    int dayOfWeek = 0;
 
-    return ok(main.render(displayDailyCatering(), displayVegetarian(), displayIndian()));
+    // Get date offset
+    Date date = new Date(System.currentTimeMillis());
+    Calendar calendar1 = Calendar.getInstance();
+    calendar1.setTime(date);
+    if (helper.GetDayFromDate(date) == 7 || helper.GetDayFromDate(date) == 1) {
+      dayOfWeek = 0;
+    } else {
+      dayOfWeek = helper.GetDayFromDate(date) - 1;
+    }
+
+    helper = null;
+
+
+    return ok(main.render(displayCatering(dayOfWeek, FoodType.DAILY), displayCatering(dayOfWeek, FoodType.VEGETARIAN), displayCatering(dayOfWeek, FoodType.INDIAN)));  
   }
 
 
