@@ -4,8 +4,8 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET		/up							controllers.Application.upVote(id: String)
-GET		/down						controllers.Application.downVote(id: String)
+POST	/rating						controllers.Application.vote()
+POST	/comment					controllers.Application.comment() #not all browsers support PUT on ajax
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

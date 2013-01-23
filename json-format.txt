@@ -2,7 +2,7 @@ Rest API calls
 
 getweeklyinfo = {
 	weeklyMenu: [
-		{
+		day: {
 			date: MM DD YYYY,
 			menuId: 315,
 			daily: {

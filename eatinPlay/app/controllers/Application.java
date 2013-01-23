@@ -83,6 +83,16 @@ public class Application extends Controller {
     /*https://github.com/playframework/Play20/wiki/Javajson*/
     /*-----------------------------------------------------*/
 
+
+
+    /// POPULATE CLASSES FROM DB
+
+
+    /// SEND JSON (with current week)
+
+
+
+
     Helper helper = new Helper(connection);    
     DailyMenu[] meals =  helper.getWeeksMenu();
       
@@ -172,6 +182,31 @@ public class Application extends Controller {
 
     return ok(main.render(displayCatering(dayOfWeek, FoodType.DAILY), displayCatering(dayOfWeek, FoodType.VEGETARIAN), displayCatering(dayOfWeek, FoodType.INDIAN)));  
   }
+
+  public static Result vote() {
+    final JsonNode values = RequestBody().asJson();// request().body().asJson();
+
+    Integer rating = values.get("rating");
+    Integer foodId = values.get("foodId");
+
+    addVote (foodId, rating);
+    
+    return ok();
+  }
+
+
+  public static Result comment() {
+    final JsonNode values = RequestBody().asJson();//request().body().asJson();
+
+    String message = values.get("message");
+    Integer catererId = values.get("catererId");
+    // TODO add date and person
+
+    addComment (catererId, message);
+    
+    return ok();
+  }
+
 
 
 }
