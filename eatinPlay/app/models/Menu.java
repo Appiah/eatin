@@ -3,6 +3,7 @@ package com.linkedin.eatin.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.HashMap;
 
 public class Menu {
 	private Integer id;
@@ -47,10 +48,10 @@ public class Menu {
 
 	public HashMap<String, Object> toJSON(){
 		HashMap<String, Object> mapper = new HashMap<String, Object>();	
-		List<Object> listOfItems = new List<Object>();
+		ArrayList<Object> listOfItems = new ArrayList<Object>();
 
-		for (int i = 0; i < foodList.size() ; i++ ) {
-			listOfItems.add( foodList.get(i).toJSON() );
+		for (int i = 0; i < foodItems.size() ; i++ ) {
+			listOfItems.add( foodItems.get(i).toJSON() );
 		}
 		mapper.put("foodItems", listOfItems);
 

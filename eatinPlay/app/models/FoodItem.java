@@ -1,6 +1,6 @@
 package com.linkedin.eatin.model;
 
-import android.util.Log;
+import java.util.HashMap;
 
 public class FoodItem {
 	public interface FIUpdateable {

@@ -1,5 +1,6 @@
 package com.linkedin.eatin.model;
 
+import java.util.HashMap;
 import java.util.Date;
 
 public class Comment {

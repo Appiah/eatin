@@ -1,4 +1,4 @@
-package models;
+/*package models;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -342,4 +342,4 @@ public class Helper {
 	        calendar.setTime(date);  
 	        return calendar.get(Calendar.DAY_OF_WEEK);   
 	} 
-}
+}*/

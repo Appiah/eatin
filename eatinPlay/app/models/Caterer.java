@@ -4,7 +4,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.json.JSONObject;
+import play.libs.Json;
+import java.util.HashMap;
 
 public class Caterer {
 	private Integer id;
@@ -92,7 +93,4 @@ public class Caterer {
 		return mapper;
 	}
 	
-	public void fromJSON(JSONObject json) {
-		
-	}
 }

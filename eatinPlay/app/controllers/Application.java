@@ -13,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import play.libs.Json;
+
 import views.html.*;
 
 public class Application extends Controller {
@@ -67,26 +69,30 @@ public class Application extends Controller {
   
 
   public static Result vote() {
-    final JsonNode values = RequestBody().asJson();// request().body().asJson();
+    //final JsonNode values = RequestBody().asJson();// request().body().asJson();
+/*
+	final Object values = request().body().asJson();
+
+	Integer rating = values
 
     Integer rating = values.get("rating");
     Integer foodId = values.get("foodId");
 
     addVote (foodId, rating);
-    
+    */
     return ok();
   }
 
 
   public static Result comment() {
-    final JsonNode values = RequestBody().asJson();//request().body().asJson();
+    /*final sdf values = RequestBody().asJson();//request().body().asJson();
 
     String message = values.get("message");
     Integer catererId = values.get("catererId");
     // TODO add date and person
 
     addComment (catererId, message);
-    
+    */
     return ok();
   }
 
