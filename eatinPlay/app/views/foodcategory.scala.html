@@ -1,52 +1,45 @@
+
 @(foodType: String)
 
 <script>
-$(function getFoodDataHTML() {
 
-	var url = "localhost:9000/data";
+	window.onload = function test@foodType (data) {
+		var dataStr = "{\"indian\":{\"catererInfo\":{\"totalLikes\":0,\"caterer\":\"Sakoon\",\"imageUrl\":null,\"foodType\":\"Indian food\",\"catererId\":12,\"totalRatings\":0,\"comments\":[]},\"foodItems\":[{\"foodId\":75,\"numRatings\":0,\"name\":\"Chaat Ki Parat\",\"numLikes\":null},{\"foodId\":76,\"numRatings\":0,\"name\":\"Avocado Jhalmuri\",\"numLikes\":null},{\"foodId\":77,\"numRatings\":0,\"name\":\"Ananas Goju\",\"numLikes\":null},{\"foodId\":78,\"numRatings\":0,\"name\":\"Chicken Pakora\",\"numLikes\":null},{\"foodId\":79,\"numRatings\":0,\"name\":\"Lime and Coconut soup\",\"numLikes\":null},{\"totalLikes\":0,\"caterer\":\"Sakoon\",\"imageUrl\":null,\"foodType\":\"Indian food\",\"catererId\":12,\"totalRatings\":0,\"comments\":[]}]},\"vegetarian\":{\"catererInfo\":{\"totalLikes\":0,\"caterer\":\"Shoreline Lake\",\"imageUrl\":null,\"foodType\":\"California\",\"catererId\":2,\"totalRatings\":0,\"comments\":[]},\"foodItems\":[{\"foodId\":5,\"numRatings\":0,\"name\":\"Vegetable Tempura\",\"numLikes\":null},{\"foodId\":6,\"numRatings\":0,\"name\":\"Pad Thai Noodles\",\"numLikes\":null},{\"foodId\":7,\"numRatings\":0,\"name\":\"Miso Salad\",\"numLikes\":null},{\"foodId\":8,\"numRatings\":0,\"name\":\"Garlic Tofu Eggplant\",\"numLikes\":null},{\"foodId\":9,\"numRatings\":0,\"name\":\"Steamed Vegetables\",\"numLikes\":null},{\"totalLikes\":0,\"caterer\":\"Shoreline Lake\",\"imageUrl\":null,\"foodType\":\"California\",\"catererId\":2,\"totalRatings\":0,\"comments\":[]}]},\"daily\":{\"catererInfo\":{\"totalLikes\":0,\"caterer\":\"Shoreline Lake\",\"imageUrl\":null,\"foodType\":\"California\",\"catererId\":2,\"totalRatings\":0,\"comments\":[]},\"foodItems\":[{\"foodId\":10,\"numRatings\":0,\"name\":\"Pasta Salad\",\"numLikes\":null},{\"foodId\":11,\"numRatings\":0,\"name\":\"Swedish Meatballs\",\"numLikes\":null},{\"foodId\":12,\"numRatings\":0,\"name\":\"Meat Lasgna\",\"numLikes\":null},{\"foodId\":13,\"numRatings\":0,\"name\":\"Baked Salmon\",\"numLikes\":null},{\"foodId\":14,\"numRatings\":0,\"name\":\"Roasted Potatoes\",\"numLikes\":null},{\"totalLikes\":0,\"caterer\":\"Shoreline Lake\",\"imageUrl\":null,\"foodType\":\"California\",\"catererId\":2,\"totalRatings\":0,\"comments\":[]}]}}";
 
-	var output = "";
-
-	jQuery.getJSON(url).done(function(data) {
+		var data = jQuery.parseJSON(dataStr);
     	console.log(data);
 
-    	var dayNum = Date.getDay() - 1;
-    	// set the day to the closest week day in the current week (if Saturday or Sunday)
-    	if (dayNum == -1) {
-    		dayNum = 0;
-    	} else if (dayNum == 5) {
-    		dayNum = 4;
+    	// TODO add in day[dayNum]. after data eventually
+
+    	var catererByDay = data.indian;
+
+    	//document.getElementById("daily").innerHTML = data;
+
+    	if ("@foodType" == "indian") {
+    		catererByDay = data.indian;
+    	} else if ("@foodType" == "daily") {
+			catererByDay = data.daily;
+    	} else if ("@foodType" == "vegetarian") {
+    		catererByDay = data.vegetarian;
     	}
-
-    	var catererByDay;
-
-    	if (@foodType == "indian") {
-    		catererByDay = data.day[dayNum].indian;
-    	} else if (@foodType == "daily") {
-			catererByDay = data.day[dayNum].daily;
-    	} else if (@foodType == "vegetarian") {
-    		catererByDay = data.day[dayNum].vegetarian;
-    	}
-    		
-
-    	output +=
-		    "<div class=\"title\">" +
+    	
+    	var rWidth = 	(catererByDay.catererInfo.totalLikes * 100 / catererByDay.catererInfo.totalRatings) ;
+    	var gWidth = ((catererByDay.catererInfo.totalRatings - catererByDay.catererInfo.totalLikes) * 100 / catererByDay.catererInfo.totalRatings);
+    	var output = "<div class=\"title\">" +
 				"<table class=\"titleTable\">" +
 					"<tr>" +
 						"<td>" +
-							"<div><text class=\"tname\">" + catererByDay.caterer +"</text></div>" +
+							"<div><text class=\"tname\">" + catererByDay.catererInfo.caterer +"</text></div>" +
 							"<div class=\"tbar\">" +
-							"<div  
-								style=\"width:" +  (catererByDay.totalLikes * 100 / catererByDay.totalRatings) + "%;\"" +
+							"<div  style=\"width:" +  rWidth + "%;\"" +
 								"class=\"redbar\"></div>" +
-							"<div 
-								style=\"width:" + ((catererByDay.totalRatings - catererByDay.totalLikes) * 100 / catererByDay.totalRatings) + "%;\"" +
+							"<div style=\"width:" + gWidth + "%;\"" +
 								"class=\"greenbar\"></div>" +
 							"</div>" +
-							"<div><text>" + catererByDay.totalRatings + " votes</text></div>" +
+							"<div><text>" + catererByDay.catererInfo.totalRatings + " votes</text></div>" +
 						"</td>" + 
-						"<td align=\"right\">"
-							"<div class=\"ticon\"><text class=\"commentCount\">" + catererByDay.totalNumComments + "</text></div>" +
+						"<td align=\"right\">" + 
+							"<div class=\"ticon\"><text class=\"commentCount\">" + + "</text></div>" +
 						"</td>" +
 					"</tr>" +
  				"</table>" +
@@ -55,38 +48,38 @@ $(function getFoodDataHTML() {
 
 		output += "<table class=\"itemTable\">";
 
+
 		var foodItems = catererByDay.foodItems;
     	jQuery.each(foodItems, function(i,item){
 
-    		output = "<tr>" +
-				"<td>" +
-					"<div class=\"itemBar\" style=\"background:rgb(" + ((item[i].numRating - item[i].numLikes ) * 255 / item[i].numRating) + "," + (item[i].numLikes * 255 / item[i].numRating) ", 0 )\">&nbsp;</div>" +
+			var r = String((foodItems[i].numRatings - foodItems[i].numLikes ) * 255 / foodItems[i].numRatings);
+			var g = String(foodItems[i].numLikes * 255 / foodItems[i].numRatings);
+    		output += "<tr>" +
+    			"<td>" +
+					"<div class=\"itemBar\" style=\"background:rgb(" + r + "," + g ", 0 )\">&nbsp;</div>" +
 				"</td>" +
+
 			"<td>" +
-				"<div><text>" + item[i].name + "</text></div>" +
-				"<div><text>" + item[i].numRating + " votes</text></div>" +	
+				"<div><text>" + foodItems[i].name + "</text></div>" +
+				"<div><text>" + foodItems[i].numRatings + " votes</text></div>" +	
 			"</td>" +
 			"<td>" +
-				"<img 
-					src=\"" + @routes.Assets.at("images/up.png") "\"" +
-					"onmouseover=\"this.src='" + @routes.Assets.at("images/up2.png") + "';" +
-					"onmouseout=\"this.src='" + @routes.Assets.at("images/up.png") + "'>" +
+				"<img src=\"" + "@routes.Assets.at("images/up.png")" + "\" " +
+					"onmouseover=\"this.src='" + "@routes.Assets.at("images/up2.png")" + "'\"; " +
+					"onmouseout=\"this.src='" + "@routes.Assets.at("images/up.png")" + "'\">" +
 			"</td>" +
 			"<td>" +
-				"<img " + 
-					"src=\"" + @routes.Assets.at("images/down.png") "\" " +
-					"onmouseover=\"this.src='" + @routes.Assets.at("images/down2.png") + "'\"; " +
-					"onmouseout=\"this.src='" + @routes.Assets.at("images/down.png") + "'\">" +
+				"<img src=\"" + "@routes.Assets.at("images/down.png")" + "\" " +
+					"onmouseover=\"this.src='" + "@routes.Assets.at("images/down2.png")" + "'\"; " +
+					"onmouseout=\"this.src='" + "@routes.Assets.at("images/down.png")" + "'\">" +
 			"</td>" +
 			"</tr>";
 
 		});
 
 		output += "</table>";
-
-	});
-
 	document.getElementById("@foodType").innerHTML=output;
 
-})
+	}
+
 </script>

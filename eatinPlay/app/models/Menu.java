@@ -58,13 +58,36 @@ public class Menu {
 
 			for (FoodItem fi : foodItems[i])
 				listOfItems[i].add(fi.toJSON());
+
+			listOfItems[i].add(caterers[i].toJSON());
+			HashMap<String, Object> m = new HashMap<String, Object>();
+			m.put("foodItems", listOfItems[i]);		
+
+			//if (i == Constants.CAT_CATER) {
+			m.put("catererInfo", caterers[i].toJSON());
+
+			
+
+			if (i == Constants.CAT_CATER) {
+				menus.put("vegetarian", m);
+			} else if (i == Constants.CAT_INDIAN) {
+				menus.put("indian", m);
+			} else {
+				menus.put("daily", m);
+			}
+
 		}
 
-		menus.put("daily", listOfItems[Constants.CAT_CATER]);
-		menus.put("indian", listOfItems[Constants.CAT_INDIAN]);
-		menus.put("vegetarian", listOfItems[Constants.CAT_VEGGIE]);
-		mapper.put("foodItems", menus);
+//		HashMap<String, Object> m = new HashMap<String, Object>();
+//		m.put("foodItems", listOfItems[Constants.CAT_CATER]);
+//		m.put
 
-		return mapper;
+//		menus.put("daily", listOfItems[Constants.CAT_CATER]);
+//		menus.put("indian", listOfItems[Constants.CAT_INDIAN]);
+//		menus.put("vegetarian", listOfItems[Constants.CAT_VEGGIE]);
+//		mapper.put("foodItems", menus);
+		//mapper.put("day", menus);
+
+		return menus;//mapper;
 	}
 }

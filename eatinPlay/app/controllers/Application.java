@@ -17,6 +17,9 @@ import static play.libs.Json.toJson;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import java.util.HashMap;
+import java.util.ArrayList;
+
 import views.html.*;
 
 public class Application extends Controller {
@@ -60,8 +63,15 @@ public class Application extends Controller {
 
     Menu[] menus = helper.getWeeksMenu();
 
-    // return day 2 (we only have data for day 2 at the moment)
-    return ok(toJson(menus[2].toJSON()));
+    ArrayList<Object> lo = new ArrayList<Object>();
+    lo.add(menus[2].toJSON());
+    lo.add(menus[3].toJSON());
+    lo.add(menus[4].toJSON());
+    lo.add(menus[2].toJSON());
+    lo.add(menus[3].toJSON());
+    HashMap<String, Object> hm = new HashMap<String, Object>();
+    hm.put("days", lo);
+    return ok(toJson(hm));
   }
 
   
@@ -112,23 +122,5 @@ public class Application extends Controller {
     
     return ok();
   }
-
- /*public static String convertMapToJson(Map map)throws JSONException{
-  
-  JSONObject obj = new JSONObject();
-  JSONObject main = new JSONObject();
-  Set set = map.keySet();
-  
-  Iterator iter = set.iterator();
-
-     while (iter.hasNext()) {
-      String key = (String) iter.next();
-   obj.accumulate(key, map.get(key));
-     }
-     main.accumulate("data",obj);
-     
-     return main.toString();
- }*/
-
 
 }
