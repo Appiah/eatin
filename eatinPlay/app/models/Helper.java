@@ -149,7 +149,7 @@ public class Helper {
 					cater = getCatererById(caterId);
 					catererMap.put(caterId, cater);
 				}
-				menu.addFoodItem(Constants.CAT_CATER, new FoodItem(rsDaily.getInt(1), rsDaily.getString(2), rsDaily.getInt(5), rsDaily.getInt(4), null));
+				menu.addFoodItem(Constants.CAT_CATER, new FoodItem(rsDaily.getInt(1), rsDaily.getString(2), rsDaily.getInt(5), rsDaily.getInt(4), cater));
 			} while (rsDaily.next());
 
 			do {
@@ -158,7 +158,7 @@ public class Helper {
 					cater = getCatererById(caterId);
 					catererMap.put(caterId, cater);
 				}
-				menu.addFoodItem(Constants.CAT_VEGGIE, new FoodItem(rsVeg.getInt(1), rsVeg.getString(2), rsVeg.getInt(5), rsVeg.getInt(4), null));
+				menu.addFoodItem(Constants.CAT_VEGGIE, new FoodItem(rsVeg.getInt(1), rsVeg.getString(2), rsVeg.getInt(5), rsVeg.getInt(4), cater));
 			} while (rsVeg.next());
 
 			return menu;

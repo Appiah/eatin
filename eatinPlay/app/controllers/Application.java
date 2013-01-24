@@ -13,7 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import play.libs.Json;
+import static play.libs.Json.toJson;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import views.html.*;
 
@@ -54,48 +56,79 @@ public class Application extends Controller {
     } catch (SQLException e) {
       return internalServerError("Connection Failed! Check output console" + '\n' +  e.toString());
     }
+    Helper helper = new Helper(connection);
 
-    return ok();
-    /*https://github.com/playframework/Play20/wiki/Javajson*/
-    /*-----------------------------------------------------*/
+    Menu[] menus = helper.getWeeksMenu();
 
-    /// POPULATE CLASSES FROM DB
-
-
-    /// SEND JSON (with current week)
-
+    // return day 2 (we only have data for day 2 at the moment)
+    return ok(toJson(menus[2].toJSON()));
   }
 
   
 
   public static Result vote() {
-    //final JsonNode values = RequestBody().asJson();// request().body().asJson();
-/*
-	final Object values = request().body().asJson();
+    final JsonNode values = request().body().asJson();
 
-	Integer rating = values
+    try {
+      setupConnection();
+    } catch (ClassNotFoundException e) {
+      return internalServerError("Where is your MySQL JDBC Driver?" + '\n' + e.toString());
+    } catch (SQLException e) {
+      return internalServerError("Connection Failed! Check output console" + '\n' +  e.toString());
+    }
 
-    Integer rating = values.get("rating");
-    Integer foodId = values.get("foodId");
+    int foodId = values.get("foodId").getIntValue();
+    int rating = values.get("rating").getIntValue();
 
-    addVote (foodId, rating);
-    */
+    Helper helper = new Helper(connection);
+
+    if (rating == 1) {
+      helper.changeRating(foodId, true);
+    } else {
+      helper.changeRating(foodId, false);
+    }
+
     return ok();
   }
 
 
   public static Result comment() {
-    /*final sdf values = RequestBody().asJson();//request().body().asJson();
+    final JsonNode values = request().body().asJson();
 
-    String message = values.get("message");
-    Integer catererId = values.get("catererId");
-    // TODO add date and person
+    try {
+      setupConnection();
+    } catch (ClassNotFoundException e) {
+      return internalServerError("Where is your MySQL JDBC Driver?" + '\n' + e.toString());
+    } catch (SQLException e) {
+      return internalServerError("Connection Failed! Check output console" + '\n' +  e.toString());
+    }
 
-    addComment (catererId, message);
-    */
+    String message = values.get("message").getValueAsText();
+    int catererId = values.get("catererId").getIntValue();
+
+    Helper helper = new Helper(connection);
+
+    helper.addComment (catererId, message);
+    
     return ok();
   }
 
+ /*public static String convertMapToJson(Map map)throws JSONException{
+  
+  JSONObject obj = new JSONObject();
+  JSONObject main = new JSONObject();
+  Set set = map.keySet();
+  
+  Iterator iter = set.iterator();
+
+     while (iter.hasNext()) {
+      String key = (String) iter.next();
+   obj.accumulate(key, map.get(key));
+     }
+     main.accumulate("data",obj);
+     
+     return main.toString();
+ }*/
 
 
 }
