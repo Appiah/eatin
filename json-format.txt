@@ -10,6 +10,8 @@ getweeklyinfo = {
 				totalRatings: 46,
 				catererId: 5,
 				caterer: "AsianSensation",
+			      totalNumComments: 398,
+			      
 				foodType: "Asian",
 				imageUrl: "",
 				comments: [
