@@ -11,29 +11,32 @@ import org.json.JSONObject;
 public class Caterer {
 	private Integer id;
 	private String name;
-	private Integer numLikes = 0;
-	private Integer numRatings = 1;
 	private String imageUrl;
 	private String foodType;
+	private Integer numComments = 0;
+	private Integer numLikes = 0;
+	private Integer numRatings = 1;
 	
 	private List<FoodItem> foodList;
 	private List<Comment> commentList;
 	
 	public Integer getId() { return id; }
 	public String getName() { return name; }
-	public Integer getNumLikes() { return numLikes; }
-	public Integer getNumRatings() { return numRatings; }
-	public Double getLikeRatio() { return (double) numLikes / (double) numRatings; }
 	public String getImageUrl() { return imageUrl; }
 	public String getFoodType() { return foodType; }
+	public Integer getNumLikes() { return numLikes; }
+	public Integer getNumRatings() { return numRatings; }
+	public Integer getNumComments() { return numComments; }
+	public Double getLikeRatio() { return (double) numLikes / (double) numRatings; }
 	public List<Comment> getCommentList() { return commentList; }
 	
 	public void setId(Integer id) { this.id = id; }
 	public void setName(String name) { this.name = name; }
-	public void setNumLikes(Integer numLikes) { this.numLikes = numLikes; }
-	public void setNumRatings(Integer numRatings) { this.numRatings = numRatings; }
 	public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 	public void setFoodType(String foodType) { this.foodType = foodType; }
+	public void setNumLikes(Integer numLikes) { this.numLikes = numLikes; }
+	public void setNumRatings(Integer numRatings) { this.numRatings = numRatings; }
+	public void setNumComments(Integer numComments) { this.numComments = numComments; }
 	
 	public Caterer(Integer id, String name, String imageUrl, String foodType) {
 		super();
@@ -82,6 +85,7 @@ public class Caterer {
 	
 	public void addComment(Comment comment) {
 		commentList.add(comment);
+		numComments ++;
 	}
 	
 	public static Caterer fromJSON(JSONObject json) throws JSONException {
@@ -93,6 +97,7 @@ public class Caterer {
 		c.setName(json.getString("caterer"));
 		c.setFoodType(json.getString("foodType"));
 		c.setImageUrl(json.getString("imageUrl"));
+		c.setNumComments(json.getInt("numComments"));
 		
 		JSONArray comments = json.getJSONArray("comments");
 		

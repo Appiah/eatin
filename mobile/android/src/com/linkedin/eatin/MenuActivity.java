@@ -32,7 +32,6 @@ import com.linkedin.eatin.model.BaseData;
 import com.linkedin.eatin.utility.Constants;
 
 public class MenuActivity extends Activity {
-
 	public class MenuListAdapter extends ArrayAdapter<FoodItem> {
 		private List<FoodItem> objects;
 		private Context context;
@@ -117,6 +116,9 @@ public class MenuActivity extends Activity {
 
 	private int day;
 	private int catId;
+	private boolean flipped = false;
+	
+	private static final String DATA_FLIPPED = "dflipped";
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -161,6 +163,7 @@ public class MenuActivity extends Activity {
 			
 			@Override
 			public void onClick(View source) {
+				flipped = !flipped;
 				flipper.showNext();
 			}
 		});
@@ -175,6 +178,18 @@ public class MenuActivity extends Activity {
 		});
 
 		updateLikes();
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		flipped = savedInstanceState.getBoolean(DATA_FLIPPED);
+		if (flipped)
+			flipper.showNext();
+	}
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putBoolean(DATA_FLIPPED, flipped);
 	}
 	
 	protected void updateLikes() {

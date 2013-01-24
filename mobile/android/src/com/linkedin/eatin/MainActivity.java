@@ -2,6 +2,9 @@ package com.linkedin.eatin;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -17,6 +20,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -24,7 +28,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.linkedin.eatin.model.BaseData;
@@ -32,6 +38,19 @@ import com.linkedin.eatin.utility.Constants;
 import com.linkedin.eatin.utility.Updateable;
 
 public class MainActivity extends FragmentActivity implements TabListener, Updateable {
+	
+	protected class DayClickHandler implements OnClickListener {
+		private int position;
+		
+		public DayClickHandler(int position) {
+			this.position = position;
+		}
+		
+		@Override
+		public void onClick(View source) {
+			mViewPager.setCurrentItem(position);
+		}
+	}
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -47,7 +66,11 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	private ViewPager mViewPager;
+	private LinearLayout mIndicator;
 	private BaseData model;
+	
+	private List<View> indicatorList;
+	private int curDay;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,17 +90,21 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mIndicator = (LinearLayout) findViewById(R.id.indicator);
+		
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		indicatorList = setupIndicators();
+		changeDay(0);
 
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
-//		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-//			@Override
-//			public void onPageSelected(int position) {
-//				actionBar.setSelectedNavigationItem(position);
-//			}
-//		});
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			@Override
+			public void onPageSelected(int position) {
+				changeDay(position);
+			}
+		});
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -116,6 +143,34 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 
 	@Override
 	public void update(int updateCode) {
+	}
+	
+	private void changeDay(int day) {
+		indicatorList.get(curDay).setBackgroundColor(Color.TRANSPARENT);
+		curDay = day;
+		indicatorList.get(curDay).setBackgroundColor(Color.parseColor("#83b5e3"));
+	}
+	
+	private List<View> setupIndicators() {
+		List<View> ret = new LinkedList<View>();
+		
+		for (int i = 0; i < model.getMenuList().size(); i++) {
+			RelativeLayout base = new RelativeLayout(this);
+			TextView label = new TextView(this);
+			label.setText(Constants.DAY_ABBREV[i]);
+			
+			LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(45, 45);
+			lp.setMargins(10, 0, 10, 0);
+			
+			base.addView(label);
+			base.setGravity(Gravity.CENTER);
+			base.setLayoutParams(lp);
+			base.setOnClickListener(new DayClickHandler(i));
+			ret.add(base);
+			mIndicator.addView(base);
+		}
+		
+		return ret;
 	}
 
 	/**
@@ -258,7 +313,15 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 			
 			TextView dayTitle = ((TextView) view.findViewById(R.id.day));
 			dayTitle.setText(Constants.DAY_NAMES[day % 5]);
-			dayTitle.setTextColor(Color.parseColor("#1a70c0"));
+			
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(menu.getDate());
+			int d1 = cal.get(Calendar.DAY_OF_MONTH);
+			cal.setTime(new Date());
+			int d2 = cal.get(Calendar.DAY_OF_MONTH);
+			
+			if (d1 == d2)
+				dayTitle.setTextColor(Color.parseColor("#1a70c0"));
 			((TextView) view.findViewById(R.id.date)).setText(dateFormat.format(menu.getDate()));
 			
 			return view;

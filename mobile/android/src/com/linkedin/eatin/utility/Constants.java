@@ -12,4 +12,5 @@ public class Constants {
 	
 	public static final String [] CAT_NAMES = {"Daily Catering", "Indian Cuisine", "Vegetarian"};
 	public static final String [] DAY_NAMES = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+	public static final String [] DAY_ABBREV = {"M", "T", "W", "T", "F"};
 }
