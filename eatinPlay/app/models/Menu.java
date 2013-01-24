@@ -1,9 +1,9 @@
-package com.linkedin.eatin.model;
+package models;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 
 public class Menu {
 	private Integer id;
@@ -23,10 +23,9 @@ public class Menu {
 	public void setCaterer(int day, Caterer caterer) { this.caterers[day] = caterer; }
 	
 	@SuppressWarnings("unchecked")
-	public Menu(Integer id, Date date) {
+	public Menu(Date date) {
 		super();
-		this.id = id;
-		this.date = date;
+		this.date = (Date) date.clone();
 		this.foodItems = (List<FoodItem>[]) new List<?>[Constants.NUM_CAT];
 		this.caterers = new Caterer[Constants.NUM_CAT];
 		
@@ -46,6 +45,7 @@ public class Menu {
 		return this.foodItems[menuId];
 	}
 
+	@SuppressWarnings("unchecked")
 	public HashMap<String, Object> toJSON(){
 		HashMap<String, Object> mapper = new HashMap<String, Object>();
 		HashMap<String, Object> menus = new HashMap<String, Object>();
