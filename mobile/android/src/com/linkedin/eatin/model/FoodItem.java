@@ -1,21 +1,25 @@
 package com.linkedin.eatin.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.linkedin.eatin.utility.PostHelper;
+import com.linkedin.eatin.utility.Updateable;
+
 import android.util.Log;
 
-public class FoodItem {
-	public interface FIUpdateable {
-		public void updateUpVote();
-		public void updateDownVote();
-	}
-	
+public class FoodItem implements Updateable {
 	private Integer id;
 	private String name;
 	private Integer numRatings;
 	private Integer numLikes;
 	private Caterer caterer;
+	
+	private int bufferedVote;
+	private int bufferedNumVote;
 	
 	public Integer getId() { return id; }
 	public String getName() { return name; }
@@ -53,14 +57,21 @@ public class FoodItem {
 	}
 	
 	public void upvote() {
-		numLikes ++;
-		numRatings ++;
-		caterer.updateRatings();
+		vote(1);
 	}
 	
 	public void downvote() {
-		numRatings ++;
-		caterer.updateRatings();
+		vote(0);
+	}
+	
+	protected void vote(int num) {
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("foodId", id);
+		data.put("isUpVote", num == 1);
+		
+		new PostHelper(data, this);
+		bufferedVote += num;
+		bufferedNumVote ++;
 	}
 	
 	private String padString(String str) {
@@ -76,5 +87,14 @@ public class FoodItem {
 		fi.setNumRating(json.getInt("numRatings"));
 		
 		return fi;
+	}
+	
+	@Override
+	public void update(String results) {
+		numLikes += bufferedVote;
+		numRatings += bufferedNumVote;
+		bufferedVote = 0;
+		bufferedNumVote = 0;
+		caterer.updateRatings();
 	}
 }

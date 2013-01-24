@@ -1,14 +1,19 @@
 package com.linkedin.eatin.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Caterer {
+import com.linkedin.eatin.utility.PostHelper;
+import com.linkedin.eatin.utility.Updateable;
+
+public class Caterer implements Updateable {
 	private Integer id;
 	private String name;
 	private String imageUrl;
@@ -19,6 +24,7 @@ public class Caterer {
 	
 	private List<FoodItem> foodList;
 	private List<Comment> commentList;
+	private List<Comment> bufferedComments;
 	
 	public Integer getId() { return id; }
 	public String getName() { return name; }
@@ -48,6 +54,7 @@ public class Caterer {
 		
 		this.foodList = new LinkedList<FoodItem>();
 		this.commentList = new LinkedList<Comment>();
+		this.bufferedComments = new LinkedList<Comment>();
 	}
 	
 	private Caterer() {	
@@ -80,12 +87,16 @@ public class Caterer {
 	}
 	
 	public void addComment(String text) {
-		commentList.add(new Comment(null, text, "Anonymous", new Date()));
+		addComment(new Comment(null, text, "Anonymous", new Date()));
 	}
 	
 	public void addComment(Comment comment) {
-		commentList.add(comment);
-		numComments ++;
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("catererId", id);
+		data.put("message", comment.getMessage());
+		
+		new PostHelper(data, this);
+		bufferedComments.add(comment);
 	}
 	
 	public static Caterer fromJSON(JSONObject json) throws JSONException {
@@ -105,5 +116,13 @@ public class Caterer {
 			c.addComment(Comment.fromJSON(comments.getJSONObject(i)));
 					
 		return c;
+	}
+	
+	@Override
+	public void update(String results) {
+		for (Comment comment : bufferedComments) {
+			commentList.add(comment);
+			numComments ++;
+		}
 	}
 }

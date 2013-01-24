@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.ActionBar;
-import android.app.ActionBar.TabListener;
-import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,7 +36,7 @@ import com.linkedin.eatin.model.BaseData;
 import com.linkedin.eatin.utility.Constants;
 import com.linkedin.eatin.utility.Updateable;
 
-public class MainActivity extends FragmentActivity implements TabListener, Updateable {
+public class MainActivity extends FragmentActivity implements Updateable {
 	
 	protected class DayClickHandler implements OnClickListener {
 		private int position;
@@ -52,22 +51,11 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 		}
 	}
 
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
 	private SectionsPagerAdapter mSectionsPagerAdapter;
-
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
 	private ViewPager mViewPager;
 	private LinearLayout mIndicator;
 	private BaseData model;
+	private ProgressDialog pdialog;
 	
 	private List<View> indicatorList;
 	private int curDay;
@@ -80,7 +68,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 		model = BaseData.getModel();
 
 		// Set up the action bar.
-		final ActionBar actionBar = getActionBar();
+		ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setIcon(R.drawable.icon);
 
@@ -94,7 +82,6 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 		
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		indicatorList = setupIndicators();
-		changeDay(0);
 
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -105,18 +92,9 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 				changeDay(position);
 			}
 		});
-
-		// For each of the sections in the app, add a tab to the action bar.
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			// Create a tab with text corresponding to the page title defined by
-			// the adapter. Also specify this Activity object, which implements
-			// the TabListener interface, as the callback (listener) for when
-			// this tab is selected.
-			actionBar.addTab(
-					actionBar.newTab()
-					.setText(mSectionsPagerAdapter.getPageTitle(i))
-					.setTabListener(this));
-		}
+		
+		model.startSyncData(this);
+		pdialog = ProgressDialog.show(this, "", "Synchronizing data...", true);
 	}
 
 	@Override
@@ -127,22 +105,12 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 	}
 
 	@Override
-	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-		// When the given tab is selected, switch to the corresponding page in
-		// the ViewPager.
-		mViewPager.setCurrentItem(tab.getPosition());
-	}
-
-	@Override
-	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-	}
-
-	@Override
-	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-	}
-
-	@Override
-	public void update(int updateCode) {
+	public void update(String result) {
+		if (result.equals(BaseData.KEY_SYNC)) {
+			changeDay(0);
+			mSectionsPagerAdapter.notifyDataSetChanged();
+			pdialog.cancel();
+		}
 	}
 	
 	private void changeDay(int day) {
@@ -154,7 +122,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 	private List<View> setupIndicators() {
 		List<View> ret = new LinkedList<View>();
 		
-		for (int i = 0; i < model.getMenuList().size(); i++) {
+		for (int i = 0; i < Constants.NUM_DAY_SHOWN; i++) {
 			RelativeLayout base = new RelativeLayout(this);
 			TextView label = new TextView(this);
 			label.setText(Constants.DAY_ABBREV[i]);
@@ -198,7 +166,7 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return model.getMenuList().size();
+			return Constants.NUM_DAY_SHOWN;
 		}
 
 		@Override
@@ -288,11 +256,12 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 				return view;
 			}
 		}
-		
+
+		private int day;
 		private ListView catListView;
 		private List<Category> catInfoList;
 		private Context context;
-		private int day;
+		private BaseData model;
 		private com.linkedin.eatin.model.Menu menu;
 		private SimpleDateFormat dateFormat;
 
@@ -304,34 +273,41 @@ public class MainActivity extends FragmentActivity implements TabListener, Updat
 			// Create a new TextView and set its text to the fragment's section
 			// number argument value.
 			super.onCreateView(inflater, container, savedInstanceState);
-			View view = inflater.inflate(R.layout.main_menu_layout, null);
 			
-			init();
+			model = BaseData.getModel();
 			
-			catListView = (ListView) view.findViewById(R.id.categoryList);
-			catListView.setAdapter(new CategoryListAdapter(context, catInfoList));
+			if (model.hasData()) {
+				View view = inflater.inflate(R.layout.main_menu_layout, null);
+				
+				init();
+				
+				catListView = (ListView) view.findViewById(R.id.categoryList);
+				catListView.setAdapter(new CategoryListAdapter(context, catInfoList));
+				
+				TextView dayTitle = ((TextView) view.findViewById(R.id.day));
+				dayTitle.setText(Constants.DAY_NAMES[day % 5]);
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(menu.getDate());
+				int d1 = cal.get(Calendar.DAY_OF_MONTH);
+				cal.setTime(new Date());
+				int d2 = cal.get(Calendar.DAY_OF_MONTH);
+				
+				if (d1 == d2)
+					dayTitle.setTextColor(Color.parseColor("#1a70c0"));
+				((TextView) view.findViewById(R.id.date)).setText(dateFormat.format(menu.getDate()));
+
+				return view;
+			}
 			
-			TextView dayTitle = ((TextView) view.findViewById(R.id.day));
-			dayTitle.setText(Constants.DAY_NAMES[day % 5]);
-			
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(menu.getDate());
-			int d1 = cal.get(Calendar.DAY_OF_MONTH);
-			cal.setTime(new Date());
-			int d2 = cal.get(Calendar.DAY_OF_MONTH);
-			
-			if (d1 == d2)
-				dayTitle.setTextColor(Color.parseColor("#1a70c0"));
-			((TextView) view.findViewById(R.id.date)).setText(dateFormat.format(menu.getDate()));
-			
-			return view;
+			return new LinearLayout(this.getActivity());
 		}
 		
 		private void init() {
 			day = getArguments().getInt(Constants.ARG_DAY);
 			context = getActivity();
 			
-			menu = BaseData.getModel().getMenuList().get(day);
+			menu = model.getMenuList().get(day);
 			
 			dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.US);
 			

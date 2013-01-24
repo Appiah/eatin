@@ -6,6 +6,7 @@ public class Constants {
 	public static final int CAT_VEGGIE = 2;
 	
 	public static final int NUM_CAT = 3;
+	public static final int NUM_DAY_SHOWN = 5;
 
 	public static final String ARG_DAY = "day";
 	public static final String ARG_CAT_ID = "catId";
