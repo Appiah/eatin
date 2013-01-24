@@ -1,56 +1,92 @@
-@(foodType: String, caterer: String, numVotesCaterer: Int, numPositiveVotesCaterer: Int, numCommentsCaterer: Int, foodItemNames: Array[String], foodItemNumVotes: Array[Int], foodItemNumPositiveVotes: Array[Int], foodItemIDs: Array[Int])
+@(foodType: String)
 
-	<div class="title">
-		<table class="titleTable">
-			<tr>
-				<td>
-					<div><text class="tname">@caterer</text></div>
-					<div class="tbar">
-					<div 
-						style="width: @((numVotesCaterer) * 100 / numVotesCaterer)%;"
-						class="redbar"></div>
-					<div 
-						style="width: @((numVotesCaterer) * 100 / numVotesCaterer)%;"
-						class="greenbar"></div>
-					</div>
-					<div><text>@numVotesCaterer votes</text></div>
-				</td>
-				<td align="right">
-					<div class="ticon"><text class="commentCount">@numCommentsCaterer</text></div>
-				</td>
-			</tr>
-		</table>
-	</div>	
+<script>
+$(function getFoodDataHTML() {
+
+	var url = "localhost:9000/data";
+
+	var output = "";
+
+	jQuery.getJSON(url).done(function(data) {
+    	console.log(data);
+
+    	var dayNum = Date.getDay() - 1;
+    	// set the day to the closest week day in the current week (if Saturday or Sunday)
+    	if (dayNum == -1) {
+    		dayNum = 0;
+    	} else if (dayNum == 5) {
+    		dayNum = 4;
+    	}
+
+    	var catererByDay;
+
+    	if (@foodType == "indian") {
+    		catererByDay = data.day[dayNum].indian;
+    	} else if (@foodType == "daily") {
+			catererByDay = data.day[dayNum].daily;
+    	} else if (@foodType == "vegetarian") {
+    		catererByDay = data.day[dayNum].vegetarian;
+    	}
+    		
+
+    	output +=
+		    "<div class=\"title\">" +
+				"<table class=\"titleTable\">" +
+					"<tr>" +
+						"<td>" +
+							"<div><text class=\"tname\">" + catererByDay.caterer +"</text></div>" +
+							"<div class=\"tbar\">" +
+							"<div  
+								style=\"width:" +  (catererByDay.totalLikes * 100 / catererByDay.totalRatings) + "%;\"" +
+								"class=\"redbar\"></div>" +
+							"<div 
+								style=\"width:" + ((catererByDay.totalRatings - catererByDay.totalLikes) * 100 / catererByDay.totalRatings) + "%;\"" +
+								"class=\"greenbar\"></div>" +
+							"</div>" +
+							"<div><text>" + catererByDay.totalRatings + " votes</text></div>" +
+						"</td>" + 
+						"<td align=\"right\">"
+							"<div class=\"ticon\"><text class=\"commentCount\">" + catererByDay.totalNumComments + "</text></div>" +
+						"</td>" +
+					"</tr>" +
+ 				"</table>" +
+			"</div>";
 
 
-	<table class="itemTable">
+		output += "<table class=\"itemTable\">";
 
-		@for(i <- 0 until foodItemNames.length){
+		var foodItems = catererByDay.foodItems;
+    	jQuery.each(foodItems, function(i,item){
 
-			<tr>
-				<td>
-					<div class="itemBar" style="background:rgb(@((foodItemNumVotes(i) - foodItemNumPositiveVotes(i) ) * 255 / foodItemNumVotes(i)), @(foodItemNumVotes(i)  * 255 / foodItemNumVotes(i)), 0 )">&nbsp;</div>
-				</td>
-			<td>
-				<div><text>@foodItemNames(i)</text></div>
-				<div><text>@foodItemNumVotes(i) votes</text></div>	
-			</td>
-			<td>
-				<img 
-					src="@routes.Assets.at("images/up.png")"
-					onmouseover="this.src='@routes.Assets.at("images/up2.png")'";
-					onmouseout="this.src='@routes.Assets.at("images/up.png")'"
-					onclick="location.href='up?id=@foodItemIDs(i)'">
-			</td>
-			<td>
-				<img 
-					src="@routes.Assets.at("images/down.png")"
-					onmouseover="this.src='@routes.Assets.at("images/down2.png")'";
-					onmouseout="this.src='@routes.Assets.at("images/down.png")'"
-					onclick="location.href='down?id=@foodItemIDs(i)'">
-			</td>
-			</tr>
+    		output = "<tr>" +
+				"<td>" +
+					"<div class=\"itemBar\" style=\"background:rgb(" + ((item[i].numRating - item[i].numLikes ) * 255 / item[i].numRating) + "," + (item[i].numLikes * 255 / item[i].numRating) ", 0 )\">&nbsp;</div>" +
+				"</td>" +
+			"<td>" +
+				"<div><text>" + item[i].name + "</text></div>" +
+				"<div><text>" + item[i].numRating + " votes</text></div>" +	
+			"</td>" +
+			"<td>" +
+				"<img 
+					src=\"" + @routes.Assets.at("images/up.png") "\"" +
+					"onmouseover=\"this.src='" + @routes.Assets.at("images/up2.png") + "';" +
+					"onmouseout=\"this.src='" + @routes.Assets.at("images/up.png") + "'>" +
+			"</td>" +
+			"<td>" +
+				"<img " + 
+					"src=\"" + @routes.Assets.at("images/down.png") "\" " +
+					"onmouseover=\"this.src='" + @routes.Assets.at("images/down2.png") + "'\"; " +
+					"onmouseout=\"this.src='" + @routes.Assets.at("images/down.png") + "'\">" +
+			"</td>" +
+			"</tr>";
 
-		}
+		});
 
-	</table>
+		output += "</table>";
+
+	});
+
+	document.getElementById(@foodType).innerHTML=output;
+
+})
+</script>
