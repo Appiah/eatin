@@ -3,6 +3,7 @@ package com.linkedin.eatin.model;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ArrayList;
 
 import play.libs.Json;
 import java.util.HashMap;
@@ -77,13 +78,13 @@ public class Caterer {
 	public HashMap<String, Object> toJSON(){
 		HashMap<String, Object> mapper = new HashMap<String, Object>();
 		mapper.put("totalLikes", numLikes);
-		mapper.put("totalRatings", totalRatings);
+		mapper.put("totalRatings", numRatings);
 		mapper.put("catererId", id);
 		mapper.put("caterer", name);
 		mapper.put("foodType", foodType);
 		mapper.put("imageUrl", imageUrl);
 
-		List<Object> listOfItems = new List<Object>();
+		List<Object> listOfItems = new ArrayList<Object>();
 				
 		for (int i = 0; i < commentList.size() ; i++ ) {
 			listOfItems.add( commentList.get(i).toJSON() );

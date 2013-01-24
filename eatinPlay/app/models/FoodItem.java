@@ -10,6 +10,7 @@ public class FoodItem {
 	
 	private Integer id;
 	private String name;
+	private Integer numLikes;
 	private Integer numRatings;
 	private Double rating;
 	private Caterer caterer;
@@ -43,7 +44,6 @@ public class FoodItem {
 		Integer r = (int)((Math.min(1-ratio, 0.5) * 2) * 255);
 		
 		String ret = "#" + padString(Integer.toHexString(r)) + padString(Integer.toHexString(g)) + "00";
-		Log.d("Color", ret);
 		return ret;
 	}
 	

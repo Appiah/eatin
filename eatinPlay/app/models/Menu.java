@@ -47,13 +47,23 @@ public class Menu {
 	}
 
 	public HashMap<String, Object> toJSON(){
-		HashMap<String, Object> mapper = new HashMap<String, Object>();	
-		ArrayList<Object> listOfItems = new ArrayList<Object>();
+		HashMap<String, Object> mapper = new HashMap<String, Object>();
+		HashMap<String, Object> menus = new HashMap<String, Object>();
 
-		for (int i = 0; i < foodItems.size() ; i++ ) {
-			listOfItems.add( foodItems.get(i).toJSON() );
+		List<Object>[] listOfItems = (List<Object>[]) new List<?>[Constants.NUM_CAT];
+
+
+		for (int i = 0; i < foodItems.length; i++) {
+			listOfItems[i] = new ArrayList<Object>();
+
+			for (FoodItem fi : foodItems[i])
+				listOfItems[i].add(fi.toJSON());
 		}
-		mapper.put("foodItems", listOfItems);
+
+		menus.put("daily", listOfItems[Constants.CAT_CATER]);
+		menus.put("indian", listOfItems[Constants.CAT_INDIAN]);
+		menus.put("vegetarian", listOfItems[Constants.CAT_VEGGIE]);
+		mapper.put("foodItems", menus);
 
 		return mapper;
 	}
