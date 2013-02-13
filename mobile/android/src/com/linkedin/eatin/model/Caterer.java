@@ -1,10 +1,8 @@
 package com.linkedin.eatin.model;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,14 +50,17 @@ public class Caterer implements Updateable {
 		this.imageUrl = imageUrl;
 		this.foodType = foodType;
 		
+		init();
+	}
+	
+	private Caterer() {
+		init();
+	}
+	
+	private void init() {
 		this.foodList = new LinkedList<FoodItem>();
 		this.commentList = new LinkedList<Comment>();
 		this.bufferedComments = new LinkedList<Comment>();
-	}
-	
-	private Caterer() {	
-		this.foodList = new LinkedList<FoodItem>();
-		this.commentList = new LinkedList<Comment>();
 	}
 	
 	public void addFoodItem(FoodItem item) {
@@ -91,29 +92,39 @@ public class Caterer implements Updateable {
 	}
 	
 	public void addComment(Comment comment) {
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("catererId", id);
-		data.put("message", comment.getMessage());
-		
-		new PostHelper(data, this);
+		JSONObject data = new JSONObject();
+		try {
+			data.put("catererId", id);
+			data.put("message", comment.getMessage());
+			(new PostHelper(data, this)).execute(BaseData.SERVER_URL + BaseData.COMMENT_PATH);
+		}
+		catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 		bufferedComments.add(comment);
+	}
+	
+	public void addCommentWithoutUpdate(Comment comment) {
+		commentList.add(comment);
 	}
 	
 	public static Caterer fromJSON(JSONObject json) throws JSONException {
 		Caterer c = new Caterer();
 		
-		c.setNumLikes(json.getInt("numLikes"));
+		c.setNumLikes(json.getInt("totalLikes"));
 		c.setNumRatings(json.getInt("totalRatings"));
 		c.setId(json.getInt("catererId"));
 		c.setName(json.getString("caterer"));
 		c.setFoodType(json.getString("foodType"));
 		c.setImageUrl(json.getString("imageUrl"));
-		c.setNumComments(json.getInt("numComments"));
+//		c.setNumComments(json.getInt("numComments"));
 		
 		JSONArray comments = json.getJSONArray("comments");
+		c.setNumComments(comments.length());
 		
 		for (int i = 0; i < comments.length(); i++)
-			c.addComment(Comment.fromJSON(comments.getJSONObject(i)));
+			c.addCommentWithoutUpdate(Comment.fromJSON(comments.getJSONObject(i)));
 					
 		return c;
 	}
@@ -124,5 +135,6 @@ public class Caterer implements Updateable {
 			commentList.add(comment);
 			numComments ++;
 		}
+		bufferedComments.clear();
 	}
 }

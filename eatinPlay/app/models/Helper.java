@@ -44,14 +44,9 @@ public class Helper {
 
 	public static boolean changeRating(int foodId, boolean isUpVote) {
 		try {
-			String sql = "update foodItems set ? where ID = ?;";
+			String sql = "update foodItems set " + (isUpVote? "Rating = Rating + 1, " : "") + "NumRatings = NumRatings + 1 where ID = ?;";
 			PreparedStatement pst = connection.prepareStatement(sql);
-			pst.setInt(2, foodId);
-			
-			if (isUpVote)
-				pst.setString(1, "Rating = Rating + 1");
-			else
-				pst.setString(2, "NumRatings = NumRatings + 1");
+			pst.setInt(1, foodId);
 			
 			pst.execute();
 			

@@ -35,9 +35,9 @@ public class Comment {
 		
 		c.setId(json.getLong("commentId"));
 		c.setMessage(json.getString("message"));
-		c.setPostDate(new Date(json.getInt("datePosted")));
+		c.setPostDate(new Date(json.getInt("postDate")));
 		c.setPoster(json.getString("poster"));
 		
-		return null;
+		return c;
 	}
 }

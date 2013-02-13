@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,14 +60,13 @@ public class Menu {
 			for (FoodItem fi : foodItems[i])
 				listOfItems[i].add(fi.toJSON());
 
-			listOfItems[i].add(caterers[i].toJSON());
+			//listOfItems[i].add(caterers[i].toJSON());
 			HashMap<String, Object> m = new HashMap<String, Object>();
-			m.put("foodItems", listOfItems[i]);		
-
-			//if (i == Constants.CAT_CATER) {
+			
+			m.put("foodItems", listOfItems[i]);
 			m.put("catererInfo", caterers[i].toJSON());
 
-			
+			System.out.println("added date");
 
 			if (i == Constants.CAT_CATER) {
 				menus.put("vegetarian", m);
@@ -77,6 +77,10 @@ public class Menu {
 			}
 
 		}
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		menus.put("date", c.getTimeInMillis());
 
 //		HashMap<String, Object> m = new HashMap<String, Object>();
 //		m.put("foodItems", listOfItems[Constants.CAT_CATER]);

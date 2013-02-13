@@ -9,6 +9,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import com.linkedin.eatin.utility.GetHelper;
 import com.linkedin.eatin.utility.Updateable;
 
@@ -19,7 +21,8 @@ public class BaseData implements Updateable {
 	public static final String COMMENT_PATH = "/comment";
 	
 	private static BaseData model;
-	private static final String SERVER_URL = "bhatton-ld.linkedin.biz:9000";
+//	private static final String SERVER_URL = "http://bhatton-ld.linkedin.biz:9000";
+	public static final String SERVER_URL = "http://hlei-ld.linkedin.biz:9000";
 	
 	private GetHelper syncTask;
 	private boolean hasData;
@@ -103,7 +106,7 @@ public class BaseData implements Updateable {
 		
 		try {
 			json = new JSONObject(result);
-			JSONArray weeklyMenu = json.getJSONArray("weeklyMenu");
+			JSONArray weeklyMenu = json.getJSONArray("days");
 
 			model.clear();
 
@@ -113,11 +116,11 @@ public class BaseData implements Updateable {
 				model.addMenu(m);
 			}
 			
-			context.update(KEY_SYNC);
 			hasData = true;
+			context.update(KEY_SYNC);
 		}
 		catch (JSONException e) {
-			e.printStackTrace();
+			Log.e("Error", Log.getStackTraceString(e));
 		}
 	}
 }

@@ -62,9 +62,9 @@ public class Menu {
 	
 	public static Menu fromJSON(JSONObject json) throws JSONException {
 		Menu m = new Menu();
-		
+
 		m.setDate(new Date(json.getLong("date")));
-		m.setId(json.getInt("id"));
+//		m.setId(json.getInt("id"));
 		
 		JSONObject [] menulist = new JSONObject[Constants.NUM_CAT];
 		menulist[Constants.CAT_CATER] = json.getJSONObject("daily");
@@ -73,10 +73,15 @@ public class Menu {
 		
 		for (int i = 0; i < menulist.length; i++) {
 			JSONObject menu = menulist[i];
-			JSONArray foodItems = menu.getJSONArray("foodItems");
-			FoodItem fi = FoodItem.fromJSON(foodItems.getJSONObject(i));
-			fi.setCaterer(Caterer.fromJSON(menu));
-			m.addFoodItem(i, fi);
+			JSONArray fis = menu.getJSONArray("foodItems");
+			
+			Caterer c = Caterer.fromJSON(menu.getJSONObject("catererInfo"));
+			
+			for (int j = 0; j < fis.length(); j++) {
+				FoodItem fi = FoodItem.fromJSON(fis.getJSONObject(j));
+				fi.setCaterer(c);
+				m.addFoodItem(i, fi);
+			}
 		}
 		
 		return m;

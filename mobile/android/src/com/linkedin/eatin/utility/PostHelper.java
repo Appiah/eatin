@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -15,16 +14,18 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
 public class PostHelper extends AsyncTask<String, String, String> {
 	protected Updateable context;
-	protected Map<String, Object> data;
+	protected JSONObject data;
 
-	public PostHelper(Map<String, Object> data2, Updateable context) {
+	public PostHelper(JSONObject data2, Updateable context) {
 		this.context = context;
 		this.data = data2;
 	}
@@ -37,16 +38,19 @@ public class PostHelper extends AsyncTask<String, String, String> {
 
 		try {
 			HttpPost post = new HttpPost(uri[0]);
-			List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
-			Iterator<String> it = data.keySet().iterator();
-			while (it.hasNext()) {
-				String key = it.next();
-				nameValuePair.add(new BasicNameValuePair(key, data.get(key).toString()));
-			}
+//			List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>();
+//			Iterator<String> it = data.keySet().iterator();
+//			while (it.hasNext()) {
+//				String key = it.next();
+//				nameValuePair.add(new BasicNameValuePair(key, data.get(key).toString()));
+//			}
 
-			post.setEntity(new UrlEncodedFormEntity(nameValuePair, "UTF-8"));
+			post.setEntity(new StringEntity(data.toString(), "UTF-8"));
+			post.setHeader("Accept", "application/json");
+			post.setHeader("Content-type", "application/json");
 			response = httpclient.execute(post);
 			StatusLine statusLine = response.getStatusLine();
+			
 			if(statusLine.getStatusCode() == HttpStatus.SC_OK){
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
 				response.getEntity().writeTo(out);

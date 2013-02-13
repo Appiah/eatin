@@ -12,29 +12,26 @@ public class FoodItem {
 	private String name;
 	private Integer numLikes;
 	private Integer numRatings;
-	private Integer rating;
 	private Caterer caterer;
 	
 	public Integer getId() { return id; }
 	public String getName() { return name; }
 	public Integer getNumRatings() { return numRatings; }
-	public Integer getNumLikes() { return (int) (rating * numRatings); }
-	public Integer getRating() { return rating; }
+	public Integer getNumLikes() { return numLikes; }
 	public Caterer getCaterer() { return caterer; }
 	
 	public void setId(Integer id) { this.id = id; }
 	public void setName(String name) { this.name = name; }
 	public void setNumRating(Integer numRating) { this.numRatings = numRating; }
-	public void setRating(Integer rating) { this.rating = rating; }
 	public void setCaterer(Caterer caterer) { this.caterer = caterer; }
 	
-	public FoodItem(Integer id, String name, Integer numRating, Integer rating,
+	public FoodItem(Integer id, String name, Integer numRating, Integer numLikes,
 			Caterer caterer) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.numRatings = numRating;
-		this.rating = rating;
+		this.numLikes = numLikes;
 		this.caterer = caterer;
 	}
 
