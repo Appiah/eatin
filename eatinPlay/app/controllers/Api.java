@@ -13,13 +13,12 @@ import models.Menu;
 
 import org.codehaus.jackson.JsonNode;
 
-import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.foodcategory;
 import views.html.main;
 
-public class Application extends Controller {
+public class Api extends Controller {
 
 	private static Connection connection = null;
 
@@ -41,10 +40,6 @@ public class Application extends Controller {
 			//return internalServerError("Connection Failed! Check output console" + '\n' +  e.toString());
 		}
 		return true;
-	}
-
-	public static Result index() {
-		return ok(main.render(foodcategory.render("daily"), foodcategory.render("vegetarian"), foodcategory.render("indian")));    
 	}
 
 	public static Result getData () {

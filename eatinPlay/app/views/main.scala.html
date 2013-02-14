@@ -1,47 +1,30 @@
-@(daily: Html, veg: Html, indian: Html)
+@(title: String)(content: Html)(css: Html)(scripts: Html)
 
 <!DOCTYPE html>
 <html>
-
-<script type="text/javascript" language="javascript">
-	function changeImage(img){
-		document.getElementById('bigImage').src=img;
-	}
-</script>
-
-
-<head>
-	<title>EatIn</title>
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-    <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-</head>
-
-<body>
-
-	<div class="container">
-	&nbsp;
-
-	<div class="header">
-		<img 
-			class="logo"
-			src="@routes.Assets.at("images/logo2.png")">
-	</div>
-
-	<div class="section group">
-		<div id="daily" class="col span_1_of_3">
-		@daily
-		</div>
-		<div id="vegetarian" class="col span_1_of_3">
-		@veg
-		</div>
-		<div id="indian" class="col span_1_of_3">
-		@indian
-		</div>
-	</div>
-
-
-</body>
-
+	<head>
+		<title>EatIn</title>
+	    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+	    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/base-styles.css")">
+	    @css
+	</head>
+	
+	<body>
+		<header class="header clearfix">
+			<img class="main-logo" src="images/logo.png" />
+			<div id="profileBox" class="float-right profile-box">
+				<img id="profileIcon" class="profile-icon" src="" />
+				<div id="profileName" class="profile-name">Terry Lei</div>
+			</div>
+		</header>
+		<section class="body">
+			@content
+		</section>
+		<footer class="footer">
+			
+		</footer>
+	    <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+	    @scripts
+	</body>
 </html>
 
