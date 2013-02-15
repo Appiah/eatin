@@ -23,7 +23,7 @@ public class Helper {
 		formatter = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 		dt = new SimpleDateFormat("yyyy-MM-dd");
 	}
-
+	
 	public static boolean addComment(int catererId, String Message) {
 		try {
 			Date date = new Date();
@@ -44,7 +44,9 @@ public class Helper {
 
 	public static boolean changeRating(int foodId, boolean isUpVote) {
 		try {
-			String sql = "update foodItems set " + (isUpVote? "Rating = Rating + 1, " : "") + "NumRatings = NumRatings + 1 where ID = ?;";
+			String sql = "update foodItems set " 
+					+ (isUpVote? "Rating = Rating + 1, " : "") 
+					+ "NumRatings = NumRatings + 1 where ID = ?;";
 			PreparedStatement pst = connection.prepareStatement(sql);
 			pst.setInt(1, foodId);
 			
@@ -67,8 +69,8 @@ public class Helper {
 			ResultSet rs = pst.executeQuery();
 			rs.next();
 			
-			Caterer caterer = new Caterer(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(3));
-			caterer.addComments(getComments(catererId, 25));
+			Caterer caterer = new Caterer(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(3), 
+					rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
 			
 			return caterer;
 		}
@@ -77,6 +79,38 @@ public class Helper {
 		}
 		
 		return null;
+	}
+	
+	public void AddCaterer(String name, String imageUrl, String foodType,
+			String contact, String email, String phoneNumber, String address, String comments) {
+		
+		try {
+			String sql = "select max(ID) from caterer;";
+			PreparedStatement pst = connection.prepareStatement(sql);
+			ResultSet rs = pst.executeQuery();
+			rs.next();
+			int nextID = rs.getInt(1) + 1;
+			
+			sql = "insert into caterer (ID, Name, Type, ImgURL, MainContact, Email, Phone, Address, Comments) "+
+					"values ("
+					+ nextID + ", "
+					+ "'" + name + "', "
+					+ "'" + foodType + "', "
+					+ "'" + imageUrl + "', "
+					+ "'" + contact + "', "
+					+ "'" + email + "', "
+					+ "'" + phoneNumber + "', "
+					+ "'" + address + "', "
+					+ "'" + comments + "');";
+			
+			pst = connection.prepareStatement(sql);
+			pst.executeUpdate();
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public Menu[] getWeeksMenu() {

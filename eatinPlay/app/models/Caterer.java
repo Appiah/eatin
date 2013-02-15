@@ -13,6 +13,11 @@ public class Caterer {
 	private Integer numRatings = 1;
 	private String imageUrl;
 	private String foodType;
+	private String comments;
+	private String contact;
+	private String address;
+	private String phoneNumber;
+	private String email;
 	
 	private List<FoodItem> foodList;
 	private List<Comment> commentList;
@@ -23,6 +28,11 @@ public class Caterer {
 	public Integer getNumRatings() { return numRatings; }
 	public Double getLikeRatio() { return (double) numLikes / (double) numRatings; }
 	public String getImageUrl() { return imageUrl; }
+	public String getComment() { return comments; }
+	public String getContact() { return contact; }
+	public String getAddress() { return address; }
+	public String getPhoneNumber() { return phoneNumber; }
+	public String getEmail() { return email; }
 	public String getFoodType() { return foodType; }
 	public List<Comment> getCommentList() { return commentList; }
 	
@@ -33,13 +43,19 @@ public class Caterer {
 	public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 	public void setFoodType(String foodType) { this.foodType = foodType; }
 	
-	public Caterer(Integer id, String name, String imageUrl, String foodType) {
+	public Caterer(Integer id, String name, String imageUrl, String foodType,
+			String contact, String email, String phoneNumber, String address, String comments) {
 		super();
 		
 		this.id = id;
 		this.name = name;
 		this.imageUrl = imageUrl;
 		this.foodType = foodType;
+		this.comments = comments;
+		this.contact = contact;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
 		
 		this.foodList = new LinkedList<FoodItem>();
 		this.commentList = new LinkedList<Comment>();
@@ -85,14 +101,19 @@ public class Caterer {
 		mapper.put("caterer", name);
 		mapper.put("foodType", foodType);
 		mapper.put("imageUrl", imageUrl);
+		mapper.put("comment", comments);
+		mapper.put("contact", contact);
+		mapper.put("address", address);
+		mapper.put("email", email);
+		mapper.put("phoneNumber", phoneNumber);
 
 		List<Object> listOfItems = new ArrayList<Object>();
-				
+		
 		for (int i = 0; i < commentList.size() ; i++ ) {
 			listOfItems.add( commentList.get(i).toJSON() );
 		}
 		mapper.put("comments", listOfItems);
-
+		
 		return mapper;
 	}
 	
