@@ -1,4 +1,4 @@
-package com.linkedin.eatin.model;
+package models;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -1,4 +1,4 @@
-/*package models;
+package models;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -102,9 +102,8 @@ public class Helper {
 	}
 
 	
-	public DailyMenu[] getWeeksMenu() {
-
-		DailyMenu[] menu = new DailyMenu[5];
+	public Menu getWeeksMenu() {
+		Menu = new Menu();
 		Date date = new Date(System.currentTimeMillis());
 		//System.out.println(GetDayFromDate(date));
 		Calendar calendar1 = Calendar.getInstance();
@@ -342,4 +341,4 @@ public class Helper {
 	        calendar.setTime(date);  
 	        return calendar.get(Calendar.DAY_OF_WEEK);   
 	} 
-}*/
+}
