@@ -1,0 +1,253 @@
+text
+{
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+div.container
+{
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	margin: 0;
+	padding: 0;
+	overflow: scroll;
+}
+
+div.header
+{
+	width: 100%;
+	height: 15%;
+	background-color: white;
+}
+
+img.logo
+{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+tr.tableRow
+{
+	height: 100%;
+}
+
+div.tableDiv
+{
+	display: block;
+	width: 99%;
+	height: 85%;
+	overflow: scroll;
+}
+
+div.first
+{
+	width: 31%;
+	float: left;
+}
+
+div.second
+{	
+	padding-left: 33%;
+	padding-right: 33%;
+	width: 33%;
+}
+
+div.third
+{
+	padding-left: 67%;
+	margin-top: -193px;
+	margin-left: -30px;
+	width: 33%;
+	float: right;
+}
+
+table.mainTable
+{
+	width: 100%;
+	height: 100%;
+}
+
+td.tableElmt
+{
+	width: 33%;
+	height: 100%;
+}
+
+iframe.insideElmt
+{
+	margin-top: -300px;
+	width: 100%;
+	height: 100%;
+}
+
+
+table.header
+{
+	width: 100%;
+	background-color: black;
+	padding: 10px;
+}
+
+img.himg
+{
+	border-style: outset;
+}
+
+text.htext
+{
+	font-size: 45px;
+	color: white;
+	font-weignt: bold;
+}
+
+div.title
+{
+	height: 100px;
+	width: 100%;
+	padding-top: 20px;
+	border-bottom-style: double;
+}
+
+table.titleTable
+{
+	width: 100%;
+}
+
+text.tname
+{
+	font-size: 45px;
+	font-weight: bold;
+}
+
+div.tbar
+{
+	height: 10px;
+	width: 100%;
+	background: transparent;
+}
+
+div.redbar
+{
+	float: left;
+	height: 10px;
+	background: red;
+}
+
+div.greenbar
+{
+	float: right;
+	height: 10px;
+	background:green;
+}
+
+div.ticon
+{
+	background-image: url('webclient/resources/comments.png');
+	height: 100px;
+	width: 100px;
+	margin: 0;
+	text-align: center;
+	line-height: 90px;
+}
+
+table.itemTable
+{
+	padding-top: 10px;
+	width: 100%;
+}
+
+div.itemBar
+{
+	width: 20px;
+	height: 50px;
+	background: #176411;
+}
+
+
+
+
+/*  SECTIONS  ============================================================================= */
+
+.section {
+	clear: both;
+	padding: 0px;
+	margin: 0px;
+}
+
+/*  GROUPING  ============================================================================= */
+
+
+.group:before,
+.group:after {
+    content:"";
+    display:table;
+}
+.group:after {
+    clear:both;
+}
+.group {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
+
+/*  GRID COLUMN SETUP   ==================================================================== */
+
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 1.6%;
+}
+
+.col:first-child { margin-left: 0; } /* all browsers except IE6 and lower */
+
+/*  GRID OF THREE   ============================================================================= */
+
+	
+.span_3_of_3 {
+	width: 100%; 
+}
+
+.span_2_of_3 {
+	width: 66.1%; 
+}
+
+.span_1_of_3 {
+	width: 32.2%; 
+}
+
+
+/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
+
+@media only screen and (max-width: 640px) {
+	.span_3_of_3 {
+		width: 80%; 
+		margin-left: auto;
+		margin-right: auto;
+		margin: 0  auto 0 auto;
+	}
+	.span_2_of_3 {
+		width: 80%; 
+		margin-left: auto;
+		margin-right: auto;
+		margin: 0  auto 0 auto;
+	}
+	.span_1_of_3 {
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+		margin: 0  auto 0 auto;
+	}
+}
+
+
+@media only screen and (max-width: 480px) {
+	.span_3_of_3 {
+		width: 100%; 
+	}
+	.span_2_of_3 {
+		width: 100%; 
+	}
+	.span_1_of_3 {
+		width: 100%;
+	}
+}
