@@ -1,51 +1,116 @@
-@() {
-	<section class="today-menu">
-		<h1 class="section-title">Today's Menu</h1>
-		<header class="menu-info">
-			<div class="table">
-				<div class="cell">
-					<h2 class="caterer-name">Cosmo <span class="subdued">(Thai)</span></h2>
-					<h3 class="current-date">Monday, February 20</h3>
+@()
+/**
+ * Author: Terry Lei (hlei@linkedin.com)
+ */
+@main("Weekly Menu") {
+	<section class="table">
+		<section class="cell today-menu">
+			<h1 class="section-title">Today's Menu</h1>
+			<h2 class="current-date">Monday, February 20</h3>
+			<header class="menu-info">
+				<div class="table">
+					<div class="cell">
+						<h3 class="caterer-name">Cosmo <span class="subdued">(Thai)</span></h2>
+					</div>
+					<div class="cell">
+						<div data-tid="likeBar"></div>
+					</div>
+					<div class="cell">
+						<div data-tid="commentBar" class="comment-bar"></div>
+					</div>
 				</div>
-				<div class="cell">
-					<div id="tmLikeBar"></div>
-					<div id="tmCommentBar"></div>
+			</header>
+			<section class="table">
+				<div class="category cell">
+					<header class="category-info">
+						<img data-tid="categoryIcon" class="category-icon" src="" />
+						<h2 data-tid="categoryName" class="category-name">Catering</h2>
+					</header>
+					<ul data-tid="caterFoodList" class="category-items">
+						<li class="category-item table">
+							<div class="cell">
+								<input data-tid="upvoteBtn" type="button" class="img-button ic-upvote" />
+								<div data-tid="ratingBall" class="item-rating"></div>
+								<input data-tid="downvoteBtn" type="button" class="img-button ic-downvote" />
+							</div>
+							<div class="cell wide">
+								<h1 data-tid="foodName" class="item-name">Steamed Mixed Veggies</h1>
+								<div data-tid="review" class="votes-bar">
+									<div class="num-upvotes">
+										<div class="icon ic-ups"></div>
+										<label data-tid="numUpVotes" class="note">400</label>
+									</div>
+									<div class="num-downvotes">
+										<div class="icon ic-downs"></div>
+										<label data-tid="numDownVotes" class="note">120</label>
+									</div>
+								</div>
+							</div>
+							<div class="cell">
+								<ul data-tid="allergyList" class="allergy-list">
+									<li class="allergy"><span>V</span></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
 				</div>
-			</div>
-		</header>
-		<section class="table">
-			<div class="category cell">
-				<header class="category-info">
-					<img data-tid="categoryIcon" class="category-icon" src="" />
-					<h2 data-tid="categoryName" class="category-name">Catering</h2>
+			</section>
+			<hr class="divider" />
+			<section class="comment-list">
+				<header class="clearfix">
+					<h1 class="list-title float-left">Comments</h1>
+					<h2 data-tid="commentCount" class="num-comments float-left">40 comments</h2>
 				</header>
-				<ul data-tid="caterFoodList" class="category-items">
-					<li class="category-item table">
-						<div class="cell">
-							<div class="item-rating"></div>
-						</div>
-						<div class="cell wide">
-							<div class="item-title">Steamed Mixed Veggies</div>
-							<div data-tid="review" class="note">40 reviews</div>
-						</div>
-						<div class="cell">
-							<div class="note">Allergens</div>
-							<div class="note">(V)(G)</div>
-						</div>
-						<div class="cell">
-							<input data-tid="upvote" type="button" class="icon ic-upvote" />
-							<input data-tid="downvote" type="button" class="icon ic-downvote" />
-						</div>
+				<form data-tid="commentForm">
+					<textarea class="input-field" placeholder="Enter your comment here:"></textarea>
+					<input type="submit" class="button" value="Comment" />
+				</form>
+				<ul data-tid="commentList" class="comment-list">
+					<li class="comment-item">
+						<h1 class="comment-author">Posted by: <span data-tid="authorName" class="highlight">Bob</span></h1>
+						<h2 data-tid="postDate" class="comment-date">20/10/2013</h2>
+						<p data-tid="commentBody" class="comment-body">This is such an awesome caterer!!! More plx!</p>
 					</li>
 				</ul>
-			</div>
+			</section>
 		</section>
-	</section>
-	<section class="weekly-menu">
-		<ul id="weeklyMenuList" class="table menu-items">
-			<li class="menu-item">
-			</li>
-		</ul>
+		<section class="cell weekly-menu">
+			<nav class="weekly-navigation">
+				<h1 data-tid="weekTitle" class="week-title">This Week:</h1>
+				<h2 data-tid="dateRange" class="week-date">20/2/2013 - 27/2/2013</h2>
+				<input data-tid="weekChangeBtn" type="button" class="button" value="Next Week" />
+			</nav>
+			<ul data-id="weeklyMenuList" class="menu-items">
+				<li class="menu-item">
+					<header class="menu-header">
+						<h1 class="menu-date">Monday <span class="subdued">14/2/2013</span></h1>
+						<h2 class="caterer-name">Asian Cuisine <span class="subdued">Chinese</span></h2>
+						<div class="caterer-info clearfix">
+							<div data-tid="likeBar" class="float-left"></div>
+							<a href="" class="fake-link"><span data-tid="numComments">10</span> comments</a>
+						</div>
+					</header>
+					<h3 class="category-name">Daily Catering</h3>
+					<ul class="category-list">
+						<li class="menu-item table">
+							<div class="cell">
+								<div data-tid="ratingBall" class="item-rating"></div>
+							</div>
+							<div class="cell wide">
+								<p data-tid="foodName">Food item 1</p>
+							</div>
+							<ul data-tid="allergyList" class="cell allergy-list">
+								<li class="allergy"><span>V</span></li>
+							</ul>
+							<nav class="cell clearfix">
+								<input data-tid="upvoteBtn" type="button" class="img-button ic-upvote float-left" />
+								<input data-tid="downvoteBtn" type="button" class="img-button ic-downvote float-left" />
+							</nav>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</section>
 	</section>
 } {
 	
