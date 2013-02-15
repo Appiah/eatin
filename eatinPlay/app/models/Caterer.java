@@ -1,12 +1,10 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ArrayList;
-
-import play.libs.Json;
-import java.util.HashMap;
 
 public class Caterer {
 	private Integer id;
@@ -73,6 +71,10 @@ public class Caterer {
 	
 	public void addComment(String text) {
 		commentList.add(new Comment(null, text, "Anonymous", new Date()));
+	}
+	
+	public void addComments(List<Comment> comments) {
+		commentList.addAll(comments);
 	}
 
 	public HashMap<String, Object> toJSON(){

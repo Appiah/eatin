@@ -8,7 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Caterer {
+import com.linkedin.eatin.utility.PostHelper;
+import com.linkedin.eatin.utility.Updateable;
+
+public class Caterer implements Updateable {
 	private Integer id;
 	private String name;
 	private String imageUrl;
@@ -19,6 +22,7 @@ public class Caterer {
 	
 	private List<FoodItem> foodList;
 	private List<Comment> commentList;
+	private List<Comment> bufferedComments;
 	
 	public Integer getId() { return id; }
 	public String getName() { return name; }
@@ -46,13 +50,17 @@ public class Caterer {
 		this.imageUrl = imageUrl;
 		this.foodType = foodType;
 		
-		this.foodList = new LinkedList<FoodItem>();
-		this.commentList = new LinkedList<Comment>();
+		init();
 	}
 	
-	private Caterer() {	
+	private Caterer() {
+		init();
+	}
+	
+	private void init() {
 		this.foodList = new LinkedList<FoodItem>();
 		this.commentList = new LinkedList<Comment>();
+		this.bufferedComments = new LinkedList<Comment>();
 	}
 	
 	public void addFoodItem(FoodItem item) {
@@ -80,30 +88,53 @@ public class Caterer {
 	}
 	
 	public void addComment(String text) {
-		commentList.add(new Comment(null, text, "Anonymous", new Date()));
+		addComment(new Comment(null, text, "Anonymous", new Date()));
 	}
 	
 	public void addComment(Comment comment) {
+		JSONObject data = new JSONObject();
+		try {
+			data.put("catererId", id);
+			data.put("message", comment.getMessage());
+			(new PostHelper(data, this)).execute(BaseData.SERVER_URL + BaseData.COMMENT_PATH);
+		}
+		catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		bufferedComments.add(comment);
+	}
+	
+	public void addCommentWithoutUpdate(Comment comment) {
 		commentList.add(comment);
-		numComments ++;
 	}
 	
 	public static Caterer fromJSON(JSONObject json) throws JSONException {
 		Caterer c = new Caterer();
 		
-		c.setNumLikes(json.getInt("numLikes"));
+		c.setNumLikes(json.getInt("totalLikes"));
 		c.setNumRatings(json.getInt("totalRatings"));
 		c.setId(json.getInt("catererId"));
 		c.setName(json.getString("caterer"));
 		c.setFoodType(json.getString("foodType"));
 		c.setImageUrl(json.getString("imageUrl"));
-		c.setNumComments(json.getInt("numComments"));
+//		c.setNumComments(json.getInt("numComments"));
 		
 		JSONArray comments = json.getJSONArray("comments");
+		c.setNumComments(comments.length());
 		
 		for (int i = 0; i < comments.length(); i++)
-			c.addComment(Comment.fromJSON(comments.getJSONObject(i)));
+			c.addCommentWithoutUpdate(Comment.fromJSON(comments.getJSONObject(i)));
 					
 		return c;
+	}
+	
+	@Override
+	public void update(String results) {
+		for (Comment comment : bufferedComments) {
+			commentList.add(comment);
+			numComments ++;
+		}
+		bufferedComments.clear();
 	}
 }
