@@ -1,16 +1,18 @@
 @import "mixins.less";
 
 html, body, p, h1, h2, h3, h4, h5, h6, div, header, footer, section, article, ul, ol, li, form, input, textarea {
-	vertical-align: baseline;
-	padding: 0;
+	vertical-align: top;
 	border: none;
-	margin: 0;
 
 	.box-sizing();
 }
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
+	line-height: 1em;
+	
+	padding: 0;
+	margin: 0;
 }
 
 li {
@@ -22,20 +24,13 @@ a {
 	font-color: black;
 }
 
-html, body, .page-wrapper {
+html, body {
 	width: 100%;
 	height: 100%;
 }
 
-html {
-	color: #333;
-	font-family: arial, helvetica;
-	font-size: 12px;
-}
-
-body {
-	position: relative;
-	.linear-gradient(~"140deg, #fff 0%, #FAB045 100%");
+input, textarea {
+	display: block;
 }
 
 .clearfix:after {
@@ -61,6 +56,7 @@ body {
 
 .table {
 	display: table;
+	width: auto;
 
 	.row {
 		display: table-row;
@@ -75,60 +71,39 @@ body {
 	width: 100%;
 }
 
-.input-field, .checkbox, .button {
-	margin: 1.1em 0 0;
+.tall {
+	height: 100%;
 }
 
-.input-field {
-	color: #444;
-	font-size: 14px;
 
-	display: block;
-	width: 100%;
 
-	padding: 0.6em 0.8em 0.5em;
-	border-radius: 5px;
-
-	.box-shadow(~"1px 1px 2px 0px #777777 inset");
+html {
+	font-family: Arial, Helvetica;
+	font-size: 12px;
 }
 
-.input-field::-webkit-input-placeholder {
-	color: #A2A3A5;
-}
-.input-field:-moz-placeholder {
-	color: #A2A3A5;
-}
-.input-field::-moz-placeholder {
-	color: #A2A3A5;
-}
-.input-field:-ms-input-placeholder {
-	color: #A2A3A5;
-}
-
-.checkbox {
-	vertical-align: bottom;
+body {
+	position: relative;
+	padding: 7em 0 0;
 }
 
 .label-right {
 	margin: 0 0 0 0.8em;
 }
 
-.button {
-	cursor: pointer;
-
-	color: #fff;
-	font-size: 14px;
-	text-shadow: -1px -1px 0 #888;
-
-	min-width: 100px;
-
-	padding: 0.7em 1.1em;
-	border: 1px solid #6D6E70;
-	border-radius: 4px;
-
-	.linear-gradient(~"top, #fff 0%, #fff 4.4%, #838383 4.5%, #AFAFAF 100%");
+.header {
+	position: absolute;
+	top: 0;
+	
+	width: 100%;
+	height: 7em;
+	
+	padding: 1em 1.7em;
 }
 
-.img-button {
-	cursor: pointer;
+.body {
+	width: 100%;
+	height: 100%;
+	
+	padding: 1em;
 }

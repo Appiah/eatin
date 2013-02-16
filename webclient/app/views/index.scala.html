@@ -5,28 +5,25 @@
 @() 
 
 @main("Weekly Menu") {
-	<section class="table">
+	<section class="wrapper table wide tall">
 		<section class="cell today-menu">
-			<h1 class="section-title">Today's Menu</h1>
-			<h2 class="current-date">Monday, February 20</h3>
-			<header class="menu-info">
-				<div class="table">
-					<div class="cell">
-						<h3 class="caterer-name">Cosmo <span class="subdued">(Thai)</span></h2>
-					</div>
-					<div class="cell">
-						<div data-tid="likeBar"></div>
-					</div>
-					<div class="cell">
-						<div data-tid="commentBar" class="comment-bar"></div>
-					</div>
+			<h1 class="section-title">Today's Menu<span class="current-date">Monday, February 20</span></h1>
+			<header class="menu-info table">
+				<div class="cell">
+					<h3 class="caterer-name">Cosmo <span class="subdued">(Thai)</span></h2>
+				</div>
+				<div class="cell">
+					<div data-tid="likeBar"></div>
+				</div>
+				<div class="cell">
+					<div data-tid="commentBar" class="comment-bar"></div>
 				</div>
 			</header>
-			<section class="table">
+			<section class="table wide">
 				<div class="category cell">
-					<header class="category-info">
-						<img data-tid="categoryIcon" class="category-icon" src="" />
-						<h2 data-tid="categoryName" class="category-name">Catering</h2>
+					<header class="category-info table">
+						<img data-tid="categoryIcon" class="category-icon cell" src='@routes.Assets.at("images/ic-cater.png")' />
+						<h2 data-tid="categoryName" class="category-name cell wide">Catering</h2>
 					</header>
 					<ul data-tid="caterFoodList" class="category-items">
 						<li class="category-item table">
@@ -37,12 +34,12 @@
 							</div>
 							<div class="cell wide">
 								<h1 data-tid="foodName" class="item-name">Steamed Mixed Veggies</h1>
-								<div data-tid="review" class="votes-bar">
-									<div class="num-upvotes">
+								<div data-tid="review" class="votes-bar clearfix">
+									<div class="num-upvotes float-left">
 										<div class="icon ic-ups"></div>
 										<label data-tid="numUpVotes" class="note">400</label>
 									</div>
-									<div class="num-downvotes">
+									<div class="num-downvotes float-left">
 										<div class="icon ic-downs"></div>
 										<label data-tid="numDownVotes" class="note">120</label>
 									</div>
@@ -50,28 +47,32 @@
 							</div>
 							<div class="cell">
 								<ul data-tid="allergyList" class="allergy-list">
-									<li class="allergy"><span>V</span></li>
+									<li class="allergy">V</li>
 								</ul>
 							</div>
 						</li>
 					</ul>
 				</div>
+				<div class="category cell"></div>
+				<div class="category cell"></div>
 			</section>
-			<hr class="divider" />
+			<hr />
 			<section class="comment-list">
-				<header class="clearfix">
-					<h1 class="list-title float-left">Comments</h1>
-					<h2 data-tid="commentCount" class="num-comments float-left">40 comments</h2>
+				<header>
+					<h1 class="list-title">Comments
+						<span class="num-comments">(<span data-tid="commentCount">40</span> comments)</span>
+					</h1>
 				</header>
-				<form data-tid="commentForm">
-					<textarea class="input-field" placeholder="Enter your comment here:"></textarea>
-					<input type="submit" class="button" value="Comment" />
+				<form data-tid="commentForm" class="wide clearfix">
+					<textarea class="input-field wide" placeholder="Enter your comment here:"></textarea>
+					<input type="submit" class="btn float-right" value="Comment" />
 				</form>
 				<ul data-tid="commentList" class="comment-list">
 					<li class="comment-item">
 						<h1 class="comment-author">Posted by: <span data-tid="authorName" class="highlight">Bob</span></h1>
 						<h2 data-tid="postDate" class="comment-date">20/10/2013</h2>
 						<p data-tid="commentBody" class="comment-body">This is such an awesome caterer!!! More plx!</p>
+						<hr class="divider" />
 					</li>
 				</ul>
 			</section>
@@ -115,7 +116,7 @@
 		</section>
 	</section>
 } {
-	
+	<link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main-page.css")'>
 } {
 	
 }
