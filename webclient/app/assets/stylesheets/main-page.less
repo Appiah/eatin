@@ -6,7 +6,53 @@
 	margin: 0;
 }
 
-				
+.food-rating {
+	width: 20px;
+	height: 20px;
+	
+	border: 1px solid;
+	margin: 0 auto;
+	
+	.border-radius(10px);
+}
+
+.ic-upvote, .ic-downvote {
+	width: 0;
+	height: 0;
+	
+	background: none;
+	padding: 0;
+	border: 10px transparent solid;
+}
+
+.ic-upvote {
+	margin: 0 0 0.5em;
+	border-bottom: 10px #c30000 solid;
+}
+
+.ic-downvote {
+	margin: 0.5em 0 0;
+	border-top: 10px #00c30e solid;
+}
+
+.ic-up, .ic-down {
+	display: inline-block;
+	vertical-align: text-bottom;
+	
+	width: 15px;
+	height: 15px;
+}
+
+.ic-up {
+	background: url("../images/ic-up.png");
+}
+
+.ic-down {
+	background: url("../images/ic-down.png");
+	
+	margin: 0 0 0 1.5em;
+}
+
 .allergy-list {
 	.allergy {
 		background: #c27f20;
@@ -45,9 +91,9 @@
 	}
 	
 	.caterer-name {
-		color: #555;
-		font-size: 36px;
-		padding: 0.4em 0 0 1em;
+		color: #aaa;
+		font-size: 32px;
+		padding: 0.4em 0 0 3em;
 	}
 	
 	.menu-info {
@@ -67,6 +113,8 @@
 		}
 		
 		.category-items {
+			margin: 0 0 0 0.5em;
+			
 			.category-item {
 				vertical-align: top;
 				
@@ -77,7 +125,8 @@
 				
 				.votes-bar {
 					font-size: 11px;
-					padding: 0 0 0 8em;
+					
+					margin: 0.5em 1em 0 0;
 				}
 				
 				.num-upvotes {
@@ -142,4 +191,54 @@
 	overflow: scroll;
 	
 	padding: 0 0 0 1.5em;
+	
+	.weekly-navigation {
+		position: relative;
+		
+		.week-title {
+			vertical-align: middle;
+			color: #333;
+			font-size: 32px;
+		}
+		
+		.week-date {
+			vertical-align: middle;
+			color: #258a20;
+			font-size: 14px;
+			
+			padding: 0.25em 0 0 1.3em;
+		}
+		
+		.week-change-btn {
+			position: absolute;
+			top: 1em;
+			right: 0.2em;
+		}
+	}
+	
+	.menu-item {
+		padding: 1em;
+		border: 1px #999 solid;
+		border-radius: 20px;
+		margin: 0.8em;
+		
+		.menu-header {
+			.menu-date {
+				color: #222;
+				font-size: 20px;
+			}
+			
+			.caterer-name {
+				color: #aaa;
+				font-size: 14px;
+			}
+		}
+			
+		.category-name {
+			color: #7fa3cb;
+			font-size: 20px;
+			
+			margin: 0 0 0.4em;
+		}
+	}
 }

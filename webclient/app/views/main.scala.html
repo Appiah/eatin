@@ -16,12 +16,14 @@
 	</head>
 	
 	<body>
-		<header class="header layout-shadow clearfix">
-			<img class="main-logo" src='@routes.Assets.at("images/logo.png")' />
-			<div id="profileBox" class="float-right profile-box">
-				<img id="profileIcon" class="profile-icon" src="" />
-				<div id="profileName" class="profile-name">Terry Lei</div>
-			</div>
+		<header class="navbar navbar-static-top header clearfix">
+			<section class="navbar-inner">
+				<img class="main-logo" src='@routes.Assets.at("images/logo.png")' />
+				<div id="profileBox" class="float-right profile-box">
+					<img id="profileIcon" class="profile-icon" src="" />
+					<div id="profileName" class="profile-name">Terry Lei</div>
+				</div>
+			</section>
 		</header>
 		<section class="body">
 			@content
