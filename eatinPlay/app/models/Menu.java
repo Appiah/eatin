@@ -11,6 +11,7 @@ public class Menu {
 	private Date date;
 	private Caterer[] caterers;
 	private List<FoodItem>[] foodItems;
+	private boolean[] approvedFlags;
 	
 	public Integer getId() { return id;}
 	public Date getDate() { return date; }
@@ -23,12 +24,16 @@ public class Menu {
 	public Caterer getCaterer(int menuId) { return caterers[menuId]; }
 	public void setCaterer(int day, Caterer caterer) { this.caterers[day] = caterer; }
 	
+	public Caterer getApprovedFlag(int category) { return flags[category]; }
+	public void setApprovedFlag(int category, bool is_approved) { this.approvedFlags[category] = is_approved; }
+	
 	@SuppressWarnings("unchecked")
 	public Menu(Date date) {
 		super();
 		this.date = (Date) date.clone();
 		this.foodItems = (List<FoodItem>[]) new List<?>[Constants.NUM_CAT];
 		this.caterers = new Caterer[Constants.NUM_CAT];
+		this.approvedFlags = new boolean[Constants.NUM_CAT];
 		
 		for (int i = 0; i < Constants.NUM_CAT; i++)
 			this.foodItems[i] = new ArrayList<FoodItem>();
@@ -65,6 +70,7 @@ public class Menu {
 			
 			m.put("foodItems", listOfItems[i]);
 			m.put("catererInfo", caterers[i].toJSON());
+			m.put("isApproved", approvedFlags[i]);
 
 			System.out.println("added date");
 
