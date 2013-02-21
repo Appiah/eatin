@@ -1,0 +1,120 @@
+@orderin_main("Welcome to OrderIn") {
+    
+    <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">OrderIn</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li><a href="admin">Home</a></li>
+                            <li class="active"><a href="admin-caterer">Manage Caterers</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+    
+} {
+<table border="0" cellpadding="5" width="100%">
+                <tr>
+                    <td><h2>Caterers</h2></td>
+                    <td align="right"><a class="btn btn-primary btn-large" href="caterer-info">Add Caterer</a></td>
+                </tr>
+            </table> 
+
+            <hr>
+
+            <table border="0" cellpadding="5" rules="rows" width="100%"> 
+                <tr bgcolor="#D4D5D6">
+                    <td>
+                        <h3>Pending</h3>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr id="row1">
+                    <td><h4>Cosmo</h4></td>
+                    <td align="right">
+                        <a class="btn btn-success btn-medium" 
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Approve</a>
+                        <a class="btn btn-danger btn-medium"
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Remove</a>
+                    </td>
+                </tr>
+                <tr id="row2">
+                    <td><h4>Fruit Garden</h4></td>
+                    <td align="right">
+                        <a class="btn btn-success btn-medium" 
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Approve</a>
+                        <a class="btn btn-danger btn-medium"
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Remove</a>
+                    </td>
+                </tr>
+                <tr id="row3">
+                    <td><h4>Sonoma Chicken Coop</h4></td>
+                    <td align="right">
+                        <a class="btn btn-success btn-medium" 
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Approve</a>
+                        <a class="btn btn-danger btn-medium"
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Remove</a>
+                    </td>
+                </tr>
+                <tr id="row4">
+                    <td><h4>Dosa on Vanecia</h4></td>
+                    <td align="right">
+                        <a class="btn btn-success btn-medium" 
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Approve</a>
+                        <a class="btn btn-danger btn-medium"
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Remove</a>
+                    </td>
+                </tr>
+            </table>
+
+            <hr>
+
+            <table border="0" cellpadding="5" rules="rows" width="100%"> 
+                <tr bgcolor="#D4D5D6">
+                    <td>
+                        <h3>Active</h3>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr id="row5">
+                    <td><h4>Kan Zeman</h4></td>
+                    <td align="right">
+                        <a class="btn btn-primary btn-medium" href="caterer-info">Edit</a>
+                        <a class="btn btn-danger btn-medium"
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Remove</a>
+                    </td>
+                </tr>
+                <tr id="row6">
+                    <td><h4>Opa</h4></td>
+                    <td align="right">
+                        <a class="btn btn-primary btn-medium" href="caterer-info">Edit</a>
+                        <a class="btn btn-danger btn-medium"
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Remove</a>
+                    </td>
+                </tr>
+                <tr id="row7">
+                    <td><h4>Greenfish</h4></td>
+                    <td align="right">
+                        <a class="btn btn-primary btn-medium" href="caterer-info">Edit</a>
+                        <a class="btn btn-danger btn-medium"
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Remove</a>
+                    </td>
+                </tr>
+                <tr id="row8">
+                    <td><h4>VJ&J BBQ</h4></td>
+                    <td align="right">
+                        <a class="btn btn-primary btn-medium" href="caterer-info">Edit</a>
+                        <a class="btn btn-danger btn-medium"
+                        onClick="removeCaterer(this.parentNode.parentNode.id)">Remove</a>
+                    </td>
+                </tr>
+            </table>
+}

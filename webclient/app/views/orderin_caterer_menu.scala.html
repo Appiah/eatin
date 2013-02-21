@@ -1,0 +1,84 @@
+@orderin_main("Welcome to OrderIn") {
+    
+    <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">OrderIn</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li><a href="caterer">Home</a></li>
+                            <li><a href="caterer-info">Info</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+    
+} {
+        <!-- Main hero unit for a primary marketing message or call to action -->
+        <div class="hero-unit">
+            <p>Please fill out the form below to send an approval request for
+                your catering on Wednesday, February 20th, 2013</p>
+        </div>
+        <div>
+            <div>
+                <h3 style="display: inline-block">Menu for CATERER'S NAME on DATE.</h3> 
+
+                <hr> 
+
+                <h4 style="display: inline-block">Style of Cuisine: </h4> 
+                    &nbsp;<input type="text" placeholder="Asian, American, etc." style="display: inline-block">
+                    &nbsp;&nbsp;<h4 style="display: inline-block">Number of Dishes: </h4>
+                    &nbsp;<input class="num" type="number" min="0" max="50" width:10px 
+                onchange="changeRowCount()"
+                id="numInput">
+                <hr> 
+
+            </div>
+            
+            <table width="590px" valign="top" cellpadding="10px" rules="rows" id="menuTable">
+                <tr bgcolor="#D4D5D6">
+                    <td><h4>Dishes</h4></td>
+                    <td><h4>Type</h4></td>
+                    <td><h4>Allergens</h4></td>
+                </tr>
+                <tr style="vertical-align: top">
+                    <td><input type="text" placeholder="Dish Name"></td>
+                    <td>
+                        <input type="checkbox"> Vegetarian <br>
+                        <input type="checkbox"> Vegan Friendly
+                    </td>
+
+                    <td>
+                        <input type="checkbox"> Dairy<br>
+                        <input type="checkbox"> Gluten<br>
+                        <input type="checkbox"> Shell Fish<br>
+                        <input type="checkbox"> Nuts
+                    </td>
+                </tr>
+                <tr style="vertical-align: top">
+                    <td><input type="text" placeholder="Dish Name"></td>
+                    <td>
+                        <input type="checkbox"> Vegetarian <br>
+                        <input type="checkbox"> Vegan Friendly
+                    </td>
+
+                    <td>
+                        <input type="checkbox"> Dairy<br>
+                        <input type="checkbox"> Gluten<br>
+                        <input type="checkbox"> Shell Fish<br>
+                        <input type="checkbox"> Nuts
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="right">
+                        <a class="btn" href="caterer">Submit</a>
+                    </td>
+                </tr>
+            </table>
+}
