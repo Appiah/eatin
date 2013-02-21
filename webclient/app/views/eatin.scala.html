@@ -8,56 +8,8 @@
 	<section class="wrapper wide tall">
 		<section class="today-menu">
 			<h1 class="section-title">Today's Menu<span class="current-date">Monday, February 20</span></h1>
-			<header class="menu-info table">
-				<div class="cell">
-					<h3 class="caterer-name">Cosmo <span class="subdued">(Thai)</span></h2>
-				</div>
-				<div class="cell">
-					<div data-tid="likeBar"></div>
-				</div>
-				<div class="cell">
-					<div data-tid="commentBar" class="comment-bar"></div>
-				</div>
-			</header>
-			<section class="table wide">
-				<div class="category cell">
-					<div class="inset-block">
-						<header class="category-info table">
-							<img data-tid="categoryIcon" class="category-icon cell" src='@routes.Assets.at("images/ic-cater.png")' />
-							<h2 data-tid="categoryName" class="category-name cell wide">Catering</h2>
-						</header>
-						<ul data-tid="caterFoodList" class="category-items">
-							<li class="category-item table">
-								<div class="cell">
-									<input data-tid="upvoteBtn" type="button" class="img-button ic-upvote" />
-									<div data-tid="ratingBall" class="food-rating"></div>
-									<input data-tid="downvoteBtn" type="button" class="img-button ic-downvote" />
-								</div>
-								<div class="cell wide left-spacing top-spacing">
-									<p data-tid="foodName" class="item-name">Steamed Mixed Veggies</p>
-									<div data-tid="review" class="votes-bar float-right clearfix">
-										<div class="num-upvotes float-left">
-											<div class="icon ic-up"></div>
-											<label data-tid="numUpVotes" class="note">400</label>
-										</div>
-										<div class="num-downvotes float-left">
-											<div class="icon ic-down"></div>
-											<label data-tid="numDownVotes" class="note">120</label>
-										</div>
-									</div>
-								</div>
-								<div class="cell top-spacing">
-									<ul data-tid="allergyList" class="allergy-list">
-										<li class="allergy">V</li>
-									</ul>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div class="category cell"></div>
-				<div class="category cell"></div>
-			</section>
+			<ul data-tid="centerMenu" class="clearfix wide">
+			</ul>
 			<hr />
 			<section class="comment-list">
 				<header>
@@ -70,12 +22,6 @@
 					<input type="submit" class="btn float-right top-margin" value="Comment" />
 				</form>
 				<ul data-tid="commentList" class="comment-list">
-					<li class="comment-item">
-						<h1 class="comment-author">Posted by: <span data-tid="authorName" class="highlight">Bob</span></h1>
-						<span data-tid="postDate" class="comment-date">20/10/2013</span>
-						<p data-tid="commentBody" class="comment-body">This is such an awesome caterer!!! More plx!</p>
-						<hr class="divider" />
-					</li>
 				</ul>
 			</section>
 		</section>
@@ -85,7 +31,7 @@
 				<h2 data-tid="dateRange" class="week-date">20/2/2013 - 27/2/2013</h2>
 				<input data-tid="weekChangeBtn" type="button" class="week-change-btn btn btn-info" value="Next Week" />
 			</nav>
-			<ul data-tid="weeklyMenuList" class="menu-items">
+			<ul data-tid="weeklyMenuList" class="menu-items clearfix">
 			</ul>
 		</section>
 	</section>
@@ -93,8 +39,65 @@
 	<link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/libs/page-flipper.css")'>
 	<link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main-page.css")'>
 } {
+	<script id="tCommentItem" type="text/template">
+		<li class="comment-item">
+			<hr class="divider" />
+			<h1 class="comment-author">Posted by: <span data-tid="authorName" class="highlight">Bob</span></h1>
+			<span data-tid="postDate" class="comment-date">20/10/2013</span>
+			<p data-tid="commentBody" class="comment-body">This is such an awesome caterer!!! More plx!</p>
+		</li>
+	</script>
+	<script id="tCenterMenuType" type="text/template">
+		<li class="category float-left">
+			<div class="inset-block">
+				<header class="category-info table">
+					<img data-tid="categoryIcon" class="category-icon cell" src='@routes.Assets.at("images/ic-cater.png")' />
+					<div class="cell">
+						<h2 data-tid="categoryName" class="category-name wide"></h2>
+						<h3 class="caterer-name wide">
+							<p data-tid="catererName"></span>
+							<p data-tid="catererType" class="subdued"></span>
+						</h2>
+						<div data-tid="likeBar"></div>
+					</div>
+				</header>
+				<ul data-tid="foodList" class="category-items">
+				</ul>
+			</div>
+		</li>
+	</script>
+	<script id="tCenterFoodItem" type="text/template">
+		<li class="category-item">
+			<hr class="divider" />
+			<div class="table wide">
+				<div class="cell">
+					<input data-tid="upvoteBtn" type="button" class="img-button ic-upvote" />
+					<div data-tid="ratingBall" class="food-rating"></div>
+					<input data-tid="downvoteBtn" type="button" class="img-button ic-downvote" />
+				</div>
+				<div class="cell wide left-spacing top-spacing">
+					<p data-tid="foodName" class="item-name">Steamed Mixed Veggies</p>
+					<div data-tid="review" class="votes-bar float-right clearfix">
+						<div class="num-upvotes float-left">
+							<div class="icon ic-up"></div>
+							<label data-tid="numUpVotes" class="note">400</label>
+						</div>
+						<div class="num-downvotes float-left">
+							<div class="icon ic-down"></div>
+							<label data-tid="numDownVotes" class="note">120</label>
+						</div>
+					</div>
+				</div>
+				<div class="cell top-spacing">
+					<ul data-tid="allergyList" class="allergy-list">
+						<li class="allergy">V</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+	</script>
 	<script id="tSideMenuItem" type="text/template">
-		<li class="menu-item">
+		<li class="menu-item inset-block">
 			<header class="menu-header">
 				<h1 class="menu-date"><span data-tid="day"></span><span data-tid="date" class="subdued left-spacing"></span></h1>
 			</header>
@@ -136,7 +139,10 @@
 	</script>
 	<script src='@routes.Assets.at("javascripts/libs/jquery-ui-1.10.0.min.js")' type="text/javascript"></script>
 	<script src='@routes.Assets.at("javascripts/libs/page-flipper.js")' type="text/javascript"></script>
+	<script src='@routes.Assets.at("javascripts/views/todayCommentItems.js")' type="text/javascript"></script>
 	<script src='@routes.Assets.at("javascripts/views/weeklyMenuItem.js")' type="text/javascript"></script>
 	<script src='@routes.Assets.at("javascripts/views/weeklyMenu.js")' type="text/javascript"></script>
+	<script src='@routes.Assets.at("javascripts/views/todayFoodItems.js")' type="text/javascript"></script>
+	<script src='@routes.Assets.at("javascripts/views/todayMenuCategories.js")' type="text/javascript"></script>
 	<script src='@routes.Assets.at("javascripts/eatin.js")' type="text/javascript"></script>
 }

@@ -3,7 +3,7 @@
 .wrapper {
 	position: relative;
 
-	padding: 0 28.5em 0 0;
+	padding: 0 25.5em 0 0;
 
 	margin: 0;
 }
@@ -19,12 +19,12 @@
 
 .ic-upvote {
 	margin: 0 0 0.5em 1px;
-	border-bottom: 10px #c30000 solid;
+	border-bottom: 10px #00c30e solid;
 }
 
 .ic-downvote {
 	margin: 0.5em 0 0 0;
-	border-top: 10px #00c30e solid;
+	border-top: 10px #c30000 solid;
 }
 
 .ic-up, .ic-down {
@@ -68,10 +68,12 @@
 .today-menu {
 	width: 100%;
 	height: 100%;
+	
+	table-layout: fixed;
 
 	overflow: auto;
 
-	padding: 1em 1.5em 1em 1em;
+	padding: 0 1.5em 0 1em;
 
 	.food-rating {
 		width: 20px;
@@ -85,6 +87,7 @@
 
 	.section-title {
 		font-size: 48px;
+		margin: 0 0 0.3em;
 	}
 
 	.current-date {
@@ -94,23 +97,13 @@
 		padding: 0 0 0 1.4em;
 	}
 
-	.caterer-name {
-		color: #2f55e9;
-		font-size: 32px;
-		padding: 0.4em 0 0 0.25em;
-
-		.subdued {
-			color: #82A8FF;
-			font-size: 28px;
-		}
-	}
-
 	.menu-info {
 		width: 100%;
 	}
 
 	.category {
 		width: 33%;
+		padding: 0 0 0 0.5em;
 
 		.category-name {
 			vertical-align: middle;
@@ -121,14 +114,32 @@
 			padding: 0 0 0 0.6em;
 		}
 
-		.category-items {
-			margin: 0 0 0 0.5em;
+		.caterer-name {
+			color: #2f55e9;
+			font-size: 15px;
+			padding: 0.2em 0 0 2em;
+			
+			.subdued {
+				color: #82A8FF;
+				font-size: 12px;
+			}
+		}
 
+		.category-items {
 			.category-item {
+				margin: 0 0 0 0.5em;
 				vertical-align: top;
+				
+				.table {
+					margin: 0;
+				}
+				
+				.divider {
+					margin: 4px 0 3px;
+				}
 
 				.item-name {
-					font-size: 18px;
+					font-size: 16px;
 
 				}
 
@@ -194,7 +205,7 @@
 }
 
 .weekly-menu {
-	width: 28em;
+	width: 25em;
 	height: 100%;
 
 	position: absolute;
@@ -203,7 +214,7 @@
 
 	overflow: auto;
 
-	padding: 0 0 0 1.5em;
+	padding: 0.5em 0 0 1.5em;
 
 	.food-rating {
 		width: 14px;
@@ -240,9 +251,6 @@
 	}
 
 	.menu-item {
-		padding: 1em;
-		border: 1px #999 solid;
-		border-radius: 20px;
 		margin: 0.8em;
 
 		.divider {
@@ -305,6 +313,27 @@
 					vertical-align: middle;
 				}
 			}
+		}
+	}
+}
+
+@media all and (max-width: 1024px) {
+	.wrapper {
+		padding-right: 0;
+	}
+	
+	.today-menu {
+		display: none;
+	}
+	
+	.weekly-menu {
+		width: 100%;
+		padding-right: 0.75em;
+		
+		.menu-item {
+			float: left;
+			width: 21em;
+			margin: 0.4em;
 		}
 	}
 }
