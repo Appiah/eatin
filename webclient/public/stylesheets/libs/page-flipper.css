@@ -1,0 +1,41 @@
+.pf-frame {
+	position: relative;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-perspective: 900px;
+	-moz-perspective: 900px;
+	-ms-perspective: 900px;
+	-o-perspective: 900px;
+	perspective: 900px;
+}
+
+.pf-frame .pf-page {
+	width: 100%;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	-ms-backface-visibility: hidden;
+	-o-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.pf-frame .pf-page.pf-blank {
+	height: 5em;
+}
+
+.pf-frame .pf-page.pf-hidden {
+	position: absolute;
+	visibility: hidden;
+	display: none;
+	opacity: 0;
+	top: 0;
+}

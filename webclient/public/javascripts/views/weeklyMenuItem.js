@@ -13,10 +13,10 @@ var WeeklyMenuItem = Backbone.View.extend({
 			var $foodList = $element.find("[data-tid='foodList']");
 			var $foodItemTemplate = $element.find("[data-tid='foodItemTemplate']");
 			
-			$element.find("[data-tid='categoryName']").html(_title);
 			$element.find("[data-tid='catererName']").html(foodsData.catererInfo.caterer);
 			$element.find("[data-tid='catererType']").html(foodsData.catererInfo.foodType);
 			$element.find("[data-tid='likeBar']").html();
+			$element.find("[data-tid='numComments']").html(foodsData.catererInfo.comments.length);
 			$element.find("[data-tid='commentLink']").click(function(_e) {
 				
 			});
@@ -25,7 +25,8 @@ var WeeklyMenuItem = Backbone.View.extend({
 			for(var j = 0; j < foodsData.foodItems.length; j++) {
 				var food = foodsData.foodItems[j];
 				var $foodItem = $foodItemTemplate.clone();
-				$foodItem.find("[data-tid='ratingBall']");
+				
+				$foodItem.find("[data-tid='ratingBall']").css("background-color", Utility.getRatingColor(food));
 				$foodItem.find("[data-tid='foodName']").html(food.name);
 				$foodItem.find("[data-tid='upvoteBtn']").click(function(_e) {
 					

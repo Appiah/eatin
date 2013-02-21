@@ -2,13 +2,13 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET     /                           controllers.Application.index()
-GET	/orderIn		    controllers.Application.orderIn()
-GET	/orderIn/admin		    controllers.Application.orderInAdminMain()
-GET 	/orderIn/admin-caterer	    controllers.Application.orderInAdminCaterer()
-GET 	/orderIn/caterer	    controllers.Application.orderInCatererMain()
-GET	/orderIn/caterer-menu	    controllers.Application.orderInCatererMenu()
-GET 	/orderIn/caterer-info 	    controllers.Application.orderInCatererInfo()
+GET     /eatin                      controllers.Application.eatIn()
+GET     /orderIn                    controllers.Application.orderIn()
+GET     /orderIn/admin              controllers.Application.orderInAdminMain()
+GET     /orderIn/admin-caterer      controllers.Application.orderInAdminCaterer()
+GET     /orderIn/caterer            controllers.Application.orderInCatererMain()
+GET     /orderIn/caterer-menu       controllers.Application.orderInCatererMenu()
+GET     /orderIn/caterer-info       controllers.Application.orderInCatererInfo()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

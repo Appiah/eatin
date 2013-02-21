@@ -1,25 +1,17 @@
 @import "mixins.less";
 
 .wrapper {
-	table-layout: fixed;
-	
-	margin: 0;
-}
+	position: relative;
 
-.food-rating {
-	width: 20px;
-	height: 20px;
-	
-	border: 1px solid;
-	margin: 0 auto;
-	
-	.border-radius(10px);
+	padding: 0 28.5em 0 0;
+
+	margin: 0;
 }
 
 .ic-upvote, .ic-downvote {
 	width: 0;
 	height: 0;
-	
+
 	background: none;
 	padding: 0;
 	border: 10px transparent solid;
@@ -35,18 +27,10 @@
 	border-top: 10px #00c30e solid;
 }
 
-.ic-upvote.hori {
-	margin: -0.3em 0 0;
-}
-
-.ic-downvote.hori {
-	margin: 0.4em 0 0;
-}
-
 .ic-up, .ic-down {
 	display: inline-block;
 	vertical-align: text-bottom;
-	
+
 	width: 15px;
 	height: 15px;
 }
@@ -57,13 +41,13 @@
 
 .ic-down {
 	background: url("../images/ic-down.png");
-	
+
 	margin: 0 0 0 1.5em;
 }
 
 .allergy-list {
 	vertical-align: middle;
-	
+
 	.allergy {
 		background: #c27f20;
 		color: #fff;
@@ -72,121 +56,136 @@
 		height: 2.2em;
 		padding: 0 0 0 0.8em;
 		margin: 0 0 0 1em;
-		
+
 		.border-radius(1.1em);
 	}
-	
+
 	.allergy:first-child {
 		margin-left: 0;
 	}
 }
 
 .today-menu {
-	width: 75%;
-	
-	overflow: scroll;
-	
+	width: 100%;
+	height: 100%;
+
+	overflow: auto;
+
 	padding: 1em 1.5em 1em 1em;
-	
+
+	.food-rating {
+		width: 20px;
+		height: 20px;
+
+		border: 1px solid #555;
+		margin: 0 auto;
+
+		.border-radius(10px);
+	}
+
 	.section-title {
 		font-size: 48px;
 	}
-	
+
 	.current-date {
-		color: #999;
-		font-size: 20px;
-		vertical-align: middle;
-		
-		padding: 0 0 0 2.5em;
+		color: #ccc;
+		font-size: 38px;
+
+		padding: 0 0 0 1.4em;
 	}
-	
+
 	.caterer-name {
-		color: #aaa;
+		color: #2f55e9;
 		font-size: 32px;
-		padding: 0.4em 0 0 3em;
+		padding: 0.4em 0 0 0.25em;
+
+		.subdued {
+			color: #82A8FF;
+			font-size: 28px;
+		}
 	}
-	
+
 	.menu-info {
 		width: 100%;
 	}
-	
+
 	.category {
 		width: 33%;
-		
+
 		.category-name {
 			vertical-align: middle;
-			
+
 			color: #444;
 			font-size: 30px;
-			
+
 			padding: 0 0 0 0.6em;
 		}
-		
+
 		.category-items {
 			margin: 0 0 0 0.5em;
-			
+
 			.category-item {
 				vertical-align: top;
-				
+
 				.item-name {
 					font-size: 18px;
-					
+
 				}
-				
+
 				.votes-bar {
 					font-size: 11px;
-					
+
 					margin: 0.5em 1em 0 0;
 				}
-				
+
 				.num-upvotes {
 					color: #00c30e;
 				}
-				
+
 				.num-downvotes {
 					color: #c30000;
 				}
 			}
 		}
 	}
-	
+
 	.comment-list {
 		.list-title {
 			color: #333;
 			font-size: 36px;
 			margin: 0 0 0.3em 0;
 		}
-		
+
 		.num-comments {
 			color: #888;
 			font-size: 16px;
-			
+
 			vertical-align: text-bottom;
-			
+
 			padding: 0 0 0 2em;
 		}
-		
+
 		.comment-item {
 			.comment-author {
-				font-size: 12px;
-				
+				font-size: 15px;
+
 				.highlight {
 					color: #2fa229;
 				}
 			}
-			
+
 			.comment-date {
 				color: #aaa;
-				font-size: 10px;
+				font-size: 12px;
 				margin: 0.3em 0 0 1.2em;
 			}
-			
+
 			.comment-body {
 				color: #333;
-				font-size: 11px;
-				margin: 1em 0 0 0.5em;
+				font-size: 13px;
+				margin: 0.8em 0 0 0.5em;
 			}
-			
+
 			.divider {
 				margin-top: 1em;
 			}
@@ -195,64 +194,117 @@
 }
 
 .weekly-menu {
-	min-width: 28em;
-	width: 25%;
-	
-	overflow: scroll;
-	
+	width: 28em;
+	height: 100%;
+
+	position: absolute;
+	right: 0;
+	top: 0;
+
+	overflow: auto;
+
 	padding: 0 0 0 1.5em;
-	
+
+	.food-rating {
+		width: 14px;
+		height: 14px;
+
+		border: 1px solid #555;
+		margin: 0 auto;
+
+		.border-radius(7px);
+	}
+
 	.weekly-navigation {
 		position: relative;
-		
+
 		.week-title {
 			vertical-align: middle;
 			color: #333;
 			font-size: 32px;
 		}
-		
+
 		.week-date {
 			vertical-align: middle;
 			color: #258a20;
 			font-size: 14px;
-			
+
 			padding: 0.25em 0 0 1.3em;
 		}
-		
+
 		.week-change-btn {
 			position: absolute;
 			top: 1em;
 			right: 0.2em;
 		}
 	}
-	
+
 	.menu-item {
 		padding: 1em;
 		border: 1px #999 solid;
 		border-radius: 20px;
 		margin: 0.8em;
-		
+
+		.divider {
+			margin: 10px 0;
+		}
+
 		.menu-header {
 			.menu-date {
-				color: #222;
-				font-size: 20px;
+				color: #444;
+				font-size: 24px;
 			}
-			
+
 			.menu-date .subdued {
 				color: #aaa;
+				font-size: 20px;
 			}
-			
-			.caterer-name {
-				color: #aaa;
+		}
+
+		.caterer-name {
+			color: #555;
+			font-size: 16px;
+
+			.subdued {
+				color: #999;
 				font-size: 14px;
 			}
 		}
-			
+
+		.caterer-info {
+			margin: 0.25em 0 0;
+		}
+
 		.category-name {
 			color: #7fa3cb;
 			font-size: 20px;
-			
+
 			margin: 0 0 0.4em;
+		}
+
+		.category-list {
+			padding: 8px 0 0;
+		}
+
+		.food-list {
+			font-size: 11px;
+			padding: 0 0 0 1em;
+
+			.food-item {
+				margin: 0 0 0.3em;
+
+				.ic-upvote {
+					margin: 1px 0 0;
+				}
+
+				.ic-downvote {
+					margin: 10px 0 0;
+				}
+
+				.cell {
+					vertical-align: middle;
+				}
+			}
 		}
 	}
 }
