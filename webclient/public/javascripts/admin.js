@@ -1,4 +1,4 @@
 function publishAlert()
 {
-	alert("Publishing the menu was a success! =-)");
+	alert("Publishing the menu was a success! :)");
 }
