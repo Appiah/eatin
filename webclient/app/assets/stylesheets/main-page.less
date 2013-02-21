@@ -26,13 +26,21 @@
 }
 
 .ic-upvote {
-	margin: 0 0 0.5em;
+	margin: 0 0 0.5em 1px;
 	border-bottom: 10px #c30000 solid;
 }
 
 .ic-downvote {
-	margin: 0.5em 0 0;
+	margin: 0.5em 0 0 0;
 	border-top: 10px #00c30e solid;
+}
+
+.ic-upvote.hori {
+	margin: -0.3em 0 0;
+}
+
+.ic-downvote.hori {
+	margin: 0.4em 0 0;
 }
 
 .ic-up, .ic-down {
@@ -54,6 +62,8 @@
 }
 
 .allergy-list {
+	vertical-align: middle;
+	
 	.allergy {
 		background: #c27f20;
 		color: #fff;
@@ -226,6 +236,10 @@
 			.menu-date {
 				color: #222;
 				font-size: 20px;
+			}
+			
+			.menu-date .subdued {
+				color: #aaa;
 			}
 			
 			.caterer-name {
