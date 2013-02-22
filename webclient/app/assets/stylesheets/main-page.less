@@ -337,3 +337,42 @@
 		}
 	}
 }
+
+@media all and (max-width: 640px) {
+	.body {
+		padding: 0
+	}
+	
+	.weekly-navigation {
+		display: none;
+	}
+	
+	.header {
+		margin: 0;
+		
+		.profile-box {
+			display: none;
+		}
+	}
+	
+	.weekly-menu {
+		padding: 0;
+		
+		.menu-items {
+			white-space: nowrap;
+			
+			width: 500%;
+			height: 100%;
+		
+			.menu-item {
+				display: inline-block;
+				margin: 0;
+				border: 0;
+				width: 20%;
+				height: 100%;
+				
+				.box-shadow(none);
+			}
+		}
+	}
+}
