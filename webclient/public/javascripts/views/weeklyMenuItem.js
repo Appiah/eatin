@@ -34,6 +34,13 @@ var WeeklyMenuItem = Backbone.View.extend({
 				$foodItem.find("[data-tid='downvoteBtn']").click(function(_e) {
 					
 				});
+				var $allergyList = $foodItem.find("[data-tid='allergyList']");
+
+				if(food.allergies) {
+					for(var i = 0; i < food.allergies.length; i++)
+						$allergyList.append("<li class='allergy'>" + food.allergies[i].charAt(0) + "</li>");
+				}
+				
 				$foodList.append($foodItem);
 			}
 			
