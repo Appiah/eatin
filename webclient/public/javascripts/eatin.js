@@ -24,35 +24,49 @@ $(function() {
 					"foodId":75,
 					"numRatings":10,
 					"name":"Chaat Ki Parat",
-					"numLikes":10
+					"numLikes":10,
+					"allergies": [
+						"nuts"
+					]
 				},
 				{
 					"foodId":76,
 					"numRatings":6,
 					"name":"Avocado Jhalmuri",
-					"numLikes":2
+					"numLikes":2,
+					"allergies": []
 				},
 				{
 					"foodId":77,
 					"numRatings":7,
 					"name":"Ananas Goju",
-					"numLikes":7
+					"numLikes":7,
+					"allergies": [
+									"gluten",
+									"shellfish"
+								]
 				},
 				{
 					"foodId":78,
 					"numRatings":10,
 					"name":"Chicken Pakora",
-					"numLikes":8
+					"numLikes":8,
+					"allergies": [
+									"nuts"
+								]
 				},
 				{
 					"foodId":79,
 					"numRatings":7,
 					"name":"Lime and Coconut soup",
-					"numLikes":5
+					"numLikes":5,
+					"allergies": [
+									"dairy"
+								]
 					 }
 				 ]
-			 },
-			 "vegetarian":{
+			},
+			"vegetarian":{
 			"catererInfo":{
 				"totalLikes":113,
 				"phoneNumber":null,
@@ -74,31 +88,41 @@ $(function() {
 					"foodId":5,
 					"numRatings":0,
 					"name":"Vegetable Tempura",
-					"numLikes":0
+					"numLikes":0,
+					"allergies": [
+									"gluten"
+								]
 				},
 				{
 					"foodId":6,
 					"numRatings":0,
 					"name":"Pad Thai Noodles",
-					"numLikes":0
+					"numLikes":0,
+					"allergies": [
+									"gluten",
+									"nuts"
+								]
 				},
 				{
 					"foodId":7,
 					"numRatings":0,
 					"name":"Miso Salad",
-					"numLikes":0
+					"numLikes":0,
+					"allergies": []
 				},
 				{
 					"foodId":8,
 					"numRatings":0,
 					"name":"Garlic Tofu Eggplant",
-					"numLikes":0
+					"numLikes":0,
+					"allergies": []
 				},
 				{
 					"foodId":9,
 					"numRatings":0,
 					"name":"Steamed Vegetables",
-					"numLikes":0
+					"numLikes":0,
+					"allergies": []
 					 }
 				 ]
 			 },
@@ -125,31 +149,43 @@ $(function() {
 					"foodId":10,
 					"numRatings":26,
 					"name":"Pasta Salad",
-					"numLikes":11
+					"numLikes":11,
+					"allergies": []
 				},
 				{
 					"foodId":11,
 					"numRatings":45,
 					"name":"Swedish Meatballs",
-					"numLikes":27
+					"numLikes":27,
+					"allergies": []
 				},
 				{
 					"foodId":12,
 					"numRatings":11,
 					"name":"Meat Lasgna",
-					"numLikes":11
+					"numLikes":11,
+					"allergies": [
+									"gluten"
+								]
 				},
 				{
 					"foodId":13,
 					"numRatings":17,
 					"name":"Baked Salmon",
-					"numLikes":6
+					"numLikes":6,
+					"allergies": [
+									"nuts",
+									"dairy"
+								]
 				},
 				{
 					"foodId":14,
 					"numRatings":83,
 					"name":"Roasted Potatoes",
-					"numLikes":58
+					"numLikes":58,
+					"allergies": [
+									"gluten"
+								]
 						  }
 					  ]
 				  }
