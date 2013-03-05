@@ -8,22 +8,11 @@
 	<section class="wrapper wide tall">
 		<section class="today-menu">
 			<h1 class="section-title">Today's Menu<span class="current-date">Monday, February 20</span></h1>
-			<ul data-tid="centerMenu" class="clearfix wide">
-			</ul>
-			<hr />
-			<section class="comment-list">
-				<header>
-					<h1 class="list-title">Comments
-						<span class="num-comments">(<span data-tid="commentCount">40</span> comments)</span>
-					</h1>
-				</header>
-				<form data-tid="commentForm" class="wide clearfix">
-					<textarea class="input-field wide" placeholder="Enter your comment here:"></textarea>
-					<input type="submit" class="btn float-right top-margin" value="Comment" />
-				</form>
-				<ul data-tid="commentList" class="comment-list">
-				</ul>
-			</section>
+			<div data-tid="centerMenu">
+				<nav data-tid="menuTypeNav" class="today-navigation clearfix wide"></nav>
+				<hr class="divider" />
+				<ul data-tid="menuTypeList" class="clearfix wide"></ul>
+			</div>
 		</section>
 		<section class="weekly-menu">
 			<nav class="weekly-navigation">
@@ -47,25 +36,45 @@
 			<p data-tid="commentBody" class="comment-body">This is such an awesome caterer!!! More plx!</p>
 		</li>
 	</script>
+	
+	<script id="tCenterMenuTypeBtn" type="text/template">
+		<div class="category-info inset-block float-left">
+			<header class="table">
+				<img data-tid="categoryIcon" class="category-icon cell" src='@routes.Assets.at("images/ic-cater.png")' />
+				<div class="cell">
+					<h2 data-tid="categoryName" class="category-name wide"></h2>
+					<h3 class="caterer-name wide">
+						<p data-tid="catererName"></span>
+						<p data-tid="catererType" class="subdued"></span>
+					</h2>
+					<div data-tid="likeBar"></div>
+				</div>
+			</header>
+		</div>
+	</script>
+	
 	<script id="tCenterMenuType" type="text/template">
 		<li class="category float-left">
-			<div class="inset-block">
-				<header class="category-info table">
-					<img data-tid="categoryIcon" class="category-icon cell" src='@routes.Assets.at("images/ic-cater.png")' />
-					<div class="cell">
-						<h2 data-tid="categoryName" class="category-name wide"></h2>
-						<h3 class="caterer-name wide">
-							<p data-tid="catererName"></span>
-							<p data-tid="catererType" class="subdued"></span>
-						</h2>
-						<div data-tid="likeBar"></div>
-					</div>
-				</header>
-				<ul data-tid="foodList" class="category-items">
-				</ul>
+			<div class="">
+				<ul data-tid="foodList" class="category-items"></ul>
+				<hr class="divider" />
+				<section class="comment-list">
+					<header>
+						<h1 class="list-title">Comments
+							<span class="num-comments">(<span data-tid="commentCount">40</span> comments)</span>
+						</h1>
+					</header>
+					<form data-tid="commentForm" class="wide clearfix">
+						<textarea class="input-field wide" placeholder="Enter your comment here:"></textarea>
+						<input type="submit" class="btn float-right top-margin" value="Comment" />
+					</form>
+					<ul data-tid="commentList" class="comment-list">
+					</ul>
+				</section>
 			</div>
 		</li>
 	</script>
+	
 	<script id="tCenterFoodItem" type="text/template">
 		<li class="category-item">
 			<hr class="divider" />
@@ -77,7 +86,7 @@
 				</div>
 				<div class="cell wide left-spacing top-spacing">
 					<p data-tid="foodName" class="item-name">Steamed Mixed Veggies</p>
-					<div data-tid="review" class="votes-bar float-right clearfix">
+					<div data-tid="review" class="votes-bar float-left clearfix">
 						<div class="num-upvotes float-left">
 							<div class="icon ic-up"></div>
 							<label data-tid="numUpVotes" class="note">400</label>
@@ -88,14 +97,17 @@
 						</div>
 					</div>
 				</div>
-				<div class="cell top-spacing">
+				<div class="cell top-spacing allergy-box">
 					<ul data-tid="allergyList" class="allergy-list">
-						<li class="allergy">V</li>
+						<li class="allergy">Gluten</li>
+						<li class="allergy">Lactose</li>
 					</ul>
 				</div>
 			</div>
+			<hr class="divider" />
 		</li>
 	</script>
+	
 	<script id="tSideMenuItem" type="text/template">
 		<li class="menu-item inset-block">
 			<header class="menu-header">
@@ -137,6 +149,7 @@
 			</ul>
 		</li>
 	</script>
+	
 	<script src='@routes.Assets.at("javascripts/libs/jquery-ui-1.10.0.min.js")' type="text/javascript"></script>
 	<script src='@routes.Assets.at("javascripts/libs/page-flipper.js")' type="text/javascript"></script>
 	<script src='@routes.Assets.at("javascripts/views/todayCommentItems.js")' type="text/javascript"></script>

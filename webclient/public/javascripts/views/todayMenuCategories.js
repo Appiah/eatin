@@ -1,39 +1,53 @@
 var TodayMenuCategories = Backbone.View.extend({
 	initialize: function() {
 		this.data = this.options.data;
+		
 		this.render();
 	},
 	
 	render: function() {
 		var $menuTypeTemplate = $($.trim(_.template($("#tCenterMenuType").html(), {})));
+		var $menuButtonTemplate = $($.trim(_.template($("#tCenterMenuTypeBtn").html(), {})));
 		var self = this;
 		
-		var buildItem = function(_data, _name, _imageUrl) {
+		this.$menuList = this.$el.find("[data-tid='menuTypeList']");
+		this.$menuNavList = this.$el.find("[data-tid='menuTypeNav']");
+		
+		var buildItem = function(_pgnum, _data, _name, _imageUrl) {
 			var $menuType = $menuTypeTemplate.clone();
+			var $menuButton = $menuButtonTemplate.clone();
 	
-			$menuType.find("[data-tid='categoryIcon']").prop("src", _imageUrl);
-			$menuType.find("[data-tid='categoryName']").html(_name);
-			$menuType.find("[data-tid='catererName']").html(_data.catererInfo.caterer);
-			$menuType.find("[data-tid='catererType']").html(_data.catererInfo.foodType);
-			$menuType.find("[data-tid='numUpVotes']").html(_data.numLikes);
-			$menuType.find("[data-tid='numDownVotes']").html(_data.numRatings - _data.numLikes);
+			$menuButton.find("[data-tid='categoryIcon']").prop("src", _imageUrl);
+			$menuButton.find("[data-tid='categoryName']").html(_name);
+			$menuButton.find("[data-tid='catererName']").html(_data.catererInfo.caterer);
+			$menuButton.find("[data-tid='catererType']").html(_data.catererInfo.foodType);
+			$menuButton.find("[data-tid='numUpVotes']").html(_data.numLikes);
+			$menuButton.find("[data-tid='numDownVotes']").html(_data.numRatings - _data.numLikes);
 			
-			$menuType.find("[data-tid='upvoteBtn']").click(function(_e) {
+			$menuButton.click(function(_event) {
+				self.$menuList.pageFlipper("flip", _pgnum);
 			});
 			
-			$menuType.find("[data-tid='downvoteBtn']").click(function(_e) {
-			});
+			// $menuButton.find("[data-tid='upvoteBtn']").click(function(_e) {
+			// });
+			
+			// $menuButton.find("[data-tid='downvoteBtn']").click(function(_e) {
+			// });
 			
 			new TodayFoodItems({
 				el: $menuType.find("[data-tid='foodList']"),
 				data: _data.foodItems
 			})
 			
-			self.$el.append($menuType);
+			self.$menuNavList.append($menuButton);
+			self.$menuList.append($menuType);
 		};
 		
-		buildItem(this.data.daily, "Catering", "assets/images/ic-cater.png");
-		buildItem(this.data.indian, "Indian", "assets/images/ic-indian.png");
-		buildItem(this.data.vegetarian, "Vegetarian", "assets/images/ic-vege.png");
+		buildItem(0, this.data.daily, "Catering", "assets/images/ic-cater.png");
+		buildItem(1, this.data.indian, "Indian", "assets/images/ic-indian.png");
+		buildItem(2, this.data.vegetarian, "Vegetarian", "assets/images/ic-vege.png");
+		
+		self.$menuList.pageFlipper();
+		
 	}
 });
